@@ -30,8 +30,6 @@ def main():
 # Overload Method Name Decision Tree
 ''', file=overload_tree_md)
         generate_library(classes, config, 'base', overload_tree_md)
-    
-    generate_events(classes, config)
 
 
 generated = []
@@ -247,98 +245,6 @@ def generated_cpp(initials, libname):
 '''
     for i in initials:
         yield '#include "generated/ffi_%s.cpp"' % (i,)
-
-def generate_events(classes, config):
-    to_be_generated = {
-        'wx-base/src/generated/events.rs': events_rs,
-        'wx-base/src/generated/events.cpp': events_cpp,
-    }
-    event_classes = [c for c in classes.all() if classes.is_a(c, 'wxEvent')]
-    for path, generator in to_be_generated.items():
-        is_rust = path.endswith('.rs')
-        with open(path, 'w', newline='\n', encoding='utf-8') as f:
-            for chunk in generator(event_classes, config):
-                print(chunk, file=f)
-        if is_rust:
-            error = subprocess.check_output(['rustfmt', path])
-            if error:
-                print(error)
-
-def events_rs(event_classes, config):
-    yield '''\
-pub enum RustEvent {\
-'''
-    event_types = sorted(chain.from_iterable(c.event_types for c in event_classes))
-    for event_type in event_types:
-        yield '    %s,' % (event_type,)
-    yield '''\
-}
-'''
-
-def events_cpp(event_classes, config):
-    yield '''\
-#include <wx/bookctrl.h>
-
-#include "manual.h"
-
-
-enum WxRustEvent {\
-'''
-    event_types = sorted(chain.from_iterable(c.event_types for c in event_classes))
-    for event_type in event_types:
-        yield '    RUST_EVT_%s,' % (pascal_to_snake(event_type).upper(),)
-    yield '''\
-};
-
-#define MAP_RUST_EVT(name) case RUST_EVT_##name: return wxEVT_##name;
-#define DEFINE_TYPE_TAG_OF_EVT(name, clazz) \\
-    template<> wxEventTypeTag<clazz> TypeTagOf(int eventType) { \\
-        switch (eventType) { \\
-        MAP_RUST_EVT(name) \\
-        } \\
-        return wxEVT_NULL; \\
-    }
-
-template<typename T> wxEventTypeTag<T> TypeTagOf(int eventType) {
-    return wxEVT_NULL;
-}'''
-    for cls in event_classes:
-        if len(cls.event_types) < 1:
-            continue
-        if len(cls.event_types) == 1:
-            yield 'DEFINE_TYPE_TAG_OF_EVT(%s, %s)' % (
-                pascal_to_snake(cls.event_types[0]).upper(),
-                cls.name,
-            )
-            continue
-        yield '''\
-template<> wxEventTypeTag<%s> TypeTagOf(int eventType) {
-    switch (eventType) {\
-''' % (cls.name,)
-        for event_type in cls.event_types:
-            yield '    MAP_RUST_EVT(%s)' % (
-                pascal_to_snake(event_type).upper(),
-            )
-        yield '''\
-    }
-    return wxEVT_NULL;
-}'''
-    yield '''
-template<typename T> void BindIfEventIs(wxEvtHandler *self, int eventType, void *aFn, void *aParam) {
-    wxEventTypeTag<T> typeTag = TypeTagOf<T>(eventType);
-    if (typeTag != wxEVT_NULL) {
-        CxxClosure<T &> functor(aFn, aParam);
-        self->Bind(typeTag, functor);
-    }
-}
-void wxEvtHandler_Bind(wxEvtHandler *self, int eventType, void *aFn, void *aParam) {\
-'''
-    for cls in event_classes:
-        if len(cls.event_types) < 1:
-            continue
-        yield '    BindIfEventIs<%s>(self, eventType, aFn, aParam);' % (cls.name,)
-    yield '''\
-}'''
 
 if __name__ == '__main__':
     main()
