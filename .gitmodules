@@ -1,0 +1,3 @@
+[submodule "bxml"]
+	path = bxml
+	url = git@github.com:kenz-gelsoft/bxml.git
