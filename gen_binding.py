@@ -30,7 +30,6 @@ def main():
 # Overload Method Name Decision Tree
 ''', file=overload_tree_md)
         generate_library(classes, config, 'base', overload_tree_md)
-        generate_library(classes, config, 'core', overload_tree_md)
     
     generate_events(classes, config)
 
@@ -179,8 +178,7 @@ pub use crate::ffi::*;
         yield 'pub use super::ffi_%s::*;' % (i,)
 
 def methods_rs(initials, libname):
-    if libname == 'base':
-        yield '''\
+    yield '''\
 use std::os::raw::c_void;
 
 pub trait WxRustMethods {
@@ -201,11 +199,6 @@ pub trait WxRustMethods {
     }
 }
 '''
-    else:
-        yield '''\
-#[doc(no_inline)]
-pub use wx_base::methods::*;
-'''
     for i in initials:
         yield 'pub use super::methods_%s::*;' % (i,)
 
@@ -218,11 +211,6 @@ use std::os::raw::{c_double, c_int, c_long, c_uchar, c_uint, c_void};
 
 use super::*;
 use methods::*;
-'''
-    if libname == 'base':
-        yield '''\
-pub use events::*;
-mod events;
 '''
     yield 'mod ffi;'
     for i in initials:
@@ -243,17 +231,7 @@ def generated_h(initials, libname):
 
 #include <wx/wx.h>
 '''
-    if libname == 'core':
-        yield '''\
-// wxBitmapBundle compatibility hack(for a while)
-#if !wxCHECK_VERSION(3, 1, 6)
-typedef wxBitmap wxBitmapBundle;
-#endif
-
-typedef wxMessageDialog::ButtonLabel ButtonLabel;
-'''
-    else:
-        yield '''\
+    yield '''\
 typedef wxDateTime::TimeZone TimeZone;
 typedef wxDateTime::Tm       Tm;
 typedef wxDateTime::WeekDay  WeekDay;
