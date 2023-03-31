@@ -227,12 +227,7 @@ def generated_h(initials, libname):
     yield '''\
 #pragma once
 
-#include <wx/wx.h>
-'''
-    yield '''\
-typedef wxDateTime::TimeZone TimeZone;
-typedef wxDateTime::Tm       Tm;
-typedef wxDateTime::WeekDay  WeekDay;
+// TODO: include required headers
 '''
     for i in initials:
         yield '#include "generated/ffi_%s.h"' % (i,)
