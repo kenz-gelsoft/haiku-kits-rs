@@ -18,13 +18,3 @@ pub trait WxRustMethods {
     }
 }
 
-pub use super::methods_c::*;
-pub use super::methods_d::*;
-pub use super::methods_e::*;
-pub use super::methods_f::*;
-pub use super::methods_m::*;
-pub use super::methods_o::*;
-pub use super::methods_r::*;
-pub use super::methods_s::*;
-pub use super::methods_t::*;
-pub use super::methods_v::*;
