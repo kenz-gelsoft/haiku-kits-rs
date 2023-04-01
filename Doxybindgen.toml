@@ -1,5 +1,8 @@
 wxml_files = [
     'bxml/classBApplication.xml',
+    'bxml/classBArchivable.xml',
+    'bxml/classBHandler.xml',
+    'bxml/classBLooper.xml',
 ]
 
 [conditions]

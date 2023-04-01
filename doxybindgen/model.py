@@ -63,7 +63,6 @@ class Class:
         self.config = config
         self.doc = ''.join(e.find('./briefdescription').itertext()).strip()
         self.__doc_id = e.get('id')
-        self.library = self._find_libname(e)
         for enum in e.findall(".//memberdef[@kind='enum']"):
             enum = Enum(enum)
             self.enums.append(enum)
@@ -93,14 +92,6 @@ class Class:
         # print(self.name, self.__base_classes)
         for mixin in self.manager.by_name(self.__base_classes[0]).mixins():
             yield mixin
-
-    def _find_libname(self, e):
-        library = self.config.get('library')
-        if library:
-            return library
-        for ref in e.findall('./detaileddescription//ref'):
-            if ref.get('refid').startswith('page_libs_'):
-                return ref.text.lower()[1:]
 
     def unprefixed(self):
         return self.name[1:]
@@ -362,12 +353,6 @@ class ClassManager:
 
     def all(self):
         return (i.cls for i in self.__all)
-    
-    def in_lib(self, libname, generated):
-        all_classes = self.all()
-        if libname is None:
-            return (cls for cls in all_classes if cls.library not in generated)
-        return (cls for cls in all_classes if cls.library == libname)
     
     def by_name(self, name):
         info = self.__by_name.get(name)

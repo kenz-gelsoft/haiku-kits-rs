@@ -58,13 +58,6 @@ class RustClassBinding:
                 self.__model.name,
                 unprefixed,
             )
-            buildable_doc = ''
-            if self.__model.library != 'base':
-                buildable_doc = ' or [`Buildable::builder()`] (if available)'
-            yield "    /// - Use [`%s`]'s `new()`%s to create an instance of this class." % (
-                unprefixed,
-                buildable_doc,
-            )
             yield "    /// - See [C++ `%s` class's documentation](%s) for more details." % (
                 self.__model.name,
                 self.__model.doc_url(),

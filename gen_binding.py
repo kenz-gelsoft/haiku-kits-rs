@@ -29,12 +29,11 @@ def main():
         print('''\
 # Overload Method Name Decision Tree
 ''', file=overload_tree_md)
-        generate_library(classes, config, 'base', overload_tree_md)
+        generate_library(classes, config, overload_tree_md)
 
 
 generated = []
-def generate_library(classes, config, libname, overload_tree_md):
-    generated.append(libname)
+def generate_library(classes, config, overload_tree_md):
     files_per_initial = {
         'src/generated/ffi_%s.rs': ffi_i_rs,
         'src/generated/methods_%s.rs': methods_i_rs,
@@ -42,8 +41,8 @@ def generate_library(classes, config, libname, overload_tree_md):
         'include/generated/ffi_%s.h': ffi_i_h,
         'src/generated/ffi_%s.cpp': ffi_i_cpp,
     }
-    rust_bindings = [RustClassBinding(cls, overload_tree_md) for cls in classes.in_lib(libname, generated)]
-    cxx_bindings = [CxxClassBinding(cls, config) for cls in classes.in_lib(libname, generated)]
+    rust_bindings = [RustClassBinding(cls, overload_tree_md) for cls in classes.all()]
+    cxx_bindings = [CxxClassBinding(cls, config) for cls in classes.all()]
     initials = []
     for initial in string.ascii_lowercase:
         rust_bindings_i = [b for b in rust_bindings if b.has_initial(initial)]
@@ -55,18 +54,15 @@ def generate_library(classes, config, libname, overload_tree_md):
             progress('.')
             path = path % (initial,)
             is_rust = path.endswith('.rs')
-            if libname:
-                path = 'wx-%s/%s' % (libname, path)
             with open(path, 'w', newline='\n', encoding='utf-8') as f:
                 for chunk in generator(
-                    rust_bindings_i if is_rust else cxx_bindings_i,
-                    libname
+                    rust_bindings_i if is_rust else cxx_bindings_i
                 ):
                     print(chunk, file=f)
-            if is_rust:
-                error = subprocess.check_output(['rustfmt', path])
-                if error:
-                    print(error)
+            # if is_rust:
+            #     error = subprocess.check_output(['rustfmt', path])
+            #     if error:
+            #         print(error)
     to_be_generated = {
         'src/generated/class.rs': class_rs,
         'src/generated/ffi.rs': ffi_rs,
@@ -78,19 +74,16 @@ def generate_library(classes, config, libname, overload_tree_md):
     for path, generator in to_be_generated.items():
         progress('.')
         is_rust = path.endswith('.rs')
-        if libname:
-            path = 'wx-%s/%s' % (libname, path)
         with open(path, 'w', newline='\n', encoding='utf-8') as f:
             for chunk in generator(
                 initials,
-                libname
             ):
                 print(chunk, file=f)
 
 def progress(s):
     print(s, end='', flush=True)
 
-def ffi_i_rs(classes, libname):
+def ffi_i_rs(classes):
     yield '''\
 use super::*;
 
@@ -107,7 +100,7 @@ extern "C" {'''
 }\
 '''
 
-def methods_i_rs(classes, libname):
+def methods_i_rs(classes):
     yield '''\
 use super::*;
 '''
@@ -115,7 +108,7 @@ use super::*;
         for line in cls.lines(for_methods=True):
             yield line
 
-def class_i_rs(classes, libname):
+def class_i_rs(classes):
     yield '''\
 use super::*;
 '''
@@ -124,7 +117,7 @@ use super::*;
             yield line
 
 
-def ffi_i_h(classes, libname):
+def ffi_i_h(classes):
     yield '''\
 #pragma once
 '''
@@ -148,7 +141,7 @@ extern "C" {
 } // extern "C"
 '''
 
-def ffi_i_cpp(classes, libname):
+def ffi_i_cpp(classes):
     yield '''\
 #include "generated.h"
 
@@ -161,21 +154,21 @@ extern "C" {
 } // extern "C"
 '''
 
-def class_rs(initials, libname):
+def class_rs(initials):
     yield '''\
 use super::*;
 '''
     for i in initials:
         yield 'pub use class_%s::*;' % (i,)
 
-def ffi_rs(initials, libname):
+def ffi_rs(initials):
     yield '''\
 pub use crate::ffi::*;
 '''
     for i in initials:
         yield 'pub use super::ffi_%s::*;' % (i,)
 
-def methods_rs(initials, libname):
+def methods_rs(initials):
     yield '''\
 use std::os::raw::c_void;
 
@@ -200,7 +193,7 @@ pub trait WxRustMethods {
     for i in initials:
         yield 'pub use super::methods_%s::*;' % (i,)
 
-def generated_rs(initials, libname):
+def generated_rs(initials):
     yield '''\
 #![allow(non_upper_case_globals)]
 #![allow(unused_imports)]
@@ -223,7 +216,7 @@ use methods::*;
         yield 'mod class_%s;' % (i,)
 
 
-def generated_h(initials, libname):
+def generated_h(initials):
     yield '''\
 #pragma once
 
@@ -232,7 +225,7 @@ def generated_h(initials, libname):
     for i in initials:
         yield '#include "generated/ffi_%s.h"' % (i,)
 
-def generated_cpp(initials, libname):
+def generated_cpp(initials):
     yield '''\
 #include "generated.h"
 
