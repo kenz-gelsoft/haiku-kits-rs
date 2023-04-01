@@ -10,10 +10,10 @@ wxwidgets! {
     #[doc(alias = "Application")]
     class Application
         = ApplicationFromCpp<false>(BApplication) impl
-        pplicationMethods,
-        ooperMethods,
-        andlerMethods
-        // rchivableMethods
+        ApplicationMethods,
+        LooperMethods,
+        HandlerMethods
+        // ArchivableMethods
 }
 impl<const FROM_CPP: bool> ApplicationFromCpp<FROM_CPP> {
     /// Initialize a BApplication object from a message.
@@ -43,22 +43,17 @@ impl Clone for ApplicationFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for pplicationFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for LooperFromCpp<FROM_CPP> {
     fn from(o: ApplicationFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for ooperFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for HandlerFromCpp<FROM_CPP> {
     fn from(o: ApplicationFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for andlerFromCpp<FROM_CPP> {
-    fn from(o: ApplicationFromCpp<FROM_CPP>) -> Self {
-        unsafe { Self::from_ptr(o.as_ptr()) }
-    }
-}
-impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for rchivableFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for ArchivableFromCpp<FROM_CPP> {
     fn from(o: ApplicationFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
@@ -93,7 +88,7 @@ wxwidgets! {
     #[doc(alias = "Archivable")]
     class Archivable
         = ArchivableFromCpp<false>(BArchivable) impl
-        rchivableMethods
+        ArchivableMethods
 }
 impl<const FROM_CPP: bool> ArchivableFromCpp<FROM_CPP> {
     /// Constructor. Does nothing.
@@ -115,11 +110,6 @@ impl<const FROM_CPP: bool> ArchivableFromCpp<FROM_CPP> {
 impl Clone for ArchivableFromCpp<true> {
     fn clone(&self) -> Self {
         Self(self.0)
-    }
-}
-impl<const FROM_CPP: bool> From<ArchivableFromCpp<FROM_CPP>> for rchivableFromCpp<FROM_CPP> {
-    fn from(o: ArchivableFromCpp<FROM_CPP>) -> Self {
-        unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
 impl<const FROM_CPP: bool> Drop for ArchivableFromCpp<FROM_CPP> {

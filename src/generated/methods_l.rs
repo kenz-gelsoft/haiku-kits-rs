@@ -5,7 +5,7 @@ use super::*;
     /// This trait represents [C++ `BLooper` class](url/to/classBLooper)'s methods and inheritance.
     ///
     /// See [`LooperFromCpp`] documentation for the class usage.
-pub trait LooperMethods: andlerMethods {
+pub trait LooperMethods: HandlerMethods {
     // NOT_SUPPORTED: fn PostMessage()
     // NOT_SUPPORTED: fn PostMessage1()
     // NOT_SUPPORTED: fn PostMessage2()

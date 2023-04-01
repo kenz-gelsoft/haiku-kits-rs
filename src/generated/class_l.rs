@@ -10,9 +10,9 @@ wxwidgets! {
     #[doc(alias = "Looper")]
     class Looper
         = LooperFromCpp<false>(BLooper) impl
-        ooperMethods,
-        andlerMethods
-        // rchivableMethods
+        LooperMethods,
+        HandlerMethods
+        // ArchivableMethods
 }
 impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// Construct a looper from an archived message.
@@ -31,17 +31,12 @@ impl Clone for LooperFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ooperFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for HandlerFromCpp<FROM_CPP> {
     fn from(o: LooperFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for andlerFromCpp<FROM_CPP> {
-    fn from(o: LooperFromCpp<FROM_CPP>) -> Self {
-        unsafe { Self::from_ptr(o.as_ptr()) }
-    }
-}
-impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for rchivableFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ArchivableFromCpp<FROM_CPP> {
     fn from(o: LooperFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }

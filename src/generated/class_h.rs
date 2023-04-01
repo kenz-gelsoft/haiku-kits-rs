@@ -10,8 +10,8 @@ wxwidgets! {
     #[doc(alias = "Handler")]
     class Handler
         = HandlerFromCpp<false>(BHandler) impl
-        andlerMethods
-        // rchivableMethods
+        HandlerMethods
+        // ArchivableMethods
 }
 impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
     /// Construct a handler from an archived message.
@@ -35,12 +35,7 @@ impl Clone for HandlerFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for andlerFromCpp<FROM_CPP> {
-    fn from(o: HandlerFromCpp<FROM_CPP>) -> Self {
-        unsafe { Self::from_ptr(o.as_ptr()) }
-    }
-}
-impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for rchivableFromCpp<FROM_CPP> {
+impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for ArchivableFromCpp<FROM_CPP> {
     fn from(o: HandlerFromCpp<FROM_CPP>) -> Self {
         unsafe { Self::from_ptr(o.as_ptr()) }
     }

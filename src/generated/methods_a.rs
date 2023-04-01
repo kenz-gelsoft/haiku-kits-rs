@@ -5,7 +5,7 @@ use super::*;
     /// This trait represents [C++ `BApplication` class](url/to/classBApplication)'s methods and inheritance.
     ///
     /// See [`ApplicationFromCpp`] documentation for the class usage.
-pub trait ApplicationMethods: ooperMethods {
+pub trait ApplicationMethods: LooperMethods {
     /// Hook method that's invoked when the BApplication receives a B_READY_TO_RUN message.
     ///
     /// See [C++ `BApplication::ReadyToRun()`'s documentation](url/to/classBApplication#af912cef601090a89cc20cb3a7af48315).
@@ -107,7 +107,7 @@ pub trait ApplicationMethods: ooperMethods {
     /// This trait represents [C++ `BArchivable` class](url/to/classBArchivable)'s methods and inheritance.
     ///
     /// See [`ArchivableFromCpp`] documentation for the class usage.
-pub trait ArchivableMethods: WxRustMethods {
+pub trait ArchivableMethods: _WxRustMethods {
     // DTOR: fn ~BArchivable()
     // NOT_SUPPORTED: fn AllArchived()
     // NOT_SUPPORTED: fn AllUnarchived()

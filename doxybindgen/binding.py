@@ -110,7 +110,7 @@ class RustClassBinding:
                 comment_or_not = '// '
             yield '        %s%sMethods' % (
                 comment_or_not,
-                ancestor.name[2:],
+                ancestor.name[1:],
             )
 
     def _impl_with_ctors(self):
@@ -148,7 +148,7 @@ class RustClassBinding:
     def _impl_from_ancestors(self):
         unprefixed = self.__model.unprefixed()
         for ancestor in self.__model.manager.ancestors_of(self.__model):
-            unprefixed_ancestor = ancestor.name[2:]
+            unprefixed_ancestor = ancestor.name[1:]
             if unprefixed == unprefixed_ancestor:
                 continue
             yield 'impl<const FROM_CPP: bool> From<%sFromCpp<FROM_CPP>> for %sFromCpp<FROM_CPP> {' % (
@@ -193,7 +193,7 @@ class RustClassBinding:
         for mixin in mixins:
             yield 'pub fn %s_As%s(obj: *mut c_void) -> *mut c_void;' % (
                 self.__model.name,
-                mixin[2:],
+                mixin[1:],
             )
     
     def _impl_mixin_if_needed(self):
@@ -203,7 +203,7 @@ class RustClassBinding:
         yield '// Mix-in(s) to %s' % (self.__model.name,)
         for mixin in mixins:
             for ancestor in self._ancestors_names_of(mixin):
-                ancestor_unprefixed = ancestor[2:]
+                ancestor_unprefixed = ancestor[1:]
                 yield 'impl<const FROM_CPP: bool> %sMethods for %sFromCpp<FROM_CPP> {' % (
                     ancestor_unprefixed,
                     self.__model.unprefixed(),
@@ -213,7 +213,7 @@ class RustClassBinding:
                 )
                 yield '        unsafe { ffi::%s_As%s(self.as_ptr()) }' % (
                     self.__model.name,
-                    mixin[2:],
+                    mixin[1:],
                 )
                 yield '    }'
                 yield '}'
@@ -256,7 +256,7 @@ class RustClassBinding:
         )
         yield 'pub trait %sMethods: %sMethods {' % (
             self.__model.unprefixed(),
-            base[2:],
+            base[1:],
         )
         if self.mixed_into():
             yield '    fn %s(&self) -> *mut c_void {' % (
@@ -632,7 +632,7 @@ class CxxClassBinding:
         signature = '%s *%s_As%s(%s* obj)' % (
             cxx_class,
             self.__model.name,
-            mixin[2:], # TODO: unprefixed
+            mixin[1:], # TODO: unprefixed
             self.__model.name,
         )
         if is_cc:

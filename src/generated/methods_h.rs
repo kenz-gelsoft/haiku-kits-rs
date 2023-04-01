@@ -5,7 +5,7 @@ use super::*;
     /// This trait represents [C++ `BHandler` class](url/to/classBHandler)'s methods and inheritance.
     ///
     /// See [`HandlerFromCpp`] documentation for the class usage.
-pub trait HandlerMethods: rchivableMethods {
+pub trait HandlerMethods: ArchivableMethods {
     /// Handle message that has been received by the associated looper.
     ///
     /// See [C++ `BHandler::MessageReceived()`'s documentation](url/to/classBHandler#aeecda5017e0081db617f23bbff71fb53).
