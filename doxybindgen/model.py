@@ -100,7 +100,7 @@ class Class:
         return name in self.__blocklist
 
     def doc_url(self):
-        return "url/to/%s" % (self.__doc_id,)
+        return "https://www.haiku-os.org/docs/api/%s.html" % (self.__doc_id,)
     
 
 class Method:

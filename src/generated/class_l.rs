@@ -5,7 +5,7 @@ use super::*;
 wxwidgets! {
     /// Receive and process messages in a separate thread.
     /// - [`Looper`] represents a C++ `BLooper` class instance which your code has ownership, [`LooperFromCpp`]`<true>` represents one which don't own.
-    /// - See [C++ `BLooper` class's documentation](url/to/classBLooper) for more details.
+    /// - See [C++ `BLooper` class's documentation](https://www.haiku-os.org/docs/api/classBLooper.html) for more details.
     #[doc(alias = "BLooper")]
     #[doc(alias = "Looper")]
     class Looper
@@ -17,7 +17,7 @@ wxwidgets! {
 impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// Construct a looper from an archived message.
     ///
-    /// See [C++ `BLooper::BLooper()`'s documentation](url/to/classBLooper#aad314758fd652fb48d61bcccab8b6ae3).
+    /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aad314758fd652fb48d61bcccab8b6ae3).
     pub fn new(data: *mut c_void) -> LooperFromCpp<FROM_CPP> {
         unsafe { LooperFromCpp(ffi::BLooper_new(data)) }
     }
@@ -56,7 +56,7 @@ impl<const FROM_CPP: bool> Drop for LooperFromCpp<FROM_CPP> {
 impl<const FROM_CPP: bool> ArchivableMethods for LooperFromCpp<FROM_CPP> {
     /// Static method to instantiate a looper from an archived message.
     ///
-    /// See [C++ `BLooper::Instantiate()`'s documentation](url/to/classBLooper#aee61314ab77c54a64f8122440189b73a).
+    /// See [C++ `BLooper::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aee61314ab77c54a64f8122440189b73a).
     fn instantiate(data: *mut c_void) -> Option<ArchivableFromCpp<true>> {
         unsafe { Archivable::option_from(ffi::BLooper_Instantiate(data)) }
     }
