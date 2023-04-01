@@ -2,8 +2,6 @@ from collections import OrderedDict
 from .model import Param, RustType, non_keyword_name, prefixed, pascal_to_snake
 
 MIXIN_CXX_CLASS = {
-    # MSW: Some wxTextEntry-derived classes actually derived from its base
-    'wxTextEntry': 'wxTextEntryBase',
 }
 
 class RustClassBinding:
@@ -35,7 +33,7 @@ class RustClassBinding:
             self.__model.name,
         )
         if for_ffi:
-            if not self.is_a('wxObject'):
+            if not self.is_a('BArchivable'):
                 yield 'pub fn %s_delete(self_: *mut c_void);' % (
                     self.__model.name,
                 )
@@ -170,7 +168,7 @@ class RustClassBinding:
             yield '}'
 
     def _impl_dynamic_cast_if_needed(self):
-        if not self.is_a('wxObject'):
+        if not self.is_a('BLooper'):
             return
         yield 'impl<const FROM_CPP: bool> DynamicCast for %sFromCpp<FROM_CPP> {' % (self.__model.unprefixed(),)
         yield '    fn class_info() -> ClassInfoFromCpp<true> {'

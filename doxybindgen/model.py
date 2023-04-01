@@ -9,20 +9,8 @@ CXX2RUST = {
     'long': 'c_long',
     'size_t': 'usize',
     'unsigned int': 'c_uint',
-    'wxAlignment': 'c_int',
-    'wxByte': 'c_uchar',
-    'wxCheckBoxState': 'c_int',
-    'wxCoord': 'c_int',
-    'wxDirection': 'c_int',
-    'wxEllipsizeMode': 'c_int',
-    'wxItemKind': 'c_int',
-    'wxLayoutDirection': 'c_int',
-    'wxWindowID': 'c_int',
 }
 STR_TYPES = [
-    'wxString',
-    'wxArtClient',
-    'wxArtID',
 ]
 CXX_PRIMITIVES = [
     'bool',
@@ -38,13 +26,8 @@ RUST_PRIMITIVES = [
     'usize',
 ]
 OS_UNSUPPORTED_TYPES = [
-    'wxAccessible',
 ]
 MANUAL_BINDINGS = [
-    'wxArrayInt',
-    'wxArrayString',
-    'wxSizerItemList',
-    'wxWindowList',
 ]
 # Known, and problematic
 RUST_KEYWORDS = [
@@ -117,16 +100,16 @@ class Class:
             return library
         for ref in e.findall('./detaileddescription//ref'):
             if ref.get('refid').startswith('page_libs_'):
-                return ref.text.lower()[2:]
+                return ref.text.lower()[1:]
 
     def unprefixed(self):
-        return self.name[2:]
+        return self.name[1:]
 
     def is_blocked_method(self, name):
         return name in self.__blocklist
 
     def doc_url(self):
-        return "https://docs.wxwidgets.org/3.2/%s.html" % (self.__doc_id,)
+        return "url/to/%s" % (self.__doc_id,)
     
 
 class Method:
@@ -279,7 +262,7 @@ class ReturnTypeWrapper:
         return self._wrap(call)[1]
 
     def _wrap(self, call=""):
-        returns = self.__wrapped[2:]
+        returns = self.__wrapped[1:]
         if self.__returns.is_str():
             return ['String',
                     'WxString::from_ptr(%s).into()' % (call,)]
@@ -475,8 +458,8 @@ class CxxType:
             t = 'sz'
         elif t.startswith('unsigned '):
             t = re.sub('^unsigned ', 'u', t)
-        elif t.startswith('wx'):
-            t = t[2:]
+        elif t.startswith('B'):
+            t = t[1:]
         return t.lower()
     
     def in_cxx(self):
@@ -521,9 +504,9 @@ class CxxType:
             if self._is_const_ref_to_string():
                 return '&str'
             if self.is_const_ref_to_binding():
-                return '&%s' % (t[2:])
+                return '&%s' % (t[1:])
             if self.is_ptr_to_binding():
-                return 'Option<&%s>' % (t[2:])
+                return 'Option<&%s>' % (t[1:])
         if t in CXX2RUST:
             t = CXX2RUST[t]
         if self.__indirection:
@@ -600,7 +583,7 @@ class CxxType:
     def make_generic(self, generic_name, is_option):
         self.generic_name = generic_name
         self.generic_option = is_option
-        return (generic_name, self.typename[2:] + 'Methods')
+        return (generic_name, self.typename[1:] + 'Methods')
 
     def normalized(self):
         return '%s%s%s' % (
