@@ -19,16 +19,16 @@ use crate::manual::*;
 
 # place wxWidgets doxygen xml files in wxml/ dir and run this.
 def main():
-    outpath = 'wx-base/src/constants.rs'
+    outpath = 'src/constants.rs'
     with open(outpath, 'w', newline='\n') as f:
         print(PROLOGUE, file=f)
-        for file in xml_files_in('wxml/'):
+        for file in xml_files_in('bxml/'):
             # print(file)
             tree = ET.parse(file)
             root = tree.getroot()
             for line in generate_constants_in(root):
                 print(line, file=f)
-    print(subprocess.check_output(['rustfmt', outpath]))
+    # print(subprocess.check_output(['rustfmt', outpath]))
 
 def xml_files_in(dir):
     index = os.path.join(dir, 'index.xml')
