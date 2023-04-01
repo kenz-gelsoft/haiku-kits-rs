@@ -1,16 +1,5 @@
 [workspace]
 
 members = [
-    "samples/hello",
-    "samples/minimal",
-    "samples/widgets",
-    "samples/wrapsizer",
     "wx-base",
-    "wx-core",
-    "wxrust-config",
 ]
-
-[patch.crates-io]
-# wxrust-config = { path = "wxrust-config" }
-wxrust-base = { path = "wx-base" }
-wxrust-config = { git = "https://github.com/kenz-gelsoft/wxrust-vendored-config" }
