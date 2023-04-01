@@ -41,103 +41,8 @@ def enums_in(root):
         yield memberdef
 
 typedefs = [
-    'wxPGVFBFlags',
 ]
 blocklist = [
-    # complex defs
-    'wxBookCtrl',
-    'wxDISABLE_DEBUG_SUPPORT',
-    'wxDISABLE_ASSERTS_IN_RELEASE_BUILD',
-    'wxEVENT_PROPAGATE_MAX',
-    'wxInvalidDateTime',
-    'wxNullProperty',
-    'wxPG_COLOUR',
-    'wxPG_COLOUR_BLACK',
-    'wxPG_DEFAULT_IMAGE_SIZE',
-    'wxPG_INVALID_VALUE',
-    'wxPG_IT_CHILDREN',
-    'wxPG_LABEL',
-    'wxPG_NULL_BITMAP',
-    'wxPG_PROP_PARENTAL_FLAGS',
-    'wxPGChoicesEmptyData',
-    'wxTLS_TYPE',
-    'wxTreeListEventHandler',
-
-    # wxRichTextRange
-    'wxRICHTEXT_ALL',
-    'wxRICHTEXT_NONE',
-    'wxRICHTEXT_NO_SELECTION',
-
-    # wxSize
-    'wxRICHTEXT_DEFAULT_OVERALL_SIZE',
-    'wxRICHTEXT_DEFAULT_IMAGE_SIZE',
-
-    # wxColour
-    'wxRICHTEXT_DEFAULT_UNFOCUSSED_BACKGROUND',
-    'wxRICHTEXT_DEFAULT_FOCUSSED_BACKGROUND',
-    'wxRICHTEXT_DEFAULT_UNSELECTED_BACKGROUND',
-    'wxRICHTEXT_DEFAULT_TYPE_COLOUR',
-    'wxRICHTEXT_DEFAULT_FOCUS_RECT_COLOUR',
-
-    # min max defs
-    'wxINT8_MIN',
-    'wxINT8_MAX',
-    'wxUINT8_MAX',
-    'wxINT16_MIN',
-    'wxINT16_MAX',
-    'wxUINT16_MAX',
-    'wxINT32_MIN',
-    'wxINT32_MAX',
-    'wxUINT32_MAX',
-    'wxINT64_MIN',
-    'wxINT64_MAX',
-    'wxUINT64_MAX',
-
-    # Mutual reference in the inner class in wx_base:: not supported
-    'Inv_Year',
-    'WET',
-    'WEST',
-    'CET',
-    'CEST',
-    'EET',
-    'EEST',
-    'MSK',
-    'MSD',
-    'AST',
-    'ADT',
-    'EST',
-    'EDT',
-    'CST',
-    'CDT',
-    'MST',
-    'MDT',
-    'PST',
-    'PDT',
-    'HST',
-    'AKST',
-    'AKDT',
-    'A_WST',
-    'A_CST',
-    'A_EST',
-    'A_ESST',
-    'NZST',
-    'NZDT',
-    'UTC',
-    'Country_EEC',
-    'France',
-    'Germany',
-    'UK',
-    'Country_WesternEurope_End',
-    'Russia',
-    'USA',
-
-    # broken initializer
-    'wxAUI_TBART_OVERFLOW_SIZE',
-    'wxFILE_EXISTS_NO_FOLLOW',
-    'wxPG_PROP_BEING_DELETED',
-
-    # special macro
-    'wxDEPRECATED_ATTR',
 ]
 generated = set()
 class Define:
@@ -175,6 +80,7 @@ class Define:
         elif "'" in v:
             t = 'char'
         v = re.sub(r'(\d+)[Ll]', r'\1', v)
+        # TODO: string types
         v = re.sub(r'wxString\((".+")\)', r'\1', v)
         v = re.sub(r'wxS\((".+")\)', r'\1', v)
         v = re.sub(r'wxT\((".+")\)', r'\1', v)
@@ -195,68 +101,6 @@ def generate_define(e):
     yield d
 
 long_types = [
-    'wxAC_DEFAULT_STYLE',
-    'wxAEDIALOG_STYLE',
-    'wxALWAYS_SHOW_SB',
-    'wxAccObject',
-    'wxBACKINGSTORE',
-    'wxBORDER',
-    'wxBorder',
-    'wxCANCEL',
-    'wxCANCEL_DEFAULT',
-    'wxCAPTION',
-    'wxCHOICEDLG_STYLE',
-    'wxCLIP_CHILDREN',
-    'wxCLIP_SIBLINGS',
-    'wxCLOSE_BOX',
-    'wxCP_DEFAULT_STYLE',
-    'wxDD_DEFAULT_STYLE',
-    'wxDEFAULT_DIALOG_STYLE',
-    'wxDEFAULT_FRAME_STYLE',
-    'wxDOUBLE_BORDER',
-    'wxFULL_REPAINT_ON_RESIZE',
-    'wxGeometryCentre',
-    'wxHLB_DEFAULT_STYLE',
-    'wxHL_ALIGN_CENTRE',
-    'wxHL_CONTEXTMENU',
-    'wxHL_DEFAULT_STYLE',
-    'wxHSCROLL',
-    'wxLB_HSCROLL',
-    'wxMAXIMIZE_BOX',
-    'wxMINIMIZE_BOX',
-    'wxNO_BORDER',
-    'wxOK',
-    'wxPGPropertyFlags',
-    'wxPG_ITERATOR_FLAGS',
-    'wxPG_PROP_ACTIVE_BTN',
-    'wxPG_PROP_MAX',
-    'wxPG_PROP_PASSWORD',
-    'wxPG_PROP_SHOW_FULL_FILENAME',
-    'wxPG_PROP_STATIC_CHOICES',
-    'wxPG_PROP_TRANSLATE_CUSTOM',
-    'wxPG_PROP_USE_CHECKBOX',
-    'wxPG_PROP_USE_DCC',
-    'wxPG_STRING_STORED_FLAGS',
-    'wxPOPUP_WINDOW',
-    'wxRAISED_BORDER',
-    'wxRESIZE_BORDER',
-    'wxRETAINED',
-    'wxSIMPLE_BORDER',
-    'wxSTATIC_BORDER',
-    'wxSTB_DEFAULT_STYLE',
-    'wxSTB_ELLIPSIZE_END',
-    'wxSTB_SHOW_TIPS',
-    'wxSTB_SIZEGRIP',
-    'wxSTC_MASK_FOLDERS',
-    'wxSUNKEN_BORDER',
-    'wxSYSTEM_MENU',
-    'wxTAB_TRAVERSAL',
-    'wxTE_DONTWRAP',
-    'wxTRANSPARENT_WINDOW',
-    'wxTextEntryDialogStyle',
-    'wxVSCROLL',
-    'wxWANTS_CHARS',
-    'wxWINDOW_STYLE_MASK',
 ]
 
 class Enum:
