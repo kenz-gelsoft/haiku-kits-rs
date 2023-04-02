@@ -8,6 +8,7 @@ RE_IDENT = re.compile(r'wx([^_]\w)')
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
 RE_INT_CAST = re.compile(r'\(int\)(.*)')
+RE_UINT_CAST = re.compile(r'\(uint32\)(.*)')
 
 RE_LONG_SUFFIX = re.compile(r'(\d+)[Ll]')
 RE_UINT_SUFFIX = re.compile(r'(\d+)[uU]')
@@ -205,23 +206,25 @@ def translate_initializer(name, v):
     t = 'c_int'
     has_long_suffix = RE_LONG_SUFFIX.search(v)
     has_uint_suffix = RE_UINT_SUFFIX.search(v)
+    has_uint_cast = RE_UINT_CAST.search(v)
     has_float_suffix = RE_FLOAT_SUFFIX.search(v)
     if name in long_types or has_long_suffix:
         t = 'c_long'
-    elif has_uint_suffix:
+        v = RE_LONG_SUFFIX.sub(r'\1', v)
+    elif has_uint_suffix or has_uint_cast:
         t = 'c_uint'
+        v = RE_UINT_SUFFIX.sub(r'\1', v)
+        v = RE_UINT_CAST.sub(r'\1', v)
     elif v == 'true' or v == 'false':
         t = 'bool'
     elif has_float_suffix:
         t = 'f32'
+        v = RE_FLOAT_SUFFIX.sub(r'\1', v)
     elif '"' in v:
         t = '&str'
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
     v = RE_INT_CAST.sub(r'\1', v) # remove int cast
-    v = RE_LONG_SUFFIX.sub(r'\1', v)
-    v = RE_UINT_SUFFIX.sub(r'\1', v)
-    v = RE_FLOAT_SUFFIX.sub(r'\1', v)
     # TODO: string types
     v = re.sub(r'wxString\((".+")\)', r'\1', v)
     v = re.sub(r'wxS\((".+")\)', r'\1', v)

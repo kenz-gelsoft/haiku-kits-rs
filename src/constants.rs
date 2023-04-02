@@ -1530,9 +1530,9 @@ pub const B_UNREAD: c_int = 0;
 pub const B_SEEN: c_int = 1;
 pub const B_READ: c_int = 2;
 
-pub const B_MAIL_NULL_CONVERSION: c_int = ((uint32) - 1);
-pub const B_MAIL_US_ASCII_CONVERSION: c_int = ((uint32) - 3);
-pub const B_MAIL_UTF8_CONVERSION: c_int = ((uint32) - 2);
+pub const B_MAIL_NULL_CONVERSION: c_uint = (-1);
+pub const B_MAIL_US_ASCII_CONVERSION: c_uint = (-3);
+pub const B_MAIL_UTF8_CONVERSION: c_uint = (-2);
 pub const BASE64_LINELENGTH: c_int = 76;
 //  ENUM: mail_encoding
 pub const base64: char = 0x62 /* 'b' */;
@@ -2178,12 +2178,12 @@ pub const B_HOST_TO_BENDIAN_INT64: c_int = __swap_int64(arg);
 pub const B_HOST_TO_LENDIAN_DOUBLE: c_int = (double)(arg);
 pub const B_HOST_TO_LENDIAN_FLOAT: c_int = (float)(arg);
 pub const B_HOST_TO_LENDIAN_INT16: c_int = (uint16)(arg);
-pub const B_HOST_TO_LENDIAN_INT32: c_int = (uint32)(arg);
+pub const B_HOST_TO_LENDIAN_INT32: c_uint = (arg);
 pub const B_HOST_TO_LENDIAN_INT64: c_int = (uint64)(arg);
 pub const B_LENDIAN_TO_HOST_DOUBLE: c_int = (double)(arg);
 pub const B_LENDIAN_TO_HOST_FLOAT: c_int = (float)(arg);
 pub const B_LENDIAN_TO_HOST_INT16: c_int = (uint16)(arg);
-pub const B_LENDIAN_TO_HOST_INT32: c_int = (uint32)(arg);
+pub const B_LENDIAN_TO_HOST_INT32: c_uint = (arg);
 pub const B_LENDIAN_TO_HOST_INT64: c_int = (uint64)(arg);
 pub const B_SWAP_DOUBLE: c_int = __swap_double(arg);
 pub const B_SWAP_FLOAT: c_int = __swap_float(arg);
