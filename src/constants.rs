@@ -2199,7 +2199,7 @@ pub const B_SWAP_BENDIAN_TO_HOST: c_int = 0 + 3;
 pub const B_SWAP_ALWAYS: c_int = 0 + 4;
 
 pub const cast_as: c_int = (dynamic_cast<class*>(object));
-pub const class_name: f32 = ((typeid(*(object))).name());
+pub const class_name: c_int = ((typeid(*(object))).name());
 pub const is_instance_of: c_int = (typeid(*(object)) == typeid(class));
 pub const is_kind_of: c_int = (dynamic_cast<class*>(object) != NULL);
 
