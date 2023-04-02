@@ -56,8 +56,9 @@ blocklist = [
     'B_UTF8_REGISTERED',
     'B_UTF8_SMILING_FACE',
     'B_UTF8_TRADEMARK',
+
     # !0U
-    'B_NO_TRUNCATION',
+    #'B_NO_TRUNCATION',
 
     # non-trivial-object
     'B_CATALOG', # BLocaleRoster::Default()->GetCatalog()
@@ -104,27 +105,31 @@ class Define:
         name = self.name
         v = ''.join(self.__initializer)
         v = ''.join(map(lambda s: s.lstrip(), v.split('\\\n')))
-        t = 'c_int'
-        if name in long_types:
-            t = 'c_long'
-        if v == 'true' or v == 'false':
-            t = 'bool'
-        elif '.' in v:
-            t = 'f32'
-        elif '"' in v:
-            t = '&str'
-        elif "'" in v:
-            (t, v) = bytes_literal(t, v)
-        v = re.sub(r'(\d+)[Ll]', r'\1', v)
-        # TODO: string types
-        v = re.sub(r'wxString\((".+")\)', r'\1', v)
-        v = re.sub(r'wxS\((".+")\)', r'\1', v)
-        v = re.sub(r'wxT\((".+")\)', r'\1', v)
-        # Don't strip `wx` prefix of string literal (c.f. IMAGE_OPTION_BMP_FORMAT)
-        if '"' not in v:
-            v = RE_IDENT.sub(r'\1', v)
+        (t, v) = translate_initializer(name, v)
         name = RE_IDENT.sub(r'\1', name)
         return 'pub const %s: %s = %s;' % (name, t, v)
+
+def translate_initializer(name, v):
+    t = 'c_int'
+    if name in long_types:
+        t = 'c_long'
+    if v == 'true' or v == 'false':
+        t = 'bool'
+    elif '.' in v:
+        t = 'f32'
+    elif '"' in v:
+        t = '&str'
+    elif "'" in v:
+        (t, v) = bytes_literal(t, v)
+    v = re.sub(r'(\d+)[Ll]', r'\1', v)
+    # TODO: string types
+    v = re.sub(r'wxString\((".+")\)', r'\1', v)
+    v = re.sub(r'wxS\((".+")\)', r'\1', v)
+    v = re.sub(r'wxT\((".+")\)', r'\1', v)
+    # Don't strip `wx` prefix of string literal (c.f. IMAGE_OPTION_BMP_FORMAT)
+    if '"' not in v:
+        v = RE_IDENT.sub(r'\1', v)
+    return (t, v)
 
 def generate_define(e):
     d = Define(e)
@@ -195,14 +200,8 @@ class EnumValue:
     
     def __str__(self):
         v = RE_ENUM_INITALIZER.match(self.initializer).group(1).strip()
-        v = v.replace('~', '!') # special replacement for wxPATH_NORM_ALL
-        t = 'c_int'
-        if self.__enum.name in long_types:
-            t = 'c_long'
-        if "'" in v:
-            (t, v) = bytes_literal(t, v)
+        (t, v) = translate_initializer(self.__enum.name, v)
         self.name = RE_IDENT.sub(r'\1', self.name)
-        v = RE_IDENT.sub(r'\1', v)
         return 'pub const %s: %s = %s;' % (
             self.name,
             t,
