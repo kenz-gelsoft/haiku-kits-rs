@@ -8,6 +8,8 @@ RE_IDENT = re.compile(r'wx([^_]\w)')
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
 
+RE_LONG_SUFFIX = re.compile(r'(\d+)[Ll]')
+
 def generate_constants_in(element):
     empty = True
     for define in defines_in(element):
@@ -111,7 +113,8 @@ class Define:
 
 def translate_initializer(name, v):
     t = 'c_int'
-    if name in long_types:
+    has_long_suffix = RE_LONG_SUFFIX.search(v)
+    if name in long_types or has_long_suffix:
         t = 'c_long'
     if v == 'true' or v == 'false':
         t = 'bool'
@@ -121,7 +124,7 @@ def translate_initializer(name, v):
         t = '&str'
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
-    v = re.sub(r'(\d+)[Ll]', r'\1', v)
+    v = RE_LONG_SUFFIX.sub(r'\1', v)
     v = re.sub(r'(\d+\.\d+)f', r'\1', v)
     # TODO: string types
     v = re.sub(r'wxString\((".+")\)', r'\1', v)

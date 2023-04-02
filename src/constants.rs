@@ -762,8 +762,8 @@ pub const B_ALIGN_LEFT: c_int = 0;
 pub const B_ALIGN_RIGHT: c_int = 0 + 1;
 pub const B_ALIGN_CENTER: c_int = 0 + 2;
 pub const B_ALIGN_HORIZONTAL_CENTER: c_int = B_ALIGN_CENTER;
-pub const B_ALIGN_HORIZONTAL_UNSET: c_int = -1;
-pub const B_ALIGN_USE_FULL_WIDTH: c_int = -2;
+pub const B_ALIGN_HORIZONTAL_UNSET: c_long = -1;
+pub const B_ALIGN_USE_FULL_WIDTH: c_long = -2;
 //  ENUM: bitmap_drawing_options
 pub const B_FILTER_BITMAP_BILINEAR: c_int = 0x00000100;
 pub const B_WAIT_FOR_RETRACE: c_int = 0x00000800;
@@ -849,13 +849,13 @@ pub const B_OVERLAY_FILTER_VERTICAL: c_int = 0x00020000;
 pub const B_OVERLAY_MIRROR: c_int = 0x00040000;
 pub const B_OVERLAY_TRANSFER_CHANNEL: c_int = 0x00080000;
 //  ENUM: vertical_alignment
-pub const B_ALIGN_TOP: c_int = 0x10;
+pub const B_ALIGN_TOP: c_long = 0x10;
 pub const B_ALIGN_MIDDLE: c_int = 0x20;
 pub const B_ALIGN_BOTTOM: c_int = 0x30;
 pub const B_ALIGN_VERTICAL_CENTER: c_int = B_ALIGN_MIDDLE;
-pub const B_ALIGN_VERTICAL_UNSET: c_int = -1;
+pub const B_ALIGN_VERTICAL_UNSET: c_long = -1;
 pub const B_ALIGN_NO_VERTICAL: c_int = B_ALIGN_VERTICAL_UNSET;
-pub const B_ALIGN_USE_FULL_HEIGHT: c_int = -2;
+pub const B_ALIGN_USE_FULL_HEIGHT: c_long = -2;
 
 //  ENUM: list_view_type
 pub const B_SINGLE_SELECTION_LIST: c_int = 0;
@@ -1567,8 +1567,8 @@ pub const B_MAIL_SHOW_STATUS_WINDOW_WHEN_ACTIVE: c_int = 2;
 pub const B_MAIL_SHOW_STATUS_WINDOW_ALWAYS: c_int = 3;
 
 //  ENUM: @57
-pub const B_FLAVOR_IS_GLOBAL: c_int = 0x100000;
-pub const B_FLAVOR_IS_LOCAL: c_int = 0x200000;
+pub const B_FLAVOR_IS_GLOBAL: c_long = 0x100000;
+pub const B_FLAVOR_IS_LOCAL: c_long = 0x200000;
 
 pub const B_MEDIA_ANY_QUALITY: f32 = 0.0;
 pub const B_MEDIA_HIGH_QUALITY: f32 = 1.0;
