@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 #![allow(non_upper_case_globals)]
 #![allow(unused_parens)]
-
 // FIXME: workaround for windows (LLP64)
 #![allow(overflowing_literals)]
 
@@ -383,8 +382,8 @@ pub const B_DRIVER_CHANGED: c_int = 0x0001;
 pub const B_MODE_CHANGED: c_int = 0x0002;
 
 pub const B_GS_CUR_API_VERSION: c_int = B_BEOS_VERSION;
-pub const B_GS_INVALID_SOUND: c_int = ((gs_id)-1);
-pub const B_GS_MAIN_SOUND: c_int = ((gs_id)-2);
+pub const B_GS_INVALID_SOUND: c_int = ((gs_id) - 1);
+pub const B_GS_MAIN_SOUND: c_int = ((gs_id) - 2);
 pub const B_GS_MIN_API_VERSION: c_int = 0x100;
 //  ENUM: @9
 pub const B_GS_BAD_HANDLE: c_int = -99999;
@@ -1531,9 +1530,9 @@ pub const B_UNREAD: c_int = 0;
 pub const B_SEEN: c_int = 1;
 pub const B_READ: c_int = 2;
 
-pub const B_MAIL_NULL_CONVERSION: c_int = ((uint32) -1);
-pub const B_MAIL_US_ASCII_CONVERSION: c_int = ((uint32) -3);
-pub const B_MAIL_UTF8_CONVERSION: c_int = ((uint32) -2);
+pub const B_MAIL_NULL_CONVERSION: c_int = ((uint32) - 1);
+pub const B_MAIL_US_ASCII_CONVERSION: c_int = ((uint32) - 3);
+pub const B_MAIL_UTF8_CONVERSION: c_int = ((uint32) - 2);
 pub const BASE64_LINELENGTH: c_int = 76;
 //  ENUM: mail_encoding
 pub const base64: char = 0x62 /* 'b' */;
@@ -2088,7 +2087,7 @@ pub const B_MIME_TYPE_CREATED: c_int = 0x00000100;
 pub const B_MIME_TYPE_DELETED: c_int = 0x00000200;
 pub const B_SNIFFER_RULE_CHANGED: c_int = 0x00000400;
 pub const B_SUPPORTED_TYPES_CHANGED: c_int = 0x00000800;
-pub const B_EVERYTHING_CHANGED: c_int = (int)0xFFFFFFFF;
+pub const B_EVERYTHING_CHANGED: c_int = 0xFFFFFFFF;
 //  ENUM: @96
 pub const B_META_MIME_MODIFIED: c_int = 0x4d4d4d44 /* 'MMMD' */;
 pub const B_META_MIME_DELETED: c_int = 0x4d4d444c /* 'MMDL' */;
@@ -2198,24 +2197,24 @@ pub const B_SWAP_LENDIAN_TO_HOST: c_int = 0 + 2;
 pub const B_SWAP_BENDIAN_TO_HOST: c_int = 0 + 3;
 pub const B_SWAP_ALWAYS: c_int = 0 + 4;
 
-pub const cast_as: c_int = (dynamic_cast<class*>(object));
-pub const class_name: c_int = ((typeid(*(object))).name());
-pub const is_instance_of: c_int = (typeid(*(object)) == typeid(class));
-pub const is_kind_of: c_int = (dynamic_cast<class*>(object) != NULL);
+//  SKIP: cast_as
+//  SKIP: class_name
+//  SKIP: is_instance_of
+//  SKIP: is_kind_of
 
-pub const ASSERT: c_int = (void)0;
-pub const ASSERT_WITH_MESSAGE: c_int = (void)0;
+//  SKIP: ASSERT
+//  SKIP: ASSERT_WITH_MESSAGE
 // NODEF: DEBUG_ONLY
-pub const DEBUGGER: c_int = (void)0;
-pub const IS_DEBUG_ENABLED: c_int = (void)0;
-pub const PRINT: c_int = (void)0;
-pub const PRINT_OBJECT: c_int = (void)0;
-pub const SERIAL_PRINT: c_int = (void)0;
-pub const SERIAL_TRACE: c_int = (void)0;
-pub const SET_DEBUG_ENABLED: c_int = (void)0;
-pub const STATIC_ASSERT: &str = static_assert(x, "static assert failed!");
-pub const TRACE: c_int = (void)0;
-pub const TRESPASS: c_int = (void)0;
+//  SKIP: DEBUGGER
+//  SKIP: IS_DEBUG_ENABLED
+//  SKIP: PRINT
+//  SKIP: PRINT_OBJECT
+//  SKIP: SERIAL_PRINT
+//  SKIP: SERIAL_TRACE
+//  SKIP: SET_DEBUG_ENABLED
+//  SKIP: STATIC_ASSERT
+//  SKIP: TRACE
+//  SKIP: TRESPASS
 
 pub const B_ALREADY_RUNNING: c_int = (B_APP_ERROR_BASE + 4);
 pub const B_AMBIGUOUS_APP_LAUNCH: c_int = (B_APP_ERROR_BASE + 6);
@@ -2352,7 +2351,7 @@ pub const B_MISSING_SYMBOL: c_int = (B_OS_ERROR_BASE + 0x304);
 pub const B_NAME_IN_USE: c_int = (B_GENERAL_ERROR_BASE + 8);
 pub const B_NAME_NOT_FOUND: c_int = (B_GENERAL_ERROR_BASE + 7);
 pub const B_NAME_TOO_LONG: c_int = (B_STORAGE_ERROR_BASE + 4);
-pub const B_NO_ERROR: c_int = ((int)0);
+pub const B_NO_ERROR: c_int = (0);
 pub const B_NO_INIT: c_int = (B_GENERAL_ERROR_BASE + 13);
 pub const B_NO_MEMORY: c_int = (B_GENERAL_ERROR_BASE + 0);
 pub const B_NO_MORE_FDS: c_int = (B_STORAGE_ERROR_BASE + 10);
@@ -2368,7 +2367,7 @@ pub const B_NOT_ALLOWED: c_int = (B_GENERAL_ERROR_BASE + 15);
 pub const B_NOT_AN_EXECUTABLE: c_int = (B_OS_ERROR_BASE + 0x302);
 pub const B_NOT_INITIALIZED: c_int = (B_GENERAL_ERROR_BASE + 13);
 pub const B_NOT_SUPPORTED: c_int = B_FROM_POSIX_ERROR(EOPNOTSUPP);
-pub const B_OK: c_int = ((int)0);
+pub const B_OK: c_int = (0);
 pub const B_OS_ERROR_BASE: c_int = (B_GENERAL_ERROR_BASE + 0x1000);
 pub const B_PARTIAL_READ: c_int = (B_STORAGE_ERROR_BASE + 16);
 pub const B_PARTIAL_WRITE: c_int = (B_STORAGE_ERROR_BASE + 17);
@@ -2492,101 +2491,101 @@ pub const PARSEDATE_MINUTE_RELATIVE_TIME: c_int = 0x0002;
 pub const PARSEDATE_RELATIVE_TIME: c_int = 0x0001;
 
 pub const B_PRId16: &str = "d";
-pub const B_PRId32: &str = __HAIKU_PRI_PREFIX_32 "d";
-pub const B_PRId64: &str = __HAIKU_PRI_PREFIX_64 "d";
+//  SKIP: B_PRId32
+//  SKIP: B_PRId64
 pub const B_PRId8: &str = "d";
 pub const B_PRIi16: &str = "i";
-pub const B_PRIi32: &str = __HAIKU_PRI_PREFIX_32 "i";
-pub const B_PRIi64: &str = __HAIKU_PRI_PREFIX_64 "i";
+//  SKIP: B_PRIi32
+//  SKIP: B_PRIi64
 pub const B_PRIi8: &str = "i";
 pub const B_PRIo16: &str = "o";
-pub const B_PRIo32: &str = __HAIKU_PRI_PREFIX_32 "o";
-pub const B_PRIo64: &str = __HAIKU_PRI_PREFIX_64 "o";
+//  SKIP: B_PRIo32
+//  SKIP: B_PRIo64
 pub const B_PRIo8: &str = "o";
 pub const B_PRIu16: &str = "u";
-pub const B_PRIu32: &str = __HAIKU_PRI_PREFIX_32 "u";
-pub const B_PRIu64: &str = __HAIKU_PRI_PREFIX_64 "u";
+//  SKIP: B_PRIu32
+//  SKIP: B_PRIu64
 pub const B_PRIu8: &str = "u";
 pub const B_PRIx16: &str = "x";
 pub const B_PRIX16: &str = "X";
-pub const B_PRIx32: &str = __HAIKU_PRI_PREFIX_32 "x";
-pub const B_PRIX32: &str = __HAIKU_PRI_PREFIX_32 "X";
-pub const B_PRIx64: &str = __HAIKU_PRI_PREFIX_64 "x";
-pub const B_PRIX64: &str = __HAIKU_PRI_PREFIX_64 "X";
+//  SKIP: B_PRIx32
+//  SKIP: B_PRIX32
+//  SKIP: B_PRIx64
+//  SKIP: B_PRIX64
 pub const B_PRIx8: &str = "x";
 pub const B_PRIX8: &str = "X";
 pub const B_SCNd16: &str = "hd";
-pub const B_SCNd32: &str = __HAIKU_PRI_PREFIX_32 "d";
-pub const B_SCNd64: &str = __HAIKU_PRI_PREFIX_64 "d";
+//  SKIP: B_SCNd32
+//  SKIP: B_SCNd64
 pub const B_SCNd8: &str = "hhd";
 pub const B_SCNi16: &str = "hi";
-pub const B_SCNi32: &str = __HAIKU_PRI_PREFIX_32 "i";
-pub const B_SCNi64: &str = __HAIKU_PRI_PREFIX_64 "i";
+//  SKIP: B_SCNi32
+//  SKIP: B_SCNi64
 pub const B_SCNi8: &str = "hhi";
 pub const B_SCNo16: &str = "ho";
-pub const B_SCNo32: &str = __HAIKU_PRI_PREFIX_32 "o";
-pub const B_SCNo64: &str = __HAIKU_PRI_PREFIX_64 "o";
+//  SKIP: B_SCNo32
+//  SKIP: B_SCNo64
 pub const B_SCNo8: &str = "hho";
 pub const B_SCNu16: &str = "hu";
-pub const B_SCNu32: &str = __HAIKU_PRI_PREFIX_32 "u";
-pub const B_SCNu64: &str = __HAIKU_PRI_PREFIX_64 "u";
+//  SKIP: B_SCNu32
+//  SKIP: B_SCNu64
 pub const B_SCNu8: &str = "hhu";
 pub const B_SCNx16: &str = "hx";
-pub const B_SCNx32: &str = __HAIKU_PRI_PREFIX_32 "x";
-pub const B_SCNx64: &str = __HAIKU_PRI_PREFIX_64 "x";
+//  SKIP: B_SCNx32
+//  SKIP: B_SCNx64
 pub const B_SCNx8: &str = "hhx";
-pub const B_PRIdBIGTIME: c_int = B_PRId64;
-pub const B_PRIdDEV: c_int = B_PRId32;
-pub const B_PRIdINO: c_int = B_PRId64;
-pub const B_PRIdOFF: c_int = B_PRId64;
-pub const B_PRIdSSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "d";
-pub const B_PRIdTIME: c_int = B_PRId64;
-pub const B_PRIiBIGTIME: c_int = B_PRIi64;
-pub const B_PRIiDEV: c_int = B_PRIi32;
-pub const B_PRIiINO: c_int = B_PRIi64;
-pub const B_PRIiOFF: c_int = B_PRIi64;
-pub const B_PRIiSSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "i";
-pub const B_PRIiTIME: c_int = B_PRIi64;
+//  SKIP: B_PRIdBIGTIME
+//  SKIP: B_PRIdDEV
+//  SKIP: B_PRIdINO
+//  SKIP: B_PRIdOFF
+//  SKIP: B_PRIdSSIZE
+//  SKIP: B_PRIdTIME
+//  SKIP: B_PRIiBIGTIME
+//  SKIP: B_PRIiDEV
+//  SKIP: B_PRIiINO
+//  SKIP: B_PRIiOFF
+//  SKIP: B_PRIiSSIZE
+//  SKIP: B_PRIiTIME
 pub const B_PRINTF_POINTER_WIDTH: c_int = 8;
-pub const B_PRIoADDR: &str = __HAIKU_PRI_PREFIX_ADDR "o";
-pub const B_PRIoGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "o";
-pub const B_PRIoPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "o";
-pub const B_PRIoSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "o";
-pub const B_PRIuADDR: &str = __HAIKU_PRI_PREFIX_ADDR "u";
-pub const B_PRIuGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "u";
-pub const B_PRIuPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "u";
-pub const B_PRIuSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "u";
-pub const B_PRIxADDR: &str = __HAIKU_PRI_PREFIX_ADDR "x";
-pub const B_PRIXADDR: &str = __HAIKU_PRI_PREFIX_ADDR "X";
-pub const B_PRIxGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "x";
-pub const B_PRIXGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "X";
-pub const B_PRIxOFF: c_int = B_PRIx64;
-pub const B_PRIxPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "x";
-pub const B_PRIXPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "X";
-pub const B_PRIxSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "x";
-pub const B_PRIXSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "X";
-pub const B_SCNdOFF: c_int = B_SCNd64;
-pub const B_SCNdSSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "d";
-pub const B_SCNiOFF: c_int = B_SCNi64;
-pub const B_SCNiSSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "i";
-pub const B_SCNoADDR: &str = __HAIKU_PRI_PREFIX_ADDR "o";
-pub const B_SCNoGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "o";
-pub const B_SCNoPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "o";
-pub const B_SCNoSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "o";
-pub const B_SCNuADDR: &str = __HAIKU_PRI_PREFIX_ADDR "u";
-pub const B_SCNuGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "u";
-pub const B_SCNuPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "u";
-pub const B_SCNuSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "u";
-pub const B_SCNxADDR: &str = __HAIKU_PRI_PREFIX_ADDR "x";
-pub const B_SCNxGENADDR: &str = __HAIKU_PRI_PREFIX_GENERIC_ADDR "x";
-pub const B_SCNxOFF: c_int = B_SCNx64;
-pub const B_SCNxPHYSADDR: &str = __HAIKU_PRI_PREFIX_PHYS_ADDR "x";
-pub const B_SCNxSIZE: &str = __HAIKU_PRI_PREFIX_ADDR "x";
+//  SKIP: B_PRIoADDR
+//  SKIP: B_PRIoGENADDR
+//  SKIP: B_PRIoPHYSADDR
+//  SKIP: B_PRIoSIZE
+//  SKIP: B_PRIuADDR
+//  SKIP: B_PRIuGENADDR
+//  SKIP: B_PRIuPHYSADDR
+//  SKIP: B_PRIuSIZE
+//  SKIP: B_PRIxADDR
+//  SKIP: B_PRIXADDR
+//  SKIP: B_PRIxGENADDR
+//  SKIP: B_PRIXGENADDR
+//  SKIP: B_PRIxOFF
+//  SKIP: B_PRIxPHYSADDR
+//  SKIP: B_PRIXPHYSADDR
+//  SKIP: B_PRIxSIZE
+//  SKIP: B_PRIXSIZE
+//  SKIP: B_SCNdOFF
+//  SKIP: B_SCNdSSIZE
+//  SKIP: B_SCNiOFF
+//  SKIP: B_SCNiSSIZE
+//  SKIP: B_SCNoADDR
+//  SKIP: B_SCNoGENADDR
+//  SKIP: B_SCNoPHYSADDR
+//  SKIP: B_SCNoSIZE
+//  SKIP: B_SCNuADDR
+//  SKIP: B_SCNuGENADDR
+//  SKIP: B_SCNuPHYSADDR
+//  SKIP: B_SCNuSIZE
+//  SKIP: B_SCNxADDR
+//  SKIP: B_SCNxGENADDR
+//  SKIP: B_SCNxOFF
+//  SKIP: B_SCNxPHYSADDR
+//  SKIP: B_SCNxSIZE
 pub const FALSE: c_int = 0;
 pub const TRUE: c_int = 1;
 pub const B_COUNT_OF: c_int = (sizeof(a) / sizeof(a[0]));
-pub const max_c: c_int = ((a)>(b)?(a):(b));
-pub const min_c: c_int = ((a)>(b)?(b):(a));
+pub const max_c: c_int = ((a) > (b)?(a): (b));
+pub const min_c: c_int = ((a) > (b)?(b): (a));
 pub const NULL: c_int = (0);
 
 pub const TLS_MAX_KEYS: c_int = 64;
@@ -2676,7 +2675,8 @@ pub const B_MS_WINDOWS_1250_CONVERSION: c_int = 0 + 27;
 
 pub const B_TRANSLATION_CURRENT_VERSION: c_int = B_BEOS_VERSION;
 pub const B_TRANSLATION_MAJOR_VERSION: c_int = (v >> 8);
-pub const B_TRANSLATION_MAKE_VERSION: c_int = ((major << 8) | ((minor << 4) & 0xf0) | (revision & 0x0f));
+pub const B_TRANSLATION_MAKE_VERSION: c_int =
+    ((major << 8) | ((minor << 4) & 0xf0) | (revision & 0x0f));
 pub const B_TRANSLATION_MIN_VERSION: c_int = 161;
 pub const B_TRANSLATION_MINOR_VERSION: c_int = ((v >> 4) & 0xf);
 pub const B_TRANSLATION_REVISION_VERSION: c_int = (v & 0xf);
@@ -2770,4 +2770,3 @@ pub const Delete: c_int = 0 + 4;
 pub const Connect: c_int = 0 + 5;
 pub const Options: c_int = 0 + 6;
 pub const Trace: c_int = 0 + 7;
-

@@ -7,6 +7,7 @@ RE_IDENT = re.compile(r'wx([^_]\w)')
 
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
+RE_INT_CAST = re.compile(r'\(int\)(.*)')
 
 RE_LONG_SUFFIX = re.compile(r'(\d+)[Ll]')
 RE_UINT_SUFFIX = re.compile(r'(\d+)[uU]')
@@ -81,6 +82,96 @@ blocklist = [
     'B_TRANSLATE_NOCOLLECT_SYSTEM_NAME',
     'B_TRANSLATE_SYSTEM_NAME',
     'B_TRANSLATION_SYSTEM_NAME_CONTEXT',
+
+    # C++ specific macro
+    'cast_as',
+    'class_name',
+    'is_instance_of',
+    'is_kind_of',
+
+    # Debug macros
+    'ASSERT',
+    'ASSERT_WITH_MESSAGE',
+    'DEBUGGER',
+    'IS_DEBUG_ENABLED',
+    'PRINT',
+    'PRINT_OBJECT',
+    'SERIAL_PRINT',
+    'SERIAL_TRACE',
+    'SET_DEBUG_ENABLED',
+    'STATIC_ASSERT',
+    'TRACE',
+    'TRESPASS',
+
+    # String concat
+    'B_PRId32',
+    'B_PRId64',
+    'B_PRIi32',
+    'B_PRIi64',
+    'B_PRIo32',
+    'B_PRIo64',
+    'B_PRIu32',
+    'B_PRIu64',
+    'B_PRIx32',
+    'B_PRIX32',
+    'B_PRIx64',
+    'B_PRIX64',
+    'B_SCNd32',
+    'B_SCNd64',
+    'B_SCNi32',
+    'B_SCNi64',
+    'B_SCNo32',
+    'B_SCNo64',
+    'B_SCNu32',
+    'B_SCNu64',
+    'B_SCNx32',
+    'B_SCNx64',
+    'B_PRIdBIGTIME',
+    'B_PRIdDEV',
+    'B_PRIdINO',
+    'B_PRIdOFF',
+    'B_PRIdSSIZE',
+    'B_PRIdTIME',
+    'B_PRIiBIGTIME',
+    'B_PRIiDEV',
+    'B_PRIiINO',
+    'B_PRIiOFF',
+    'B_PRIiSSIZE',
+    'B_PRIiTIME',
+    'B_PRIoADDR',
+    'B_PRIoGENADDR',
+    'B_PRIoPHYSADDR',
+    'B_PRIoSIZE',
+    'B_PRIuADDR',
+    'B_PRIuGENADDR',
+    'B_PRIuPHYSADDR',
+    'B_PRIuSIZE',
+    'B_PRIxADDR',
+    'B_PRIXADDR',
+    'B_PRIxGENADDR',
+    'B_PRIXGENADDR',
+    'B_PRIxOFF',
+    'B_PRIxPHYSADDR',
+    'B_PRIXPHYSADDR',
+    'B_PRIxSIZE',
+    'B_PRIXSIZE',
+    'B_SCNdOFF',
+    'B_SCNdSSIZE',
+    'B_SCNiOFF',
+    'B_SCNiSSIZE',
+    'B_SCNoADDR',
+    'B_SCNoGENADDR',
+    'B_SCNoPHYSADDR',
+    'B_SCNoSIZE',
+    'B_SCNuADDR',
+    'B_SCNuGENADDR',
+    'B_SCNuPHYSADDR',
+    'B_SCNuSIZE',
+    'B_SCNxADDR',
+    'B_SCNxGENADDR',
+    'B_SCNxOFF',
+    'B_SCNxPHYSADDR',
+    'B_SCNxSIZE',
 ]
 generated = set()
 class Define:
@@ -127,6 +218,7 @@ def translate_initializer(name, v):
         t = '&str'
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
+    v = RE_INT_CAST.sub(r'\1', v) # remove int cast
     v = RE_LONG_SUFFIX.sub(r'\1', v)
     v = RE_UINT_SUFFIX.sub(r'\1', v)
     v = RE_FLOAT_SUFFIX.sub(r'\1', v)
