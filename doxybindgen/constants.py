@@ -5,6 +5,9 @@ import xml.etree.ElementTree as ET
 # MEMO: don't replace `wx` prefix of `wx_GL_COMPAT_PROFILE`
 RE_IDENT = re.compile(r'wx([^_]\w)')
 
+RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
+RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
+
 def generate_constants_in(element):
     empty = True
     for define in defines_in(element):
@@ -78,7 +81,7 @@ class Define:
         elif '"' in v:
             t = '&str'
         elif "'" in v:
-            t = 'char'
+            (t, v) = bytes_literal(t, v)
         v = re.sub(r'(\d+)[Ll]', r'\1', v)
         # TODO: string types
         v = re.sub(r'wxString\((".+")\)', r'\1', v)
@@ -158,19 +161,39 @@ class EnumValue:
         return None
     
     def __str__(self):
-        initializer = self.initializer.replace('~', '!') # special replacement for wxPATH_NORM_ALL
+        v = RE_ENUM_INITALIZER.match(self.initializer).group(1).strip()
+        v = v.replace('~', '!') # special replacement for wxPATH_NORM_ALL
         t = 'c_int'
         if self.__enum.name in long_types:
             t = 'c_long'
-        if "'" in initializer:
-            t = 'char'
+        if "'" in v:
+            (t, v) = bytes_literal(t, v)
         self.name = RE_IDENT.sub(r'\1', self.name)
-        initializer = RE_IDENT.sub(r'\1', initializer)
-        return 'pub const %s: %s %s;' % (
+        v = RE_IDENT.sub(r'\1', v)
+        return 'pub const %s: %s = %s;' % (
             self.name,
             t,
-            initializer,
+            v,
         )
+
+def bytes_literal(t, v):
+    byte_count = len(v) - 2 # quotes
+    if byte_count == 1:
+        t = 'char'
+    elif byte_count == 2:
+        t = 'c_short'
+    elif byte_count == 4:
+        t = 'c_int'
+    v = RE_BYTES_LITERAL.sub(bytes_to_int, v)
+    return (t, v)
+
+def bytes_to_int(matched):
+    i = 0
+    s = matched.group(1)
+    for c in s:
+        i <<= 8
+        i += ord(c)
+    return "%s /* '%s' */" % (hex(i), s)
 
 def generate_enum(e):
     enum = Enum(e)
