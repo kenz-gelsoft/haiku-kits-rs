@@ -460,7 +460,7 @@ pub const B_FIXED_SPACING: c_int = 3;
 pub const B_DISABLE_ANTIALIASING: c_int = 0x00000001;
 pub const B_FORCE_ANTIALIASING: c_int = 0x00000002;
 //  ENUM: @19
-pub const B_NO_TRUNCATION: c_int = !0U;
+//  SKIP: B_NO_TRUNCATION
 pub const B_TRUNCATE_END: c_int = 0;
 pub const B_TRUNCATE_BEGINNING: c_int = 1;
 pub const B_TRUNCATE_MIDDLE: c_int = 2;
@@ -650,15 +650,15 @@ pub const B_INPUT_METHOD_CHANGED: c_int = 2;
 pub const B_INPUT_METHOD_LOCATION_REQUEST: c_int = 3;
 
 pub const B_MAX_MOUSE_BUTTONS: c_int = 16;
-pub const B_UTF8_BULLET: &str = "\xE2\x80\xA2";
-pub const B_UTF8_CLOSE_QUOTE: &str = "\xE2\x80\x9D";
-pub const B_UTF8_COPYRIGHT: &str = "\xC2\xA9";
-pub const B_UTF8_ELLIPSIS: &str = "\xE2\x80\xA6";
-pub const B_UTF8_HIROSHI: &str = "\xE5\xBC\x98";
-pub const B_UTF8_OPEN_QUOTE: &str = "\xE2\x80\x9C";
-pub const B_UTF8_REGISTERED: &str = "\xC2\xAE";
-pub const B_UTF8_SMILING_FACE: &str = "\xE2\x98\xBB";
-pub const B_UTF8_TRADEMARK: &str = "\xE2\x84\xA2";
+//  SKIP: B_UTF8_BULLET
+//  SKIP: B_UTF8_CLOSE_QUOTE
+//  SKIP: B_UTF8_COPYRIGHT
+//  SKIP: B_UTF8_ELLIPSIS
+//  SKIP: B_UTF8_HIROSHI
+//  SKIP: B_UTF8_OPEN_QUOTE
+//  SKIP: B_UTF8_REGISTERED
+//  SKIP: B_UTF8_SMILING_FACE
+//  SKIP: B_UTF8_TRADEMARK
 //  ENUM: @31
 pub const B_BACKSPACE: c_int = 0x08;
 pub const B_RETURN: c_int = 0x0a;
@@ -1014,31 +1014,31 @@ pub const B_DOCUMENT_WINDOW: c_int = 11;
 pub const B_BORDERED_WINDOW: c_int = 20;
 pub const B_FLOATING_WINDOW: c_int = 21;
 
-pub const B_CATALOG: c_int = BLocaleRoster::Default()->GetCatalog();
-pub const B_TRANSLATE: c_int = B_CATALOG->GetString((string), B_TRANSLATION_CONTEXT);
-pub const B_TRANSLATE_ALL: c_int = B_CATALOG->GetString((string), (context), (comment));
-pub const B_TRANSLATE_COMMENT: c_int = B_CATALOG->GetString((string), B_TRANSLATION_CONTEXT, (comment));
-pub const B_TRANSLATE_CONTEXT: c_int = B_CATALOG->GetString((string), (context));
-pub const B_TRANSLATE_ID: c_int = B_CATALOG->GetString((id));
-pub const B_TRANSLATE_MARK: c_int = (string);
-pub const B_TRANSLATE_MARK_ALL: c_int = (string);
+//  SKIP: B_CATALOG
+//  SKIP: B_TRANSLATE
+//  SKIP: B_TRANSLATE_ALL
+//  SKIP: B_TRANSLATE_COMMENT
+//  SKIP: B_TRANSLATE_CONTEXT
+//  SKIP: B_TRANSLATE_ID
+//  SKIP: B_TRANSLATE_MARK
+//  SKIP: B_TRANSLATE_MARK_ALL
 // NODEF: B_TRANSLATE_MARK_ALL_VOID
-pub const B_TRANSLATE_MARK_COMMENT: c_int = (string);
+//  SKIP: B_TRANSLATE_MARK_COMMENT
 // NODEF: B_TRANSLATE_MARK_COMMENT_VOID
-pub const B_TRANSLATE_MARK_CONTEXT: c_int = (string);
+//  SKIP: B_TRANSLATE_MARK_CONTEXT
 // NODEF: B_TRANSLATE_MARK_CONTEXT_VOID
-pub const B_TRANSLATE_MARK_ID: c_int = (id);
+//  SKIP: B_TRANSLATE_MARK_ID
 // NODEF: B_TRANSLATE_MARK_ID_VOID
-pub const B_TRANSLATE_MARK_SYSTEM_NAME: c_int = (string);
+//  SKIP: B_TRANSLATE_MARK_SYSTEM_NAME
 // NODEF: B_TRANSLATE_MARK_SYSTEM_NAME_VOID
 // NODEF: B_TRANSLATE_MARK_VOID
-pub const B_TRANSLATE_NOCOLLECT: c_int = B_TRANSLATE(string);
-pub const B_TRANSLATE_NOCOLLECT_ALL: c_int = B_TRANSLATE_ALL(string, context, comment);
-pub const B_TRANSLATE_NOCOLLECT_COMMENT: c_int = B_TRANSLATE_COMMENT(string, comment);
-pub const B_TRANSLATE_NOCOLLECT_ID: c_int = B_TRANSLATE_ID(id);
-pub const B_TRANSLATE_NOCOLLECT_SYSTEM_NAME: c_int = B_TRANSLATE_SYSTEM_NAME(string);
-pub const B_TRANSLATE_SYSTEM_NAME: c_int = (BLocaleRoster::Default()->IsFilesystemTranslationPreferred() ? BLocaleRoster::Default()->GetCatalog()->GetString((string), B_TRANSLATION_SYSTEM_NAME_CONTEXT) : (string));
-pub const B_TRANSLATION_SYSTEM_NAME_CONTEXT: &str = "System name";
+//  SKIP: B_TRANSLATE_NOCOLLECT
+//  SKIP: B_TRANSLATE_NOCOLLECT_ALL
+//  SKIP: B_TRANSLATE_NOCOLLECT_COMMENT
+//  SKIP: B_TRANSLATE_NOCOLLECT_ID
+//  SKIP: B_TRANSLATE_NOCOLLECT_SYSTEM_NAME
+//  SKIP: B_TRANSLATE_SYSTEM_NAME
+//  SKIP: B_TRANSLATION_SYSTEM_NAME_CONTEXT
 
 pub const U_ICU_NAMESPACE: c_int = icu;
 //  ENUM: collator_strengths

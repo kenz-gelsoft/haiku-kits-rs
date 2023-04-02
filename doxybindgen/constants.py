@@ -46,6 +46,39 @@ def enums_in(root):
 typedefs = [
 ]
 blocklist = [
+    # out of range hex escape: TODO: support non-ASCII 0x escape
+    'B_UTF8_BULLET',
+    'B_UTF8_CLOSE_QUOTE',
+    'B_UTF8_COPYRIGHT',
+    'B_UTF8_ELLIPSIS',
+    'B_UTF8_HIROSHI',
+    'B_UTF8_OPEN_QUOTE',
+    'B_UTF8_REGISTERED',
+    'B_UTF8_SMILING_FACE',
+    'B_UTF8_TRADEMARK',
+    # !0U
+    'B_NO_TRUNCATION',
+
+    # non-trivial-object
+    'B_CATALOG', # BLocaleRoster::Default()->GetCatalog()
+    'B_TRANSLATE',
+    'B_TRANSLATE_ALL',
+    'B_TRANSLATE_COMMENT',
+    'B_TRANSLATE_CONTEXT',
+    'B_TRANSLATE_ID',
+    'B_TRANSLATE_MARK',
+    'B_TRANSLATE_MARK_ALL',
+    'B_TRANSLATE_MARK_COMMENT',
+    'B_TRANSLATE_MARK_CONTEXT',
+    'B_TRANSLATE_MARK_ID',
+    'B_TRANSLATE_MARK_SYSTEM_NAME',
+    'B_TRANSLATE_NOCOLLECT',
+    'B_TRANSLATE_NOCOLLECT_ALL',
+    'B_TRANSLATE_NOCOLLECT_COMMENT',
+    'B_TRANSLATE_NOCOLLECT_ID',
+    'B_TRANSLATE_NOCOLLECT_SYSTEM_NAME',
+    'B_TRANSLATE_SYSTEM_NAME',
+    'B_TRANSLATION_SYSTEM_NAME_CONTEXT',
 ]
 generated = set()
 class Define:
