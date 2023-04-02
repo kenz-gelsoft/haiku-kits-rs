@@ -9,6 +9,7 @@ RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
 
 RE_LONG_SUFFIX = re.compile(r'(\d+)[Ll]')
+RE_UINT_SUFFIX = re.compile(r'(\d+)[uU]')
 RE_FLOAT_SUFFIX = re.compile(r'(\d+\.\d+)f')
 
 def generate_constants_in(element):
@@ -59,9 +60,6 @@ blocklist = [
     'B_UTF8_REGISTERED',
     'B_UTF8_SMILING_FACE',
     'B_UTF8_TRADEMARK',
-
-    # !0U
-    #'B_NO_TRUNCATION',
 
     # non-trivial-object
     'B_CATALOG', # BLocaleRoster::Default()->GetCatalog()
@@ -115,10 +113,13 @@ class Define:
 def translate_initializer(name, v):
     t = 'c_int'
     has_long_suffix = RE_LONG_SUFFIX.search(v)
+    has_uint_suffix = RE_UINT_SUFFIX.search(v)
     has_float_suffix = RE_FLOAT_SUFFIX.search(v)
     if name in long_types or has_long_suffix:
         t = 'c_long'
-    if v == 'true' or v == 'false':
+    elif has_uint_suffix:
+        t = 'c_uint'
+    elif v == 'true' or v == 'false':
         t = 'bool'
     elif has_float_suffix:
         t = 'f32'
@@ -127,6 +128,7 @@ def translate_initializer(name, v):
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
     v = RE_LONG_SUFFIX.sub(r'\1', v)
+    v = RE_UINT_SUFFIX.sub(r'\1', v)
     v = RE_FLOAT_SUFFIX.sub(r'\1', v)
     # TODO: string types
     v = re.sub(r'wxString\((".+")\)', r'\1', v)
@@ -206,6 +208,7 @@ class EnumValue:
     
     def __str__(self):
         v = RE_ENUM_INITALIZER.match(self.initializer).group(1).strip()
+        v = v.replace('~', '!') # special replacement for negative unsigned value
         (t, v) = translate_initializer(self.__enum.name, v)
         self.name = RE_IDENT.sub(r'\1', self.name)
         return 'pub const %s: %s = %s;' % (

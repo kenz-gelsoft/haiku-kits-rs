@@ -460,7 +460,7 @@ pub const B_FIXED_SPACING: c_int = 3;
 pub const B_DISABLE_ANTIALIASING: c_int = 0x00000001;
 pub const B_FORCE_ANTIALIASING: c_int = 0x00000002;
 //  ENUM: @19
-pub const B_NO_TRUNCATION: c_int = ~0U;
+pub const B_NO_TRUNCATION: c_uint = !0;
 pub const B_TRUNCATE_END: c_int = 0;
 pub const B_TRUNCATE_BEGINNING: c_int = 1;
 pub const B_TRUNCATE_MIDDLE: c_int = 2;
@@ -1629,7 +1629,7 @@ pub const B_MEDIA_RETAINED_DATA: c_int = 0x1;
 pub const B_MEDIA_MULTIPLE_BUFFERS: c_int = 0x2;
 pub const B_MEDIA_CONTIGUOUS_BUFFER: c_int = 0x4;
 pub const B_MEDIA_LINEAR_UPDATES: c_int = 0x8;
-pub const B_MEDIA_MAUI_UNDEFINED_FLAGS: c_int = ~0xf;
+pub const B_MEDIA_MAUI_UNDEFINED_FLAGS: c_int = !0xf;
 //  ENUM: media_frame_flags
 pub const B_MEDIA_KEY_FRAME: c_int = 0x1;
 //  ENUM: media_multi_channels
