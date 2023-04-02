@@ -921,7 +921,7 @@ pub const B_FOLLOW_RIGHT: c_int = _rule_(0, _VIEW_RIGHT_, 0, _VIEW_RIGHT_);
 pub const B_FOLLOW_TOP: c_int = _rule_(_VIEW_TOP_, 0, _VIEW_TOP_, 0);
 pub const B_FOLLOW_TOP_BOTTOM: c_int = _rule_(_VIEW_TOP_, 0, _VIEW_BOTTOM_, 0);
 pub const B_FOLLOW_V_CENTER: c_int = _rule_(_VIEW_CENTER_, 0, _VIEW_CENTER_, 0);
-pub const B_MOUSE_BUTTON: c_int = (1 << ((n) - 1));
+//  FUNC: B_MOUSE_BUTTON
 //  ENUM: @44
 pub const B_PRIMARY_MOUSE_BUTTON: c_int = B_MOUSE_BUTTON(1);
 pub const B_SECONDARY_MOUSE_BUTTON: c_int = B_MOUSE_BUTTON(2);
@@ -1014,30 +1014,30 @@ pub const B_BORDERED_WINDOW: c_int = 20;
 pub const B_FLOATING_WINDOW: c_int = 21;
 
 //  SKIP: B_CATALOG
-//  SKIP: B_TRANSLATE
-//  SKIP: B_TRANSLATE_ALL
-//  SKIP: B_TRANSLATE_COMMENT
-//  SKIP: B_TRANSLATE_CONTEXT
-//  SKIP: B_TRANSLATE_ID
-//  SKIP: B_TRANSLATE_MARK
-//  SKIP: B_TRANSLATE_MARK_ALL
+//  FUNC: B_TRANSLATE
+//  FUNC: B_TRANSLATE_ALL
+//  FUNC: B_TRANSLATE_COMMENT
+//  FUNC: B_TRANSLATE_CONTEXT
+//  FUNC: B_TRANSLATE_ID
+//  FUNC: B_TRANSLATE_MARK
+//  FUNC: B_TRANSLATE_MARK_ALL
 // NODEF: B_TRANSLATE_MARK_ALL_VOID
-//  SKIP: B_TRANSLATE_MARK_COMMENT
+//  FUNC: B_TRANSLATE_MARK_COMMENT
 // NODEF: B_TRANSLATE_MARK_COMMENT_VOID
-//  SKIP: B_TRANSLATE_MARK_CONTEXT
+//  FUNC: B_TRANSLATE_MARK_CONTEXT
 // NODEF: B_TRANSLATE_MARK_CONTEXT_VOID
-//  SKIP: B_TRANSLATE_MARK_ID
+//  FUNC: B_TRANSLATE_MARK_ID
 // NODEF: B_TRANSLATE_MARK_ID_VOID
-//  SKIP: B_TRANSLATE_MARK_SYSTEM_NAME
+//  FUNC: B_TRANSLATE_MARK_SYSTEM_NAME
 // NODEF: B_TRANSLATE_MARK_SYSTEM_NAME_VOID
 // NODEF: B_TRANSLATE_MARK_VOID
-//  SKIP: B_TRANSLATE_NOCOLLECT
-//  SKIP: B_TRANSLATE_NOCOLLECT_ALL
-//  SKIP: B_TRANSLATE_NOCOLLECT_COMMENT
-//  SKIP: B_TRANSLATE_NOCOLLECT_ID
-//  SKIP: B_TRANSLATE_NOCOLLECT_SYSTEM_NAME
-//  SKIP: B_TRANSLATE_SYSTEM_NAME
-//  SKIP: B_TRANSLATION_SYSTEM_NAME_CONTEXT
+//  FUNC: B_TRANSLATE_NOCOLLECT
+//  FUNC: B_TRANSLATE_NOCOLLECT_ALL
+//  FUNC: B_TRANSLATE_NOCOLLECT_COMMENT
+//  FUNC: B_TRANSLATE_NOCOLLECT_ID
+//  FUNC: B_TRANSLATE_NOCOLLECT_SYSTEM_NAME
+//  FUNC: B_TRANSLATE_SYSTEM_NAME
+pub const B_TRANSLATION_SYSTEM_NAME_CONTEXT: &str = "System name";
 
 pub const U_ICU_NAMESPACE: c_int = icu;
 //  ENUM: collator_strengths
@@ -2163,33 +2163,33 @@ pub const B_ANY_NODE: c_int = 0x07;
 pub const B_OBJECT_CACHE: c_int = 0;
 pub const B_MALLOC_CACHE: c_int = 1;
 
-pub const B_BENDIAN_TO_HOST_DOUBLE: c_int = __swap_double(arg);
-pub const B_BENDIAN_TO_HOST_FLOAT: c_int = __swap_float(arg);
-pub const B_BENDIAN_TO_HOST_INT16: c_int = __swap_int16(arg);
-pub const B_BENDIAN_TO_HOST_INT32: c_int = __swap_int32(arg);
-pub const B_BENDIAN_TO_HOST_INT64: c_int = __swap_int64(arg);
+//  FUNC: B_BENDIAN_TO_HOST_DOUBLE
+//  FUNC: B_BENDIAN_TO_HOST_FLOAT
+//  FUNC: B_BENDIAN_TO_HOST_INT16
+//  FUNC: B_BENDIAN_TO_HOST_INT32
+//  FUNC: B_BENDIAN_TO_HOST_INT64
 pub const B_HOST_IS_BENDIAN: c_int = 0;
 pub const B_HOST_IS_LENDIAN: c_int = 1;
-pub const B_HOST_TO_BENDIAN_DOUBLE: c_int = __swap_double(arg);
-pub const B_HOST_TO_BENDIAN_FLOAT: c_int = __swap_float(arg);
-pub const B_HOST_TO_BENDIAN_INT16: c_int = __swap_int16(arg);
-pub const B_HOST_TO_BENDIAN_INT32: c_int = __swap_int32(arg);
-pub const B_HOST_TO_BENDIAN_INT64: c_int = __swap_int64(arg);
-pub const B_HOST_TO_LENDIAN_DOUBLE: c_int = (double)(arg);
-pub const B_HOST_TO_LENDIAN_FLOAT: c_int = (float)(arg);
-pub const B_HOST_TO_LENDIAN_INT16: c_int = (uint16)(arg);
-pub const B_HOST_TO_LENDIAN_INT32: c_uint = (arg);
-pub const B_HOST_TO_LENDIAN_INT64: c_int = (uint64)(arg);
-pub const B_LENDIAN_TO_HOST_DOUBLE: c_int = (double)(arg);
-pub const B_LENDIAN_TO_HOST_FLOAT: c_int = (float)(arg);
-pub const B_LENDIAN_TO_HOST_INT16: c_int = (uint16)(arg);
-pub const B_LENDIAN_TO_HOST_INT32: c_uint = (arg);
-pub const B_LENDIAN_TO_HOST_INT64: c_int = (uint64)(arg);
-pub const B_SWAP_DOUBLE: c_int = __swap_double(arg);
-pub const B_SWAP_FLOAT: c_int = __swap_float(arg);
-pub const B_SWAP_INT16: c_int = __swap_int16(arg);
-pub const B_SWAP_INT32: c_int = __swap_int32(arg);
-pub const B_SWAP_INT64: c_int = __swap_int64(arg);
+//  FUNC: B_HOST_TO_BENDIAN_DOUBLE
+//  FUNC: B_HOST_TO_BENDIAN_FLOAT
+//  FUNC: B_HOST_TO_BENDIAN_INT16
+//  FUNC: B_HOST_TO_BENDIAN_INT32
+//  FUNC: B_HOST_TO_BENDIAN_INT64
+//  FUNC: B_HOST_TO_LENDIAN_DOUBLE
+//  FUNC: B_HOST_TO_LENDIAN_FLOAT
+//  FUNC: B_HOST_TO_LENDIAN_INT16
+//  FUNC: B_HOST_TO_LENDIAN_INT32
+//  FUNC: B_HOST_TO_LENDIAN_INT64
+//  FUNC: B_LENDIAN_TO_HOST_DOUBLE
+//  FUNC: B_LENDIAN_TO_HOST_FLOAT
+//  FUNC: B_LENDIAN_TO_HOST_INT16
+//  FUNC: B_LENDIAN_TO_HOST_INT32
+//  FUNC: B_LENDIAN_TO_HOST_INT64
+//  FUNC: B_SWAP_DOUBLE
+//  FUNC: B_SWAP_FLOAT
+//  FUNC: B_SWAP_INT16
+//  FUNC: B_SWAP_INT32
+//  FUNC: B_SWAP_INT64
 //  ENUM: swap_action
 pub const B_SWAP_HOST_TO_LENDIAN: c_int = 0;
 pub const B_SWAP_HOST_TO_BENDIAN: c_int = 0 + 1;
@@ -2197,24 +2197,24 @@ pub const B_SWAP_LENDIAN_TO_HOST: c_int = 0 + 2;
 pub const B_SWAP_BENDIAN_TO_HOST: c_int = 0 + 3;
 pub const B_SWAP_ALWAYS: c_int = 0 + 4;
 
-//  SKIP: cast_as
-//  SKIP: class_name
-//  SKIP: is_instance_of
-//  SKIP: is_kind_of
+//  FUNC: cast_as
+//  FUNC: class_name
+//  FUNC: is_instance_of
+//  FUNC: is_kind_of
 
-//  SKIP: ASSERT
-//  SKIP: ASSERT_WITH_MESSAGE
+//  FUNC: ASSERT
+//  FUNC: ASSERT_WITH_MESSAGE
 // NODEF: DEBUG_ONLY
-//  SKIP: DEBUGGER
-//  SKIP: IS_DEBUG_ENABLED
-//  SKIP: PRINT
-//  SKIP: PRINT_OBJECT
-//  SKIP: SERIAL_PRINT
-//  SKIP: SERIAL_TRACE
-//  SKIP: SET_DEBUG_ENABLED
-//  SKIP: STATIC_ASSERT
-//  SKIP: TRACE
-//  SKIP: TRESPASS
+//  FUNC: DEBUGGER
+//  FUNC: IS_DEBUG_ENABLED
+//  FUNC: PRINT
+//  FUNC: PRINT_OBJECT
+//  FUNC: SERIAL_PRINT
+//  FUNC: SERIAL_TRACE
+//  FUNC: SET_DEBUG_ENABLED
+//  FUNC: STATIC_ASSERT
+//  FUNC: TRACE
+//  FUNC: TRESPASS
 
 pub const B_ALREADY_RUNNING: c_int = (B_APP_ERROR_BASE + 4);
 pub const B_AMBIGUOUS_APP_LAUNCH: c_int = (B_APP_ERROR_BASE + 6);
@@ -2285,7 +2285,7 @@ pub const B_ERRORS_END: c_int = (B_GENERAL_ERROR_BASE + 0xffff);
 pub const B_FILE_ERROR: c_int = (B_STORAGE_ERROR_BASE + 0);
 pub const B_FILE_EXISTS: c_int = (B_STORAGE_ERROR_BASE + 2);
 pub const B_FILE_TOO_LARGE: c_int = B_FROM_POSIX_ERROR(EFBIG);
-pub const B_FROM_POSIX_ERROR: c_int = (error);
+//  FUNC: B_FROM_POSIX_ERROR
 pub const B_GENERAL_ERROR_BASE: c_int = INT_MIN;
 pub const B_ILLEGAL_DATA: c_int = (B_TRANSLATION_ERROR_BASE + 2);
 pub const B_INTERFACE_ERROR_BASE: c_int = (B_GENERAL_ERROR_BASE + 0x3000);
@@ -2387,9 +2387,9 @@ pub const B_STORAGE_ERROR_BASE: c_int = (B_GENERAL_ERROR_BASE + 0x6000);
 pub const B_STREAM_NOT_FOUND: c_int = (B_MEDIA_ERROR_BASE + 0);
 pub const B_SUBSCRIBER_NOT_ENTERED: c_int = (B_MEDIA_ERROR_BASE + 5);
 pub const B_TIMED_OUT: c_int = (B_GENERAL_ERROR_BASE + 9);
-pub const B_TO_NEGATIVE_ERROR: c_int = _to_negative_error(error);
-pub const B_TO_POSITIVE_ERROR: c_int = _to_positive_error(error);
-pub const B_TO_POSIX_ERROR: c_int = (error);
+//  FUNC: B_TO_NEGATIVE_ERROR
+//  FUNC: B_TO_POSITIVE_ERROR
+//  FUNC: B_TO_POSIX_ERROR
 pub const B_TOO_MANY_ARGS: c_int = B_FROM_POSIX_ERROR(E2BIG);
 pub const B_TRANSLATION_BASE_ERROR: c_int = (B_TRANSLATION_ERROR_BASE + 0);
 pub const B_TRANSLATION_ERROR_BASE: c_int = (B_GENERAL_ERROR_BASE + 0x4800);
@@ -2583,9 +2583,9 @@ pub const B_PRINTF_POINTER_WIDTH: c_int = 8;
 //  SKIP: B_SCNxSIZE
 pub const FALSE: c_int = 0;
 pub const TRUE: c_int = 1;
-pub const B_COUNT_OF: c_int = (sizeof(a) / sizeof(a[0]));
-pub const max_c: c_int = ((a) > (b)?(a): (b));
-pub const min_c: c_int = ((a) > (b)?(b): (a));
+//  FUNC: B_COUNT_OF
+//  FUNC: max_c
+//  FUNC: min_c
 pub const NULL: c_int = (0);
 
 pub const TLS_MAX_KEYS: c_int = 64;
@@ -2674,12 +2674,11 @@ pub const B_UTF16_CONVERSION: c_int = 0 + 26;
 pub const B_MS_WINDOWS_1250_CONVERSION: c_int = 0 + 27;
 
 pub const B_TRANSLATION_CURRENT_VERSION: c_int = B_BEOS_VERSION;
-pub const B_TRANSLATION_MAJOR_VERSION: c_int = (v >> 8);
-pub const B_TRANSLATION_MAKE_VERSION: c_int =
-    ((major << 8) | ((minor << 4) & 0xf0) | (revision & 0x0f));
+//  FUNC: B_TRANSLATION_MAJOR_VERSION
+//  FUNC: B_TRANSLATION_MAKE_VERSION
 pub const B_TRANSLATION_MIN_VERSION: c_int = 161;
-pub const B_TRANSLATION_MINOR_VERSION: c_int = ((v >> 4) & 0xf);
-pub const B_TRANSLATION_REVISION_VERSION: c_int = (v & 0xf);
+//  FUNC: B_TRANSLATION_MINOR_VERSION
+//  FUNC: B_TRANSLATION_REVISION_VERSION
 
 //  ENUM: @104
 pub const B_GIF_FORMAT: c_int = 0x47494620 /* 'GIF ' */;
@@ -2743,14 +2742,14 @@ pub const LOG_INFO: c_int = 6;
 pub const LOG_NOTICE: c_int = 5;
 pub const LOG_PANIC: c_int = LOG_EMERG;
 pub const LOG_WARNING: c_int = 4;
-pub const LOG_FAC: c_int = (((p) & LOG_FACMASK) >> 3);
+//  FUNC: LOG_FAC
 pub const LOG_FACMASK: c_int = (0x03f8)	/* mask to extract facility part */;
 pub const LOG_FTP: c_int = (11 << 3);
-pub const LOG_MASK: c_int = (1 << (pri));
+//  FUNC: LOG_MASK
 pub const LOG_NFACILITIES: c_int = (24)		/* current number of facilities */;
-pub const LOG_PRI: c_int = ((p) & LOG_PRIMASK);
+//  FUNC: LOG_PRI
 pub const LOG_PRIMASK: c_int = (0x7)	/* mask to extract priority part */;
-pub const LOG_UPTO: c_int = ((1 << ((pri) + 1)) - 1);
+//  FUNC: LOG_UPTO
 
 //  ENUM: @7
 pub const B_STICKY_EVENT: c_int = 0x01;
