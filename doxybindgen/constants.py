@@ -122,6 +122,7 @@ def translate_initializer(name, v):
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
     v = re.sub(r'(\d+)[Ll]', r'\1', v)
+    v = re.sub(r'(\d+\.\d+)f', r'\1', v)
     # TODO: string types
     v = re.sub(r'wxString\((".+")\)', r'\1', v)
     v = re.sub(r'wxS\((".+")\)', r'\1', v)

@@ -878,8 +878,8 @@ pub const B_OPTION_CONTROL_VALUE: c_int = 0x5f424d56 /* '_BMV' */;
 pub const B_ONE_STATE_BUTTON: c_int = 0;
 pub const B_TWO_STATE_BUTTON: c_int = 0 + 1;
 
-pub const B_H_SCROLL_BAR_HEIGHT: f32 = 14.0f;
-pub const B_V_SCROLL_BAR_WIDTH: f32 = 14.0f;
+pub const B_H_SCROLL_BAR_HEIGHT: f32 = 14.0;
+pub const B_V_SCROLL_BAR_WIDTH: f32 = 14.0;
 
 //  ENUM: @43
 pub const B_SIZE_UNSET: c_int = -2;
@@ -1570,10 +1570,10 @@ pub const B_MAIL_SHOW_STATUS_WINDOW_ALWAYS: c_int = 3;
 pub const B_FLAVOR_IS_GLOBAL: c_int = 0x100000;
 pub const B_FLAVOR_IS_LOCAL: c_int = 0x200000;
 
-pub const B_MEDIA_ANY_QUALITY: f32 = 0.0f;
-pub const B_MEDIA_HIGH_QUALITY: f32 = 1.0f;
-pub const B_MEDIA_LOW_QUALITY: f32 = 0.1f;
-pub const B_MEDIA_MEDIUM_QUALITY: f32 = 0.5f;
+pub const B_MEDIA_ANY_QUALITY: f32 = 0.0;
+pub const B_MEDIA_HIGH_QUALITY: f32 = 1.0;
+pub const B_MEDIA_LOW_QUALITY: f32 = 0.1;
+pub const B_MEDIA_MEDIUM_QUALITY: f32 = 0.5;
 pub const B_MEDIA_NAME_LENGTH: c_int = 64;
 //  ENUM: @58
 pub const B_MEDIA_WILDCARD: c_int = 0x54525743 /* 'TRWC' */;
