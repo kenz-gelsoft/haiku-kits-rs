@@ -1,5 +1,3 @@
-#include <wx/bookctrl.h>
-
 #include "manual.h"
 
 // wxApp
@@ -15,20 +13,8 @@ bool App::OnInit() {
     return true;
 }
 
-int wxApp_argc() {
-    return wxGetApp().argc;
-}
-wxString *wxApp_argv(int i) {
-    return new wxString(wxGetApp().argv[i]);
-}
-
 void wxObject_delete(wxObject *self) {
     delete self;
-}
-
-void wxEvtHandler_CallAfter(wxEvtHandler *self, void *aFn, void *aParam) {
-    CxxClosureVoid functor(aFn, aParam);
-    self->CallAfter(functor);
 }
 
 // String
@@ -44,47 +30,6 @@ UTF8Data wxString_UTF8Data(wxString *self) {
         utf8.data(),
         utf8.length()
     };
-}
-
-// (wx)String::const_iterator
-wxString::const_iterator *wxStringConstIterator_new() {
-    return new wxString::const_iterator;
-}
-void wxStringConstIterator_delete(wxString::const_iterator *self) {
-    delete self;
-}
-size_t wxStringConstIterator_IndexIn(wxString::const_iterator *self, const wxString *s) {
-    return std::distance(s->begin(), *self);
-}
-
-// ArrayInt
-wxArrayInt *wxArrayInt_new() {
-    return new wxArrayInt();
-}
-void wxArrayInt_delete(wxArrayInt *self) {
-    delete self;
-}
-void wxArrayInt_Add(wxArrayInt *self, int i) {
-    self->Add(i);
-}
-int wxArrayInt_Item(wxArrayInt *self, size_t index) {
-    return self->Item(index);
-}
-
-// ArrayString
-wxArrayString *wxArrayString_new() {
-    return new wxArrayString();
-}
-void wxArrayString_delete(wxArrayString *self) {
-    delete self;
-}
-void wxArrayString_Add(wxArrayString *self, const wxString *s) {
-    self->Add(*s);
-}
-
-// DateTime
-bool wxDateTime_ParseDate(wxDateTime * self, const wxString * date, wxString::const_iterator * end) {
-    return self->ParseDate(*date, end);
 }
 
 class OpaqueWeakRef : public wxTrackerNode

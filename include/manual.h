@@ -1,6 +1,5 @@
 #pragma once
-#include <wx/wx.h>
-
+// TODO include haiku-api headers
 
 // wxEvtHandler
 template <typename T>
@@ -44,13 +43,7 @@ class App : public wxApp {
     virtual bool OnInit();
 };
 
-int wxApp_argc();
-wxString *wxApp_argv(int i);
-
 void wxObject_delete(wxObject *self);
-
-void wxEvtHandler_Bind(wxEvtHandler *evtHandler, int eventType, void *aFn, void *aParam);
-void wxEvtHandler_CallAfter(wxEvtHandler *evtHandler, void *aFn, void *aParam);
 
 // String
 struct UTF8Data {
@@ -60,25 +53,6 @@ struct UTF8Data {
 wxString *wxString_new(const unsigned char *psz, const size_t nLength);
 void wxString_delete(wxString *self);
 UTF8Data wxString_UTF8Data(wxString *self);
-
-// (wx)String::const_iterator
-wxString::const_iterator *wxStringConstIterator_new();
-void wxStringConstIterator_delete(wxString::const_iterator *self);
-size_t wxStringConstIterator_IndexIn(wxString::const_iterator *self, const wxString *s);
-
-// ArrayInt
-wxArrayInt *wxArrayInt_new();
-void wxArrayInt_delete(wxArrayInt *self);
-void wxArrayInt_Add(wxArrayInt *self, int i);
-int wxArrayInt_Item(wxArrayInt *self, size_t index);
-
-// ArrayString
-wxArrayString *wxArrayString_new();
-void wxArrayString_delete(wxArrayString *self);
-void wxArrayString_Add(wxArrayString *self, const wxString *s);
-
-// DateTime
-bool wxDateTime_ParseDate(wxDateTime * self, const wxString * date, wxString::const_iterator * end);
 
 // WeakRef
 void *OpaqueWeakRef_new(void *obj);

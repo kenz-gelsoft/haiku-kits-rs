@@ -5,7 +5,6 @@ fn main() {
     cc_build
         .cpp(true)
         .file("src/manual.cpp")
-        .file("src/generated/events.cpp")
         .file("src/generated.cpp")
         .include("include")
         .flag_if_supported("-std=c++14")
