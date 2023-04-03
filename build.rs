@@ -1,12 +1,7 @@
-use wxrust_config::wx_config;
-
 fn main() {
     let mut cc_build = cc::Build::new();
-    // from `wx-config --cflags`
-    let cflags = wx_config(&["--cflags"]);
-    for arg in cflags.iter() {
-        cc_build.flag(arg);
-    }
+    let cflags = ""; // TODO
+    cc_build.flag(cflags);
     cc_build
         .cpp(true)
         .file("src/manual.cpp")
@@ -20,7 +15,6 @@ fn main() {
         .flag_if_supported("-Wno-unused-parameter")
         .compile("wx");
 
-    // from `wx-config --libs`
-    let libs = wx_config(&["--libs"]);
-    println!("cargo:rustc-flags={}", libs.join(" "));
+    let libs = ""; // TODO
+    println!("cargo:rustc-flags={}", libs);
 }
