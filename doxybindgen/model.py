@@ -12,6 +12,7 @@ CXX2RUST = {
     'perform_code': 'u32',
     'size_t': 'usize',
     'status_t': 'i32',
+    'thread_id': 'i32',
     'uint32': 'u32',
     'unsigned int': 'c_uint',
 }

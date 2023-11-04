@@ -63,6 +63,9 @@ BHandler * BLooper_PreferredHandler(const BLooper * self) {
 void BLooper_SetPreferredHandler(BLooper * self, BHandler * handler) {
     return self->SetPreferredHandler(handler);
 }
+thread_id BLooper_Run(BLooper * self) {
+    return self->Run();
+}
 void BLooper_Loop(BLooper * self) {
     return self->Loop();
 }
@@ -83,6 +86,15 @@ bool BLooper_IsLocked(const BLooper * self) {
 }
 status_t BLooper_LockWithTimeout(BLooper * self, bigtime_t timeout) {
     return self->LockWithTimeout(timeout);
+}
+thread_id BLooper_Thread(const BLooper * self) {
+    return self->Thread();
+}
+BLooper * BLooper_LooperForThread(thread_id thread) {
+    return BLooper::LooperForThread(thread);
+}
+thread_id BLooper_LockingThread(const BLooper * self) {
+    return self->LockingThread();
 }
 int32 BLooper_CountLocks(const BLooper * self) {
     return self->CountLocks();

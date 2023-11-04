@@ -164,7 +164,12 @@ pub trait LooperMethods: HandlerMethods {
             ffi::BLooper_SetPreferredHandler(self.as_ptr(), handler)
         }
     }
-    // NOT_SUPPORTED: fn Run()
+    /// Start the event loop.
+    ///
+    /// See [C++ `BLooper::Run()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a88bb85410e0c4124bdc6f16168df4811).
+    fn run(&self) -> i32 {
+        unsafe { ffi::BLooper_Run(self.as_ptr()) }
+    }
     /// Run the event loop in the current thread.
     ///
     /// See [C++ `BLooper::Loop()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a5cb1d2eb7640fdcbc1085ad19583691d).
@@ -207,10 +212,25 @@ pub trait LooperMethods: HandlerMethods {
     fn lock_with_timeout(&self, timeout: i64) -> i32 {
         unsafe { ffi::BLooper_LockWithTimeout(self.as_ptr(), timeout) }
     }
-    // NOT_SUPPORTED: fn Thread()
+    /// Return the thread id of the internal message looper thread.
+    ///
+    /// See [C++ `BLooper::Thread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a257d396d04d128edf7a0c9669ead36c0).
+    fn thread(&self) -> i32 {
+        unsafe { ffi::BLooper_Thread(self.as_ptr()) }
+    }
     // NOT_SUPPORTED: fn Team()
-    // NOT_SUPPORTED: fn LooperForThread()
-    // NOT_SUPPORTED: fn LockingThread()
+    /// Static method to retrieve a BLooper for a specified thread.
+    ///
+    /// See [C++ `BLooper::LooperForThread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#acf16bb9628e7dbbace3920ebeff6dc34).
+    fn looper_for_thread(thread: i32) -> Option<LooperFromCpp<true>> {
+        unsafe { Looper::option_from(ffi::BLooper_LooperForThread(thread)) }
+    }
+    /// Return the thread id of the thread that currently holds the lock.
+    ///
+    /// See [C++ `BLooper::LockingThread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a1d5d9dbc9d890ed1329b69fbfe9254b3).
+    fn locking_thread(&self) -> i32 {
+        unsafe { ffi::BLooper_LockingThread(self.as_ptr()) }
+    }
     /// Return the number of recursive locks that are currently being held on this looper.
     ///
     /// See [C++ `BLooper::CountLocks()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a4eec703acd9bd7fe9a455af0f81e08f9).

@@ -23,7 +23,7 @@ extern "C" {
     pub fn BLooper_IndexOf(self_: *const c_void, handler: *mut c_void) -> i32;
     pub fn BLooper_PreferredHandler(self_: *const c_void) -> *mut c_void;
     pub fn BLooper_SetPreferredHandler(self_: *mut c_void, handler: *mut c_void);
-    // NOT_SUPPORTED: pub fn BLooper_Run(self_: *mut c_void) -> thread_id;
+    pub fn BLooper_Run(self_: *mut c_void) -> i32;
     pub fn BLooper_Loop(self_: *mut c_void);
     pub fn BLooper_Quit(self_: *mut c_void);
     pub fn BLooper_QuitRequested(self_: *mut c_void) -> bool;
@@ -31,10 +31,10 @@ extern "C" {
     pub fn BLooper_Unlock(self_: *mut c_void);
     pub fn BLooper_IsLocked(self_: *const c_void) -> bool;
     pub fn BLooper_LockWithTimeout(self_: *mut c_void, timeout: i64) -> i32;
-    // NOT_SUPPORTED: pub fn BLooper_Thread(self_: *const c_void) -> thread_id;
+    pub fn BLooper_Thread(self_: *const c_void) -> i32;
     // NOT_SUPPORTED: pub fn BLooper_Team(self_: *const c_void) -> team_id;
-    // NOT_SUPPORTED: pub fn BLooper_LooperForThread(thread: thread_id) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BLooper_LockingThread(self_: *const c_void) -> thread_id;
+    pub fn BLooper_LooperForThread(thread: i32) -> *mut c_void;
+    pub fn BLooper_LockingThread(self_: *const c_void) -> i32;
     pub fn BLooper_CountLocks(self_: *const c_void) -> i32;
     pub fn BLooper_CountLockRequests(self_: *const c_void) -> i32;
     // NOT_SUPPORTED: pub fn BLooper_Sem(self_: *const c_void) -> sem_id;
