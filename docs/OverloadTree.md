@@ -13,10 +13,13 @@
     - 1: `const char*`: None 
         - 1: `int32`: None 
             - 1: `int32`: BLooper1 (char)
-- 2: BApplication.PostMessage: None 
-    - 2: `BMessage*`: PostMessage1 ()
+- 4: BApplication.PostMessage: None 
+    - 2: `uint32`: PostMessage (uint32)
         - 1: `BHandler*`: None 
-            - 1: `BHandler*`: PostMessage3 (handler)
+            - 1: `BHandler*`: PostMessage2 (uint32, handler)
+    - 2: `BMessage*`: PostMessage1 (message)
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage3 (message, handler)
 - 2: BApplication.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)
@@ -34,10 +37,13 @@
     - 1: `const char*`: None 
         - 1: `int32`: None 
             - 1: `int32`: BLooper1 (char)
-- 2: BLooper.PostMessage: None 
-    - 2: `BMessage*`: PostMessage1 ()
+- 4: BLooper.PostMessage: None 
+    - 2: `uint32`: PostMessage (uint32)
         - 1: `BHandler*`: None 
-            - 1: `BHandler*`: PostMessage3 (handler)
+            - 1: `BHandler*`: PostMessage2 (uint32, handler)
+    - 2: `BMessage*`: PostMessage1 (message)
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage3 (message, handler)
 - 2: BLooper.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)

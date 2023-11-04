@@ -6,9 +6,9 @@ extern "C" {
     pub fn BLooper_CLASSINFO() -> *mut c_void;
     pub fn BLooper_new(data: *mut c_void) -> *mut c_void;
     pub fn BLooper_Instantiate(data: *mut c_void) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage(self_: *mut c_void, command: uint32) -> i32;
+    pub fn BLooper_PostMessage(self_: *mut c_void, command: u32) -> i32;
     pub fn BLooper_PostMessage1(self_: *mut c_void, message: *mut c_void) -> i32;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage2(self_: *mut c_void, command: uint32, handler: *mut c_void, reply_to: *mut c_void) -> i32;
+    pub fn BLooper_PostMessage2(self_: *mut c_void, command: u32, handler: *mut c_void, reply_to: *mut c_void) -> i32;
     pub fn BLooper_PostMessage3(self_: *mut c_void, message: *mut c_void, handler: *mut c_void, reply_to: *mut c_void) -> i32;
     pub fn BLooper_DispatchMessage(self_: *mut c_void, message: *mut c_void, handler: *mut c_void);
     pub fn BLooper_CurrentMessage(self_: *const c_void) -> *mut c_void;

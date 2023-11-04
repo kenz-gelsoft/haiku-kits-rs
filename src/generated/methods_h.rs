@@ -106,7 +106,18 @@ pub trait HandlerMethods: ArchivableMethods {
     // NOT_SUPPORTED: fn StartWatchingAll()
     // NOT_SUPPORTED: fn StopWatching()
     // NOT_SUPPORTED: fn StopWatchingAll()
-    // NOT_SUPPORTED: fn StartWatching1()
+    /// Subscribe an observer for a specific state change of this handler.
+    ///
+    /// See [C++ `BHandler::StartWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a20713ff6ee9df49a014f391374eaf689).
+    fn start_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> i32 {
+        unsafe {
+            let observer = match observer {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BHandler_StartWatching1(self.as_ptr(), observer, what)
+        }
+    }
     /// Subscribe an observer for a all state changes.
     ///
     /// See [C++ `BHandler::StartWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a31927c51d89e0e3b3bf609a786ee6c3b).
@@ -119,7 +130,18 @@ pub trait HandlerMethods: ArchivableMethods {
             ffi::BHandler_StartWatchingAll1(self.as_ptr(), observer)
         }
     }
-    // NOT_SUPPORTED: fn StopWatching1()
+    /// Unsubscribe an observer from watching a specific state.
+    ///
+    /// See [C++ `BHandler::StopWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#ad3544be491270f856a0af8d36ce02d78).
+    fn stop_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> i32 {
+        unsafe {
+            let observer = match observer {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BHandler_StopWatching1(self.as_ptr(), observer, what)
+        }
+    }
     /// Unsubscribe an observer from watching all states.
     ///
     /// See [C++ `BHandler::StopWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a8b9a424ce63f5932666094b6eadf10cf).
@@ -132,7 +154,12 @@ pub trait HandlerMethods: ArchivableMethods {
             ffi::BHandler_StopWatchingAll1(self.as_ptr(), observer)
         }
     }
-    // NOT_SUPPORTED: fn SendNotices()
+    /// Emit a state change to the observers.
+    ///
+    /// See [C++ `BHandler::SendNotices()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a71bf72dc17a64bcd42656722271a9e0c).
+    fn send_notices(&self, what: u32, notice: *const c_void) {
+        unsafe { ffi::BHandler_SendNotices(self.as_ptr(), what, notice) }
+    }
     /// Check if there are any observers watching this handler.
     ///
     /// See [C++ `BHandler::IsWatched()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a581b84f0f067afa88768ce6a0c07f59f).

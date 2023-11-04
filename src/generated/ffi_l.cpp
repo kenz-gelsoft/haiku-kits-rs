@@ -12,8 +12,14 @@ BLooper *BLooper_new(BMessage * data) {
 BArchivable * BLooper_Instantiate(BMessage * data) {
     return BLooper::Instantiate(data);
 }
+status_t BLooper_PostMessage(BLooper * self, uint32 command) {
+    return self->PostMessage(command);
+}
 status_t BLooper_PostMessage1(BLooper * self, BMessage * message) {
     return self->PostMessage(message);
+}
+status_t BLooper_PostMessage2(BLooper * self, uint32 command, BHandler * handler, BHandler * reply_to) {
+    return self->PostMessage(command, handler, reply_to);
 }
 status_t BLooper_PostMessage3(BLooper * self, BMessage * message, BHandler * handler, BHandler * reply_to) {
     return self->PostMessage(message, handler, reply_to);

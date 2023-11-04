@@ -6,18 +6,38 @@ use super::*;
     ///
     /// See [`LooperFromCpp`] documentation for the class usage.
 pub trait LooperMethods: HandlerMethods {
-    // NOT_SUPPORTED: fn PostMessage()
+    /// Post a message with the command as what identifier to this looper.
+    ///
+    /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a0de6737bfbf8a8b4913adc8c74bb544e).
+    fn post_message_uint32(&self, command: u32) -> i32 {
+        unsafe { ffi::BLooper_PostMessage(self.as_ptr(), command) }
+    }
     /// Post a message to this looper.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ae79a7818ce950d8edcd238f7948df020).
-    fn post_message(&self, message: *mut c_void) -> i32 {
+    fn post_message_message(&self, message: *mut c_void) -> i32 {
         unsafe { ffi::BLooper_PostMessage1(self.as_ptr(), message) }
     }
-    // NOT_SUPPORTED: fn PostMessage2()
+    /// Sends a message with command what identifier to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
+    ///
+    /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a2dc16ecf211eb7e32eaa4b08863e856d).
+    fn post_message_uint32_handler<H: HandlerMethods, H2: HandlerMethods>(&self, command: u32, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
+        unsafe {
+            let handler = match handler {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let reply_to = match reply_to {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BLooper_PostMessage2(self.as_ptr(), command, handler, reply_to)
+        }
+    }
     /// Send a message to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ac75eed80e72b236650f19b4015de6e99).
-    fn post_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
+    fn post_message_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
         unsafe {
             let handler = match handler {
                 Some(r) => r.as_ptr(),
