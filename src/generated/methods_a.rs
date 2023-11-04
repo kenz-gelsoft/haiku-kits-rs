@@ -120,17 +120,49 @@ pub trait ApplicationMethods: LooperMethods {
     fn signature(&self) -> *const c_void {
         unsafe { ffi::BApplication_Signature(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn GetAppInfo()
+    /// Fills out the info parameter with information about the application.
+    ///
+    /// See [C++ `BApplication::GetAppInfo()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a2b27a6149b1bf53e71a8d83382708308).
+    fn get_app_info(&self, info: *mut c_void) -> i32 {
+        unsafe { ffi::BApplication_GetAppInfo(self.as_ptr(), info) }
+    }
     /// Returns a BResources object for the application.
     ///
     /// See [C++ `BApplication::AppResources()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a1aef5ac43f00eed24d6501b7afb50f47).
     fn app_resources() -> *mut c_void {
         unsafe { ffi::BApplication_AppResources() }
     }
-    // NOT_SUPPORTED: fn RegisterLooper()
-    // NOT_SUPPORTED: fn UnregisterLooper()
+    /// Register a looper to quit when the application quits.
+    ///
+    /// See [C++ `BApplication::RegisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a2b46141e108da1167be0d3427ca37716).
+    fn register_looper<L: LooperMethods>(&self, looper: Option<&L>) -> i32 {
+        unsafe {
+            let looper = match looper {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BApplication_RegisterLooper(self.as_ptr(), looper)
+        }
+    }
+    /// Remove a previously registered Looper from the quit-list.
+    ///
+    /// See [C++ `BApplication::UnregisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aac40a7828ef8cc9c65f65a30b14594f6).
+    fn unregister_looper<L: LooperMethods>(&self, looper: Option<&L>) -> i32 {
+        unsafe {
+            let looper = match looper {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BApplication_UnregisterLooper(self.as_ptr(), looper)
+        }
+    }
     // DTOR: fn ~BApplication()
-    // NOT_SUPPORTED: fn InitCheck()
+    /// Returns the status of the constructor.
+    ///
+    /// See [C++ `BApplication::InitCheck()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aef81a1f9e59c305f2af7a7ad8e240ae0).
+    fn init_check(&self) -> i32 {
+        unsafe { ffi::BApplication_InitCheck(self.as_ptr()) }
+    }
 }
 
 // BArchivable
@@ -139,9 +171,24 @@ pub trait ApplicationMethods: LooperMethods {
     /// See [`ArchivableFromCpp`] documentation for the class usage.
 pub trait ArchivableMethods: _WxRustMethods {
     // DTOR: fn ~BArchivable()
-    // NOT_SUPPORTED: fn AllArchived()
-    // NOT_SUPPORTED: fn AllUnarchived()
-    // NOT_SUPPORTED: fn Archive()
+    /// Method relating to the use of BArchiver.
+    ///
+    /// See [C++ `BArchivable::AllArchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a4075315c407443a3b0dbb3d7551b53c9).
+    fn all_archived(&self, archive: *mut c_void) -> i32 {
+        unsafe { ffi::BArchivable_AllArchived(self.as_ptr(), archive) }
+    }
+    /// Method relating to the use of BUnarchiver.
+    ///
+    /// See [C++ `BArchivable::AllUnarchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a2b1d74c147ea18e4b4bfacd42f11e0d2).
+    fn all_unarchived(&self, archive: *const c_void) -> i32 {
+        unsafe { ffi::BArchivable_AllUnarchived(self.as_ptr(), archive) }
+    }
+    /// Archive the object into a BMessage.
+    ///
+    /// See [C++ `BArchivable::Archive()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a051c5263dd1a75dcf28787b60825dc44).
+    fn archive(&self, into: *mut c_void, deep: bool) -> i32 {
+        unsafe { ffi::BArchivable_Archive(self.as_ptr(), into, deep) }
+    }
     // NOT_SUPPORTED: fn Perform()
     /// Static member to restore objects from messages.
     ///

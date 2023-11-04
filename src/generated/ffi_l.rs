@@ -6,10 +6,10 @@ extern "C" {
     pub fn BLooper_CLASSINFO() -> *mut c_void;
     pub fn BLooper_new(data: *mut c_void) -> *mut c_void;
     pub fn BLooper_Instantiate(data: *mut c_void) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage(self_: *mut c_void, command: uint32) -> status_t;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage1(self_: *mut c_void, message: *mut c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage2(self_: *mut c_void, command: uint32, handler: *mut c_void, reply_to: *mut c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BLooper_PostMessage3(self_: *mut c_void, message: *mut c_void, handler: *mut c_void, reply_to: *mut c_void) -> status_t;
+    // NOT_SUPPORTED: pub fn BLooper_PostMessage(self_: *mut c_void, command: uint32) -> i32;
+    pub fn BLooper_PostMessage1(self_: *mut c_void, message: *mut c_void) -> i32;
+    // NOT_SUPPORTED: pub fn BLooper_PostMessage2(self_: *mut c_void, command: uint32, handler: *mut c_void, reply_to: *mut c_void) -> i32;
+    pub fn BLooper_PostMessage3(self_: *mut c_void, message: *mut c_void, handler: *mut c_void, reply_to: *mut c_void) -> i32;
     pub fn BLooper_DispatchMessage(self_: *mut c_void, message: *mut c_void, handler: *mut c_void);
     pub fn BLooper_CurrentMessage(self_: *const c_void) -> *mut c_void;
     pub fn BLooper_DetachCurrentMessage(self_: *mut c_void) -> *mut c_void;
@@ -30,7 +30,7 @@ extern "C" {
     pub fn BLooper_Lock(self_: *mut c_void) -> bool;
     pub fn BLooper_Unlock(self_: *mut c_void);
     pub fn BLooper_IsLocked(self_: *const c_void) -> bool;
-    // NOT_SUPPORTED: pub fn BLooper_LockWithTimeout(self_: *mut c_void, timeout: i64) -> status_t;
+    pub fn BLooper_LockWithTimeout(self_: *mut c_void, timeout: i64) -> i32;
     // NOT_SUPPORTED: pub fn BLooper_Thread(self_: *const c_void) -> thread_id;
     // NOT_SUPPORTED: pub fn BLooper_Team(self_: *const c_void) -> team_id;
     // NOT_SUPPORTED: pub fn BLooper_LooperForThread(thread: thread_id) -> *mut c_void;

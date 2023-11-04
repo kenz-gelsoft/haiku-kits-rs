@@ -12,6 +12,12 @@ BLooper *BLooper_new(BMessage * data) {
 BArchivable * BLooper_Instantiate(BMessage * data) {
     return BLooper::Instantiate(data);
 }
+status_t BLooper_PostMessage1(BLooper * self, BMessage * message) {
+    return self->PostMessage(message);
+}
+status_t BLooper_PostMessage3(BLooper * self, BMessage * message, BHandler * handler, BHandler * reply_to) {
+    return self->PostMessage(message, handler, reply_to);
+}
 void BLooper_DispatchMessage(BLooper * self, BMessage * message, BHandler * handler) {
     return self->DispatchMessage(message, handler);
 }
@@ -68,6 +74,9 @@ void BLooper_Unlock(BLooper * self) {
 }
 bool BLooper_IsLocked(const BLooper * self) {
     return self->IsLocked();
+}
+status_t BLooper_LockWithTimeout(BLooper * self, bigtime_t timeout) {
+    return self->LockWithTimeout(timeout);
 }
 int32 BLooper_CountLocks(const BLooper * self) {
     return self->CountLocks();

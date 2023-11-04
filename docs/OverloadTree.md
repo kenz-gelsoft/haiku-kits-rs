@@ -13,6 +13,10 @@
     - 1: `const char*`: None 
         - 1: `int32`: None 
             - 1: `int32`: BLooper1 (char)
+- 2: BApplication.PostMessage: None 
+    - 2: `BMessage*`: PostMessage1 ()
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage3 (handler)
 - 2: BApplication.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)
@@ -30,6 +34,10 @@
     - 1: `const char*`: None 
         - 1: `int32`: None 
             - 1: `int32`: BLooper1 (char)
+- 2: BLooper.PostMessage: None 
+    - 2: `BMessage*`: PostMessage1 ()
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage3 (handler)
 - 2: BLooper.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)

@@ -7,9 +7,29 @@ use super::*;
     /// See [`LooperFromCpp`] documentation for the class usage.
 pub trait LooperMethods: HandlerMethods {
     // NOT_SUPPORTED: fn PostMessage()
-    // NOT_SUPPORTED: fn PostMessage1()
+    /// Post a message to this looper.
+    ///
+    /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ae79a7818ce950d8edcd238f7948df020).
+    fn post_message(&self, message: *mut c_void) -> i32 {
+        unsafe { ffi::BLooper_PostMessage1(self.as_ptr(), message) }
+    }
     // NOT_SUPPORTED: fn PostMessage2()
-    // NOT_SUPPORTED: fn PostMessage3()
+    /// Send a message to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
+    ///
+    /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ac75eed80e72b236650f19b4015de6e99).
+    fn post_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
+        unsafe {
+            let handler = match handler {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let reply_to = match reply_to {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BLooper_PostMessage3(self.as_ptr(), message, handler, reply_to)
+        }
+    }
     /// Dispatch a message to a handler. Override if there are messages that you want to catch before they are sent to the handlers.
     ///
     /// See [C++ `BLooper::DispatchMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#add21ca8765c67b0dbf95b8f0361afa73).
@@ -161,7 +181,12 @@ pub trait LooperMethods: HandlerMethods {
     fn is_locked(&self) -> bool {
         unsafe { ffi::BLooper_IsLocked(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn LockWithTimeout()
+    /// Lock a looper with a timeout.
+    ///
+    /// See [C++ `BLooper::LockWithTimeout()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a734cdb06bfe92efdea24528c9b43bfc1).
+    fn lock_with_timeout(&self, timeout: i64) -> i32 {
+        unsafe { ffi::BLooper_LockWithTimeout(self.as_ptr(), timeout) }
+    }
     // NOT_SUPPORTED: fn Thread()
     // NOT_SUPPORTED: fn Team()
     // NOT_SUPPORTED: fn LooperForThread()

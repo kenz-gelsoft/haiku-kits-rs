@@ -42,11 +42,23 @@ BList * BHandler_FilterList(BHandler * self) {
 bool BHandler_LockLooper(BHandler * self) {
     return self->LockLooper();
 }
+status_t BHandler_LockLooperWithTimeout(BHandler * self, bigtime_t timeout) {
+    return self->LockLooperWithTimeout(timeout);
+}
 void BHandler_UnlockLooper(BHandler * self) {
     return self->UnlockLooper();
 }
 BHandler * BHandler_ResolveSpecifier(BHandler * self, BMessage * message, int32 index, BMessage * specifier, int32 what, const char * property) {
     return self->ResolveSpecifier(message, index, specifier, what, property);
+}
+status_t BHandler_GetSupportedSuites(BHandler * self, BMessage * data) {
+    return self->GetSupportedSuites(data);
+}
+status_t BHandler_StartWatchingAll1(BHandler * self, BHandler * observer) {
+    return self->StartWatchingAll(observer);
+}
+status_t BHandler_StopWatchingAll1(BHandler * self, BHandler * observer) {
+    return self->StopWatchingAll(observer);
 }
 bool BHandler_IsWatched(const BHandler * self) {
     return self->IsWatched();

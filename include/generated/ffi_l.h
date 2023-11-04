@@ -8,6 +8,8 @@ extern "C" {
 void BLooper_delete(BLooper *self);
 BLooper *BLooper_new(BMessage * data);
 BArchivable * BLooper_Instantiate(BMessage * data);
+status_t BLooper_PostMessage1(BLooper * self, BMessage * message);
+status_t BLooper_PostMessage3(BLooper * self, BMessage * message, BHandler * handler, BHandler * reply_to);
 void BLooper_DispatchMessage(BLooper * self, BMessage * message, BHandler * handler);
 BMessage * BLooper_CurrentMessage(const BLooper * self);
 BMessage * BLooper_DetachCurrentMessage(BLooper * self);
@@ -27,6 +29,7 @@ bool BLooper_QuitRequested(BLooper * self);
 bool BLooper_Lock(BLooper * self);
 void BLooper_Unlock(BLooper * self);
 bool BLooper_IsLocked(const BLooper * self);
+status_t BLooper_LockWithTimeout(BLooper * self, bigtime_t timeout);
 int32 BLooper_CountLocks(const BLooper * self);
 int32 BLooper_CountLockRequests(const BLooper * self);
 void BLooper_AddCommonFilter(BLooper * self, BMessageFilter * filter);

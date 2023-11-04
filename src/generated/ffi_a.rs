@@ -25,24 +25,24 @@ extern "C" {
     pub fn BApplication_LooperAt(self_: *const c_void, index: i32) -> *mut c_void;
     pub fn BApplication_IsLaunching(self_: *const c_void) -> bool;
     pub fn BApplication_Signature(self_: *const c_void) -> *const c_void;
-    // NOT_SUPPORTED: pub fn BApplication_GetAppInfo(self_: *const c_void, info: *mut c_void) -> status_t;
+    pub fn BApplication_GetAppInfo(self_: *const c_void, info: *mut c_void) -> i32;
     pub fn BApplication_AppResources() -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BApplication_RegisterLooper(self_: *mut c_void, looper: *mut c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BApplication_UnregisterLooper(self_: *mut c_void, looper: *mut c_void) -> status_t;
+    pub fn BApplication_RegisterLooper(self_: *mut c_void, looper: *mut c_void) -> i32;
+    pub fn BApplication_UnregisterLooper(self_: *mut c_void, looper: *mut c_void) -> i32;
     pub fn BApplication_new1(signature: *const c_void) -> *mut c_void;
     pub fn BApplication_new2(signature: *const c_void, error: *mut c_void) -> *mut c_void;
     // DTOR: pub fn BApplication_~BApplication(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BApplication_InitCheck(self_: *const c_void) -> status_t;
+    pub fn BApplication_InitCheck(self_: *const c_void) -> i32;
 
     // BArchivable
     pub fn BArchivable_CLASSINFO() -> *mut c_void;
     pub fn BArchivable_new() -> *mut c_void;
     pub fn BArchivable_new1(from: *mut c_void) -> *mut c_void;
     // DTOR: pub fn BArchivable_~BArchivable(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BArchivable_AllArchived(self_: *const c_void, archive: *mut c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BArchivable_AllUnarchived(self_: *mut c_void, archive: *const c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BArchivable_Archive(self_: *const c_void, into: *mut c_void, deep: bool) -> status_t;
-    // NOT_SUPPORTED: pub fn BArchivable_Perform(self_: *mut c_void, d: perform_code, arg: *mut c_void) -> status_t;
+    pub fn BArchivable_AllArchived(self_: *const c_void, archive: *mut c_void) -> i32;
+    pub fn BArchivable_AllUnarchived(self_: *mut c_void, archive: *const c_void) -> i32;
+    pub fn BArchivable_Archive(self_: *const c_void, into: *mut c_void, deep: bool) -> i32;
+    // NOT_SUPPORTED: pub fn BArchivable_Perform(self_: *mut c_void, d: perform_code, arg: *mut c_void) -> i32;
     pub fn BArchivable_Instantiate(archive: *mut c_void) -> *mut c_void;
 
 }

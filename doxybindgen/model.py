@@ -10,6 +10,7 @@ CXX2RUST = {
     'int32': 'i32',
     'long': 'c_long',
     'size_t': 'usize',
+    'status_t': 'i32',
     'unsigned int': 'c_uint',
 }
 STR_TYPES = [
