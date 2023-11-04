@@ -90,6 +90,9 @@ status_t BLooper_LockWithTimeout(BLooper * self, bigtime_t timeout) {
 thread_id BLooper_Thread(const BLooper * self) {
     return self->Thread();
 }
+team_id BLooper_Team(const BLooper * self) {
+    return self->Team();
+}
 BLooper * BLooper_LooperForThread(thread_id thread) {
     return BLooper::LooperForThread(thread);
 }

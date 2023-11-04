@@ -34,6 +34,7 @@ void BLooper_Unlock(BLooper * self);
 bool BLooper_IsLocked(const BLooper * self);
 status_t BLooper_LockWithTimeout(BLooper * self, bigtime_t timeout);
 thread_id BLooper_Thread(const BLooper * self);
+team_id BLooper_Team(const BLooper * self);
 BLooper * BLooper_LooperForThread(thread_id thread);
 thread_id BLooper_LockingThread(const BLooper * self);
 int32 BLooper_CountLocks(const BLooper * self);

@@ -218,7 +218,12 @@ pub trait LooperMethods: HandlerMethods {
     fn thread(&self) -> i32 {
         unsafe { ffi::BLooper_Thread(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Team()
+    /// Return the team id in which this looper exists.
+    ///
+    /// See [C++ `BLooper::Team()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#afeb7a4900f26e7746d6c8bdb5cf684f3).
+    fn team(&self) -> i32 {
+        unsafe { ffi::BLooper_Team(self.as_ptr()) }
+    }
     /// Static method to retrieve a BLooper for a specified thread.
     ///
     /// See [C++ `BLooper::LooperForThread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#acf16bb9628e7dbbace3920ebeff6dc34).
