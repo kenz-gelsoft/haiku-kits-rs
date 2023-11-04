@@ -42,7 +42,12 @@ pub trait ApplicationMethods: LooperMethods {
     fn pulse(&self) {
         unsafe { ffi::BApplication_Pulse(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn SetPulseRate()
+    /// Sets the interval that the B_PULSE messages are sent.
+    ///
+    /// See [C++ `BApplication::SetPulseRate()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a565e7ede16cd6a0e7df384c3c97ba860).
+    fn set_pulse_rate(&self, rate: i64) {
+        unsafe { ffi::BApplication_SetPulseRate(self.as_ptr(), rate) }
+    }
     /// Restores the cursor.
     ///
     /// See [C++ `BApplication::ShowCursor()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#ad21286f2cae75ee360d022fbacc8a21d).

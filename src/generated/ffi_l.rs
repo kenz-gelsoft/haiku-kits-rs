@@ -30,7 +30,7 @@ extern "C" {
     pub fn BLooper_Lock(self_: *mut c_void) -> bool;
     pub fn BLooper_Unlock(self_: *mut c_void);
     pub fn BLooper_IsLocked(self_: *const c_void) -> bool;
-    // NOT_SUPPORTED: pub fn BLooper_LockWithTimeout(self_: *mut c_void, timeout: bigtime_t) -> status_t;
+    // NOT_SUPPORTED: pub fn BLooper_LockWithTimeout(self_: *mut c_void, timeout: i64) -> status_t;
     // NOT_SUPPORTED: pub fn BLooper_Thread(self_: *const c_void) -> thread_id;
     // NOT_SUPPORTED: pub fn BLooper_Team(self_: *const c_void) -> team_id;
     // NOT_SUPPORTED: pub fn BLooper_LooperForThread(thread: thread_id) -> *mut c_void;

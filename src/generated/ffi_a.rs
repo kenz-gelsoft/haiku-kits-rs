@@ -12,7 +12,7 @@ extern "C" {
     pub fn BApplication_RefsReceived(self_: *mut c_void, message: *mut c_void);
     pub fn BApplication_AboutRequested(self_: *mut c_void);
     pub fn BApplication_Pulse(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BApplication_SetPulseRate(self_: *mut c_void, rate: bigtime_t);
+    pub fn BApplication_SetPulseRate(self_: *mut c_void, rate: i64);
     pub fn BApplication_ShowCursor(self_: *mut c_void);
     pub fn BApplication_HideCursor(self_: *mut c_void);
     pub fn BApplication_ObscureCursor(self_: *mut c_void);

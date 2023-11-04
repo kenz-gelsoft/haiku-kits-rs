@@ -30,6 +30,9 @@ void BApplication_AboutRequested(BApplication * self) {
 void BApplication_Pulse(BApplication * self) {
     return self->Pulse();
 }
+void BApplication_SetPulseRate(BApplication * self, bigtime_t rate) {
+    return self->SetPulseRate(rate);
+}
 void BApplication_ShowCursor(BApplication * self) {
     return self->ShowCursor();
 }

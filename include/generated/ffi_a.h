@@ -14,6 +14,7 @@ void BApplication_AppActivated(BApplication * self, bool active);
 void BApplication_RefsReceived(BApplication * self, BMessage * message);
 void BApplication_AboutRequested(BApplication * self);
 void BApplication_Pulse(BApplication * self);
+void BApplication_SetPulseRate(BApplication * self, bigtime_t rate);
 void BApplication_ShowCursor(BApplication * self);
 void BApplication_HideCursor(BApplication * self);
 void BApplication_ObscureCursor(BApplication * self);

@@ -4,6 +4,7 @@ import re
 
 
 CXX2RUST = {
+    'bigtime_t': 'i64',
     'double': 'c_double',
     'int': 'c_int',
     'int32': 'i32',
@@ -21,10 +22,11 @@ RUST_PRIMITIVES = [
     'bool',
     'c_double',
     'c_int',
-    'i32',
     'c_long',
     'c_uchar',
     'c_uint',
+    'i32',
+    'i64',
     'usize',
 ]
 OS_UNSUPPORTED_TYPES = [
