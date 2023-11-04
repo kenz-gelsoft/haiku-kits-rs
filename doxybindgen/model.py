@@ -9,6 +9,7 @@ CXX2RUST = {
     'int': 'c_int',
     'int32': 'i32',
     'long': 'c_long',
+    'perform_code': 'u32',
     'size_t': 'usize',
     'status_t': 'i32',
     'unsigned int': 'c_uint',
@@ -28,6 +29,7 @@ RUST_PRIMITIVES = [
     'c_uint',
     'i32',
     'i64',
+    'u32',
     'usize',
 ]
 OS_UNSUPPORTED_TYPES = [

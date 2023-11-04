@@ -42,7 +42,7 @@ extern "C" {
     pub fn BArchivable_AllArchived(self_: *const c_void, archive: *mut c_void) -> i32;
     pub fn BArchivable_AllUnarchived(self_: *mut c_void, archive: *const c_void) -> i32;
     pub fn BArchivable_Archive(self_: *const c_void, into: *mut c_void, deep: bool) -> i32;
-    // NOT_SUPPORTED: pub fn BArchivable_Perform(self_: *mut c_void, d: perform_code, arg: *mut c_void) -> i32;
+    pub fn BArchivable_Perform(self_: *mut c_void, d: u32, arg: *mut c_void) -> i32;
     pub fn BArchivable_Instantiate(archive: *mut c_void) -> *mut c_void;
 
 }

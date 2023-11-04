@@ -42,6 +42,7 @@ BArchivable *BArchivable_new1(BMessage * from);
 status_t BArchivable_AllArchived(const BArchivable * self, BMessage * archive);
 status_t BArchivable_AllUnarchived(BArchivable * self, const BMessage * archive);
 status_t BArchivable_Archive(const BArchivable * self, BMessage * into, bool deep);
+status_t BArchivable_Perform(BArchivable * self, perform_code d, void * arg);
 BArchivable * BArchivable_Instantiate(BMessage * archive);
 
 } // extern "C"
