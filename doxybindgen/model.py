@@ -10,6 +10,7 @@ CXX2RUST = {
     'int32': 'i32',
     'long': 'c_long',
     'perform_code': 'u32',
+    'sem_id': 'i32',
     'size_t': 'usize',
     'status_t': 'i32',
     'team_id': 'i32',

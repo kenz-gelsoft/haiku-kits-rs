@@ -105,6 +105,9 @@ int32 BLooper_CountLocks(const BLooper * self) {
 int32 BLooper_CountLockRequests(const BLooper * self) {
     return self->CountLockRequests();
 }
+sem_id BLooper_Sem(const BLooper * self) {
+    return self->Sem();
+}
 void BLooper_AddCommonFilter(BLooper * self, BMessageFilter * filter) {
     return self->AddCommonFilter(filter);
 }

@@ -39,6 +39,7 @@ BLooper * BLooper_LooperForThread(thread_id thread);
 thread_id BLooper_LockingThread(const BLooper * self);
 int32 BLooper_CountLocks(const BLooper * self);
 int32 BLooper_CountLockRequests(const BLooper * self);
+sem_id BLooper_Sem(const BLooper * self);
 void BLooper_AddCommonFilter(BLooper * self, BMessageFilter * filter);
 bool BLooper_RemoveCommonFilter(BLooper * self, BMessageFilter * filter);
 void BLooper_SetCommonFilterList(BLooper * self, BList * filters);

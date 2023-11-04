@@ -248,7 +248,12 @@ pub trait LooperMethods: HandlerMethods {
     fn count_lock_requests(&self) -> i32 {
         unsafe { ffi::BLooper_CountLockRequests(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Sem()
+    /// Return the id of the semaphore that is used to lock this looper.
+    ///
+    /// See [C++ `BLooper::Sem()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aa96df67561b0ce1428ae45148c21e01f).
+    fn sem(&self) -> i32 {
+        unsafe { ffi::BLooper_Sem(self.as_ptr()) }
+    }
     /// Add a common filter to the list of filters that are applied to all incoming messages.
     ///
     /// See [C++ `BLooper::AddCommonFilter()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a25adc41bdfd741e9c82d2b469a5086b0).
