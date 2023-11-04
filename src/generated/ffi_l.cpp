@@ -36,6 +36,15 @@ void BLooper_AddHandler(BLooper * self, BHandler * handler) {
 bool BLooper_RemoveHandler(BLooper * self, BHandler * handler) {
     return self->RemoveHandler(handler);
 }
+int32 BLooper_CountHandlers(const BLooper * self) {
+    return self->CountHandlers();
+}
+BHandler * BLooper_HandlerAt(const BLooper * self, int32 index) {
+    return self->HandlerAt(index);
+}
+int32 BLooper_IndexOf(const BLooper * self, BHandler * handler) {
+    return self->IndexOf(handler);
+}
 BHandler * BLooper_PreferredHandler(const BLooper * self) {
     return self->PreferredHandler();
 }
@@ -60,6 +69,12 @@ void BLooper_Unlock(BLooper * self) {
 bool BLooper_IsLocked(const BLooper * self) {
     return self->IsLocked();
 }
+int32 BLooper_CountLocks(const BLooper * self) {
+    return self->CountLocks();
+}
+int32 BLooper_CountLockRequests(const BLooper * self) {
+    return self->CountLockRequests();
+}
 void BLooper_AddCommonFilter(BLooper * self, BMessageFilter * filter) {
     return self->AddCommonFilter(filter);
 }
@@ -71,6 +86,9 @@ void BLooper_SetCommonFilterList(BLooper * self, BList * filters) {
 }
 BList * BLooper_CommonFilterList(const BLooper * self) {
     return self->CommonFilterList();
+}
+BLooper *BLooper_new1(const char * name, int32 priority, int32 port_capacity) {
+    return new BLooper(name, priority, port_capacity);
 }
 
 } // extern "C"

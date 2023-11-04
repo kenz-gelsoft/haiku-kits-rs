@@ -85,7 +85,12 @@ pub trait HandlerMethods: ArchivableMethods {
     fn unlock_looper(&self) {
         unsafe { ffi::BHandler_UnlockLooper(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn ResolveSpecifier()
+    /// Determine the proper handler for a scripting message.
+    ///
+    /// See [C++ `BHandler::ResolveSpecifier()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a76439ffaf84e65232698d2a4a3317d22).
+    fn resolve_specifier(&self, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: *const c_void) -> Option<HandlerFromCpp<true>> {
+        unsafe { Handler::option_from(ffi::BHandler_ResolveSpecifier(self.as_ptr(), message, index, specifier, what, property)) }
+    }
     // NOT_SUPPORTED: fn GetSupportedSuites()
     // NOT_SUPPORTED: fn StartWatching()
     // NOT_SUPPORTED: fn StartWatchingAll()

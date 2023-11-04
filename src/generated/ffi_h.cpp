@@ -45,6 +45,9 @@ bool BHandler_LockLooper(BHandler * self) {
 void BHandler_UnlockLooper(BHandler * self) {
     return self->UnlockLooper();
 }
+BHandler * BHandler_ResolveSpecifier(BHandler * self, BMessage * message, int32 index, BMessage * specifier, int32 what, const char * property) {
+    return self->ResolveSpecifier(message, index, specifier, what, property);
+}
 bool BHandler_IsWatched(const BHandler * self) {
     return self->IsWatched();
 }

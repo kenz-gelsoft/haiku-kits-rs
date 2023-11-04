@@ -18,9 +18,9 @@ extern "C" {
     pub fn BLooper_IsMessageWaiting(self_: *const c_void) -> bool;
     pub fn BLooper_AddHandler(self_: *mut c_void, handler: *mut c_void);
     pub fn BLooper_RemoveHandler(self_: *mut c_void, handler: *mut c_void) -> bool;
-    // NOT_SUPPORTED: pub fn BLooper_CountHandlers(self_: *const c_void) -> int32;
-    // NOT_SUPPORTED: pub fn BLooper_HandlerAt(self_: *const c_void, index: int32) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BLooper_IndexOf(self_: *const c_void, handler: *mut c_void) -> int32;
+    pub fn BLooper_CountHandlers(self_: *const c_void) -> i32;
+    pub fn BLooper_HandlerAt(self_: *const c_void, index: i32) -> *mut c_void;
+    pub fn BLooper_IndexOf(self_: *const c_void, handler: *mut c_void) -> i32;
     pub fn BLooper_PreferredHandler(self_: *const c_void) -> *mut c_void;
     pub fn BLooper_SetPreferredHandler(self_: *mut c_void, handler: *mut c_void);
     // NOT_SUPPORTED: pub fn BLooper_Run(self_: *mut c_void) -> thread_id;
@@ -35,14 +35,14 @@ extern "C" {
     // NOT_SUPPORTED: pub fn BLooper_Team(self_: *const c_void) -> team_id;
     // NOT_SUPPORTED: pub fn BLooper_LooperForThread(thread: thread_id) -> *mut c_void;
     // NOT_SUPPORTED: pub fn BLooper_LockingThread(self_: *const c_void) -> thread_id;
-    // NOT_SUPPORTED: pub fn BLooper_CountLocks(self_: *const c_void) -> int32;
-    // NOT_SUPPORTED: pub fn BLooper_CountLockRequests(self_: *const c_void) -> int32;
+    pub fn BLooper_CountLocks(self_: *const c_void) -> i32;
+    pub fn BLooper_CountLockRequests(self_: *const c_void) -> i32;
     // NOT_SUPPORTED: pub fn BLooper_Sem(self_: *const c_void) -> sem_id;
     pub fn BLooper_AddCommonFilter(self_: *mut c_void, filter: *mut c_void);
     pub fn BLooper_RemoveCommonFilter(self_: *mut c_void, filter: *mut c_void) -> bool;
     pub fn BLooper_SetCommonFilterList(self_: *mut c_void, filters: *mut c_void);
     pub fn BLooper_CommonFilterList(self_: *const c_void) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BLooper_new1(name: *const c_void, priority: int32, port_capacity: int32) -> *mut c_void;
+    pub fn BLooper_new1(name: *const c_void, priority: i32, port_capacity: i32) -> *mut c_void;
     // DTOR: pub fn BLooper_~BLooper(self_: *mut c_void);
 
 }

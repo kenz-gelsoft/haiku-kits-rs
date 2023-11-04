@@ -8,6 +8,11 @@
     - 1: `const void*`: SetCursor (void)
     - 1: `const BCursor*`: None 
         - 1: `bool`: SetCursor1 (cursor)
+- 2: BApplication.BLooper: None 
+    - 1: `BMessage*`: BLooper (message)
+    - 1: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `int32`: BLooper1 (char)
 - 2: BApplication.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)
@@ -20,6 +25,11 @@
     - 1: `const char*`: BHandler1 (char)
 - 2: BHandler.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
+- 2: BLooper.BLooper: None 
+    - 1: `BMessage*`: BLooper (message)
+    - 1: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `int32`: BLooper1 (char)
 - 2: BLooper.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
     - 1: `const char*`: BHandler1 (char)

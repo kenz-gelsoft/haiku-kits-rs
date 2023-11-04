@@ -19,6 +19,7 @@ void BHandler_SetFilterList(BHandler * self, BList * filters);
 BList * BHandler_FilterList(BHandler * self);
 bool BHandler_LockLooper(BHandler * self);
 void BHandler_UnlockLooper(BHandler * self);
+BHandler * BHandler_ResolveSpecifier(BHandler * self, BMessage * message, int32 index, BMessage * specifier, int32 what, const char * property);
 bool BHandler_IsWatched(const BHandler * self);
 BHandler *BHandler_new1(const char * name);
 BArchivable * BHandler_Instantiate(BMessage * data);

@@ -15,6 +15,9 @@ BArchivable * BApplication_Instantiate(BMessage * data) {
 void BApplication_ReadyToRun(BApplication * self) {
     return self->ReadyToRun();
 }
+void BApplication_ArgvReceived(BApplication * self, int32 argc, char ** argv) {
+    return self->ArgvReceived(argc, argv);
+}
 void BApplication_AppActivated(BApplication * self, bool active) {
     return self->AppActivated(active);
 }
@@ -44,6 +47,18 @@ void BApplication_SetCursor(BApplication * self, const void * cursor) {
 }
 void BApplication_SetCursor1(BApplication * self, const BCursor * cursor, bool sync) {
     return self->SetCursor(cursor, sync);
+}
+int32 BApplication_CountWindows(const BApplication * self) {
+    return self->CountWindows();
+}
+BWindow * BApplication_WindowAt(const BApplication * self, int32 index) {
+    return self->WindowAt(index);
+}
+int32 BApplication_CountLoopers(const BApplication * self) {
+    return self->CountLoopers();
+}
+BLooper * BApplication_LooperAt(const BApplication * self, int32 index) {
+    return self->LooperAt(index);
 }
 bool BApplication_IsLaunching(const BApplication * self) {
     return self->IsLaunching();

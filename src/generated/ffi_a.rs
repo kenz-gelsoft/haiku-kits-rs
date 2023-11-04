@@ -7,7 +7,7 @@ extern "C" {
     pub fn BApplication_new(data: *mut c_void) -> *mut c_void;
     pub fn BApplication_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BApplication_ReadyToRun(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BApplication_ArgvReceived(self_: *mut c_void, argc: int32, argv: *mut c_void);
+    pub fn BApplication_ArgvReceived(self_: *mut c_void, argc: i32, argv: *mut c_void);
     pub fn BApplication_AppActivated(self_: *mut c_void, active: bool);
     pub fn BApplication_RefsReceived(self_: *mut c_void, message: *mut c_void);
     pub fn BApplication_AboutRequested(self_: *mut c_void);
@@ -19,10 +19,10 @@ extern "C" {
     pub fn BApplication_IsCursorHidden(self_: *const c_void) -> bool;
     pub fn BApplication_SetCursor(self_: *mut c_void, cursor: *const c_void);
     pub fn BApplication_SetCursor1(self_: *mut c_void, cursor: *const c_void, sync: bool);
-    // NOT_SUPPORTED: pub fn BApplication_CountWindows(self_: *const c_void) -> int32;
-    // NOT_SUPPORTED: pub fn BApplication_WindowAt(self_: *const c_void, index: int32) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BApplication_CountLoopers(self_: *const c_void) -> int32;
-    // NOT_SUPPORTED: pub fn BApplication_LooperAt(self_: *const c_void, index: int32) -> *mut c_void;
+    pub fn BApplication_CountWindows(self_: *const c_void) -> i32;
+    pub fn BApplication_WindowAt(self_: *const c_void, index: i32) -> *mut c_void;
+    pub fn BApplication_CountLoopers(self_: *const c_void) -> i32;
+    pub fn BApplication_LooperAt(self_: *const c_void, index: i32) -> *mut c_void;
     pub fn BApplication_IsLaunching(self_: *const c_void) -> bool;
     pub fn BApplication_Signature(self_: *const c_void) -> *const c_void;
     // NOT_SUPPORTED: pub fn BApplication_GetAppInfo(self_: *const c_void, info: *mut c_void) -> status_t;

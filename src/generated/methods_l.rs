@@ -82,9 +82,30 @@ pub trait LooperMethods: HandlerMethods {
             ffi::BLooper_RemoveHandler(self.as_ptr(), handler)
         }
     }
-    // NOT_SUPPORTED: fn CountHandlers()
-    // NOT_SUPPORTED: fn HandlerAt()
-    // NOT_SUPPORTED: fn IndexOf()
+    /// Get the number of handlers associated with this looper.
+    ///
+    /// See [C++ `BLooper::CountHandlers()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a6179629238d0be92d7a89503be24d4e3).
+    fn count_handlers(&self) -> i32 {
+        unsafe { ffi::BLooper_CountHandlers(self.as_ptr()) }
+    }
+    /// Get the handler at an index of the list of associated handlers.
+    ///
+    /// See [C++ `BLooper::HandlerAt()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a6976132123edacf4b3a2831eadf5f4bf).
+    fn handler_at(&self, index: i32) -> Option<HandlerFromCpp<true>> {
+        unsafe { Handler::option_from(ffi::BLooper_HandlerAt(self.as_ptr(), index)) }
+    }
+    /// Get the index of the handler that is in the associated handler list.
+    ///
+    /// See [C++ `BLooper::IndexOf()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a3061534f6d2f3186efca4cddd19f378f).
+    fn index_of<H: HandlerMethods>(&self, handler: Option<&H>) -> i32 {
+        unsafe {
+            let handler = match handler {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BLooper_IndexOf(self.as_ptr(), handler)
+        }
+    }
     /// Get the preferred handler.
     ///
     /// See [C++ `BLooper::PreferredHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#af1a4af6872abc40a887bfcabd55aff98).
@@ -145,8 +166,18 @@ pub trait LooperMethods: HandlerMethods {
     // NOT_SUPPORTED: fn Team()
     // NOT_SUPPORTED: fn LooperForThread()
     // NOT_SUPPORTED: fn LockingThread()
-    // NOT_SUPPORTED: fn CountLocks()
-    // NOT_SUPPORTED: fn CountLockRequests()
+    /// Return the number of recursive locks that are currently being held on this looper.
+    ///
+    /// See [C++ `BLooper::CountLocks()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a4eec703acd9bd7fe9a455af0f81e08f9).
+    fn count_locks(&self) -> i32 {
+        unsafe { ffi::BLooper_CountLocks(self.as_ptr()) }
+    }
+    /// Return the number of pending locks.
+    ///
+    /// See [C++ `BLooper::CountLockRequests()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a64e7b89294df1f7b614d1267f870ecd9).
+    fn count_lock_requests(&self) -> i32 {
+        unsafe { ffi::BLooper_CountLockRequests(self.as_ptr()) }
+    }
     // NOT_SUPPORTED: fn Sem()
     /// Add a common filter to the list of filters that are applied to all incoming messages.
     ///

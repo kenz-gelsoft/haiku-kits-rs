@@ -12,7 +12,12 @@ pub trait ApplicationMethods: LooperMethods {
     fn ready_to_run(&self) {
         unsafe { ffi::BApplication_ReadyToRun(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn ArgvReceived()
+    /// Hook method that gets invoked when the application receives a B_ARGV_RECEIVED message.
+    ///
+    /// See [C++ `BApplication::ArgvReceived()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a0826684edce56baa7a31c89c97a1d161).
+    fn argv_received(&self, argc: i32, argv: *mut c_void) {
+        unsafe { ffi::BApplication_ArgvReceived(self.as_ptr(), argc, argv) }
+    }
     /// Hook method that gets invoked when the application receives B_APP_ACTIVATED message.
     ///
     /// See [C++ `BApplication::AppActivated()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a71e7db8bc9e4f34137bcd4c5e3ed6a16).
@@ -74,10 +79,30 @@ pub trait ApplicationMethods: LooperMethods {
     fn set_cursor_cursor(&self, cursor: *const c_void, sync: bool) {
         unsafe { ffi::BApplication_SetCursor1(self.as_ptr(), cursor, sync) }
     }
-    // NOT_SUPPORTED: fn CountWindows()
-    // NOT_SUPPORTED: fn WindowAt()
-    // NOT_SUPPORTED: fn CountLoopers()
-    // NOT_SUPPORTED: fn LooperAt()
+    /// Returns the number of windows created by the application.
+    ///
+    /// See [C++ `BApplication::CountWindows()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a0cc9fc7396ac3717b238d61ab1f4b82b).
+    fn count_windows(&self) -> i32 {
+        unsafe { ffi::BApplication_CountWindows(self.as_ptr()) }
+    }
+    /// Returns the BWindow object at the specified index in the application's window list.
+    ///
+    /// See [C++ `BApplication::WindowAt()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a8850d9542d628e11d91a4fd25279b65d).
+    fn window_at(&self, index: i32) -> *mut c_void {
+        unsafe { ffi::BApplication_WindowAt(self.as_ptr(), index) }
+    }
+    /// Returns the number of BLoopers created by the application.
+    ///
+    /// See [C++ `BApplication::CountLoopers()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aa7ae6e5ae95ce7befab6e0022a2ec983).
+    fn count_loopers(&self) -> i32 {
+        unsafe { ffi::BApplication_CountLoopers(self.as_ptr()) }
+    }
+    /// Returns the BLooper object at the specified index in the application's looper list.
+    ///
+    /// See [C++ `BApplication::LooperAt()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a68827a127ca45f4c421e3b30ca9500bf).
+    fn looper_at(&self, index: i32) -> Option<LooperFromCpp<true>> {
+        unsafe { Looper::option_from(ffi::BApplication_LooperAt(self.as_ptr(), index)) }
+    }
     /// Returns whether or not the application is in the process of launching.
     ///
     /// See [C++ `BApplication::IsLaunching()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a49c3d8c8521a1b931f45fdcbaedb3f2d).

@@ -18,7 +18,7 @@ extern "C" {
     pub fn BHandler_LockLooper(self_: *mut c_void) -> bool;
     // NOT_SUPPORTED: pub fn BHandler_LockLooperWithTimeout(self_: *mut c_void, timeout: bigtime_t) -> status_t;
     pub fn BHandler_UnlockLooper(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BHandler_ResolveSpecifier(self_: *mut c_void, message: *mut c_void, index: int32, specifier: *mut c_void, what: int32, property: *const c_void) -> *mut c_void;
+    pub fn BHandler_ResolveSpecifier(self_: *mut c_void, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: *const c_void) -> *mut c_void;
     // NOT_SUPPORTED: pub fn BHandler_GetSupportedSuites(self_: *mut c_void, data: *mut c_void) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StartWatching(self_: *mut c_void, target: BMessenger, what: uint32) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StartWatchingAll(self_: *mut c_void, target: BMessenger) -> status_t;

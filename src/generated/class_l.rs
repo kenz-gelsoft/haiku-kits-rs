@@ -18,10 +18,15 @@ impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// Construct a looper from an archived message.
     ///
     /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aad314758fd652fb48d61bcccab8b6ae3).
-    pub fn new(data: *mut c_void) -> LooperFromCpp<FROM_CPP> {
+    pub fn new_with_message(data: *mut c_void) -> LooperFromCpp<FROM_CPP> {
         unsafe { LooperFromCpp(ffi::BLooper_new(data)) }
     }
-    // NOT_SUPPORTED: fn BLooper1()
+    /// Construct a new BLooper with a priority and an capacity.
+    ///
+    /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a33fa84a6ed383e5a897d11380d72ce38).
+    pub fn new_with_char(name: *const c_void, priority: i32, port_capacity: i32) -> LooperFromCpp<FROM_CPP> {
+        unsafe { LooperFromCpp(ffi::BLooper_new1(name, priority, port_capacity)) }
+    }
     pub fn none() -> Option<&'static Self> {
         None
     }

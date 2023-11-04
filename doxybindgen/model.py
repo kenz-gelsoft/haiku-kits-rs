@@ -6,6 +6,7 @@ import re
 CXX2RUST = {
     'double': 'c_double',
     'int': 'c_int',
+    'int32': 'i32',
     'long': 'c_long',
     'size_t': 'usize',
     'unsigned int': 'c_uint',
@@ -20,6 +21,7 @@ RUST_PRIMITIVES = [
     'bool',
     'c_double',
     'c_int',
+    'i32',
     'c_long',
     'c_uchar',
     'c_uint',
