@@ -1,6 +1,7 @@
 #pragma once
 
-#include <None>
+#include <Application.h>
+#include <Archivable.h>
 
 extern "C" {
 
