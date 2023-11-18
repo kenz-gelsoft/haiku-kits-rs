@@ -164,6 +164,8 @@ class Define:
         name = self.name
         v = ''.join(self.__initializer)
         v = ''.join(map(lambda s: s.lstrip(), v.split('\\\n')))
+        if 'B_TO_POSIX_ERROR' in v:
+            v = re.sub(r'B_TO_POSIX_ERROR\((.+)\)', r'(\1)', v)
         (t, v) = translate_initializer(name, v)
         name = RE_IDENT.sub(r'\1', name)
         return 'pub const %s: %s = %s;' % (name, t, v)
