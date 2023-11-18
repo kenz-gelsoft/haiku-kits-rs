@@ -175,7 +175,9 @@ def translate_initializer(name, v):
     v = re.sub(r'B_FROM_POSIX_ERROR\((.+)\)', r'\1', v)
     # - Simple computation
     v = re.sub(r'B_MOUSE_BUTTON\((.+)\)', r'(1 << ((\1) - 1))', v)
-        
+    # - Not a macro, but inline function that simple calculation
+    v = re.sub(r'_rule_\((.+),(.+),(.+),(.+)\)', r'(((\1) << 12) | ((\2) << 8) | ((\3) << 4) | (\4))', v)
+
     t = 'c_int'
     has_long_suffix = RE_LONG_SUFFIX.search(v)
     has_uint_suffix = RE_UINT_SUFFIX.search(v)
