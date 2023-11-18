@@ -84,8 +84,6 @@ class RustClassBinding:
                 yield line                
             for line in self._impl_from_ancestors():
                 yield line
-            for line in self._impl_dynamic_cast_if_needed():
-                yield line
             for line in self._impl_drop_if_needed():
                 yield line
             for line in self._impl_mixin_if_needed():
@@ -160,15 +158,6 @@ class RustClassBinding:
             yield '    }'
             yield '}'
 
-    def _impl_dynamic_cast_if_needed(self):
-        if not self.is_a('BLooper'):
-            return
-        yield 'impl<const FROM_CPP: bool> DynamicCast for %sFromCpp<FROM_CPP> {' % (self.__model.unprefixed(),)
-        yield '    fn class_info() -> ClassInfoFromCpp<true> {'
-        yield '        unsafe { ClassInfoFromCpp::from_ptr(ffi::%s_CLASSINFO()) }' % (self.__model.name)
-        yield '    }'
-        yield '}'
-    
     def _impl_drop_if_needed(self):
         if (self.is_a('wxEvtHandler') or
             self.is_a('wxSizer')):
@@ -609,8 +598,6 @@ class CxxClassBinding:
         yield '// CLASS: %s' % (self.__model.name,)
         for line in self._dtor_lines(is_cc):
             yield line
-        for line in self._class_info_lines(is_cc):
-            yield line
         self.in_condition = None
         for method in self.__methods:
             for line in method.lines(is_cc):
@@ -659,19 +646,6 @@ class CxxClassBinding:
         if is_cc:
             yield '%s {' % (signature,)
             yield '    delete self;'
-            yield '}'
-        else:
-            yield '%s;' % (signature,)
-    
-    def _class_info_lines(self, is_cc):
-        if not self.__model.manager.is_a(self.__model, 'wxObject'):
-            return
-        signature = 'wxClassInfo *%s_CLASSINFO()' % (
-            self.__model.name,
-        )
-        if is_cc:
-            yield '%s {' % (signature,)
-            yield '    return wxCLASSINFO(%s);' % (self.__model.name,)
             yield '}'
         else:
             yield '%s;' % (signature,)

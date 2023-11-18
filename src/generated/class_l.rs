@@ -46,11 +46,6 @@ impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ArchivableFromCpp<F
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> DynamicCast for LooperFromCpp<FROM_CPP> {
-    fn class_info() -> ClassInfoFromCpp<true> {
-        unsafe { ClassInfoFromCpp::from_ptr(ffi::BLooper_CLASSINFO()) }
-    }
-}
 impl<const FROM_CPP: bool> Drop for LooperFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {

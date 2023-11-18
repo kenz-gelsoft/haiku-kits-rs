@@ -58,11 +58,6 @@ impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for ArchivableFrom
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> DynamicCast for ApplicationFromCpp<FROM_CPP> {
-    fn class_info() -> ClassInfoFromCpp<true> {
-        unsafe { ClassInfoFromCpp::from_ptr(ffi::BApplication_CLASSINFO()) }
-    }
-}
 impl<const FROM_CPP: bool> Drop for ApplicationFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
