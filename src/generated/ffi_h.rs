@@ -3,7 +3,7 @@ use super::*;
 extern "C" {
 
     // BHandler
-    pub fn BHandler_CLASSINFO() -> *mut c_void;
+    pub fn BHandler_delete(self_: *mut c_void);
     pub fn BHandler_new(data: *mut c_void) -> *mut c_void;
     pub fn BHandler_MessageReceived(self_: *mut c_void, message: *mut c_void);
     pub fn BHandler_Looper(self_: *const c_void) -> *mut c_void;

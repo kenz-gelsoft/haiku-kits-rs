@@ -33,14 +33,9 @@ class RustClassBinding:
             self.__model.name,
         )
         if for_ffi:
-            if not self.is_a('BArchivable'):
-                yield 'pub fn %s_delete(self_: *mut c_void);' % (
-                    self.__model.name,
-                )
-            else:
-                yield 'pub fn %s_CLASSINFO() -> *mut c_void;' % (
-                    self.__model.name,
-                )
+            yield 'pub fn %s_delete(self_: *mut c_void);' % (
+                self.__model.name,
+            )
             for method in self.__methods:
                 for line in method.lines(for_ffi=True):
                     yield line
