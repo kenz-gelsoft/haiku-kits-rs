@@ -94,10 +94,10 @@ pub mod methods {
     pub use super::generated::methods::*;
     use super::*;
 
-    pub trait Bindable {
-        fn bind<E: EventMethods, F: Fn(&E) + 'static>(&self, event_type: RustEvent, closure: F);
-        fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F);
-    }
+//    pub trait Bindable {
+//        fn bind<E: EventMethods, F: Fn(&E) + 'static>(&self, event_type: RustEvent, closure: F);
+//        fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F);
+//    }
 
     pub trait ArrayIntMethods: WxRustMethods {
         fn add(&self, i: c_int) {
@@ -127,35 +127,35 @@ pub mod methods {
     //
     // This trait should be `DateTimeMethods` and, the base trait
     // should be `DateTimeMethodsAuto` for API consistencey.
-    pub trait DateTimeMethodsManual: DateTimeMethods {
-        fn parse_date(&self, date: &str) -> Option<usize> {
-            unsafe {
-                let end = StringConstIterator::new();
-                let date = WxString::from(date);
-                let date = date.as_ptr();
-                if ffi::wxDateTime_ParseDate(self.as_ptr(), date, end.as_ptr()) {
-                    Some(end.index_in(date))
-                } else {
-                    None
-                }
-            }
-        }
-    }
-
-    pub trait DynamicCast: ObjectMethods {
-        fn class_info() -> ClassInfoFromCpp<true>;
-        fn dynamic_cast<T: DynamicCast>(&self) -> Option<T::CppManaged> {
-            if self.is_kind_of(Some(&T::class_info())) {
-                unsafe { Some(T::from_cpp_managed_ptr(self.as_ptr())) }
-            } else {
-                None
-            }
-        }
-    }
-
-    pub trait Trackable<T>: EvtHandlerMethods {
-        fn to_weak_ref(&self) -> WeakRef<T>;
-    }
+//    pub trait DateTimeMethodsManual: DateTimeMethods {
+//        fn parse_date(&self, date: &str) -> Option<usize> {
+//            unsafe {
+//                let end = StringConstIterator::new();
+//                let date = WxString::from(date);
+//                let date = date.as_ptr();
+//                if ffi::wxDateTime_ParseDate(self.as_ptr(), date, end.as_ptr()) {
+//                    Some(end.index_in(date))
+//                } else {
+//                    None
+//                }
+//            }
+//        }
+//    }
+//
+//    pub trait DynamicCast: ObjectMethods {
+//        fn class_info() -> ClassInfoFromCpp<true>;
+//        fn dynamic_cast<T: DynamicCast>(&self) -> Option<T::CppManaged> {
+//            if self.is_kind_of(Some(&T::class_info())) {
+//                unsafe { Some(T::from_cpp_managed_ptr(self.as_ptr())) }
+//            } else {
+//                None
+//            }
+//        }
+//    }
+//
+//    pub trait Trackable<T>: EvtHandlerMethods {
+//        fn to_weak_ref(&self) -> WeakRef<T>;
+//    }
 }
 
 // wxString
@@ -203,31 +203,31 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
     (trampoline::<F> as _, Box::into_raw(closure) as _)
 }
 
-impl<T: EvtHandlerMethods> Bindable for T {
-    fn bind<E: EventMethods, F: Fn(&E) + 'static>(&self, event_type: RustEvent, closure: F) {
-        unsafe {
-            let (f, param) = to_wx_callable(move |arg: *mut c_void| {
-                E::with_ptr(arg, |event| {
-                    closure(event);
-                });
-            });
-            ffi::wxEvtHandler_Bind(self.as_ptr(), event_type as c_int, f, param);
-        }
-    }
-    fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F) {
-        unsafe {
-            let (f, param) = to_wx_callable(closure);
-            ffi::wxEvtHandler_CallAfter(self.as_ptr(), f, param);
-        }
-    }
-}
-
+//impl<T: EvtHandlerMethods> Bindable for T {
+//    fn bind<E: EventMethods, F: Fn(&E) + 'static>(&self, event_type: RustEvent, closure: F) {
+//        unsafe {
+//            let (f, param) = to_wx_callable(move |arg: *mut c_void| {
+//                E::with_ptr(arg, |event| {
+//                    closure(event);
+//                });
+//            });
+//            ffi::wxEvtHandler_Bind(self.as_ptr(), event_type as c_int, f, param);
+//        }
+//    }
+//    fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F) {
+//        unsafe {
+//            let (f, param) = to_wx_callable(closure);
+//            ffi::wxEvtHandler_CallAfter(self.as_ptr(), f, param);
+//        }
+//    }
+//}
+//
 // Effectively all wxEvtHandlers are wxTrackable.
-impl<T: EvtHandlerMethods> Trackable<T> for T {
-    fn to_weak_ref(&self) -> WeakRef<T> {
-        unsafe { WeakRef::from(self.as_ptr()) }
-    }
-}
+//impl<T: EvtHandlerMethods> Trackable<T> for T {
+//    fn to_weak_ref(&self) -> WeakRef<T> {
+//        unsafe { WeakRef::from(self.as_ptr()) }
+//    }
+//}
 
 pub struct WxArgs {
     argc: c_int,
@@ -410,4 +410,4 @@ impl<T> Drop for WeakRef<T> {
     }
 }
 
-impl<const FROM_CPP: bool> DateTimeMethodsManual for DateTimeFromCpp<FROM_CPP> {}
+//impl<const FROM_CPP: bool> DateTimeMethodsManual for DateTimeFromCpp<FROM_CPP> {}
