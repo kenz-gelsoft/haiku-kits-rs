@@ -291,6 +291,7 @@ def bytes_literal(t, v):
     byte_count = len(v) - 2 # quotes
     if byte_count == 1:
         t = 'char'
+        return (t, v)
     elif byte_count == 2:
         t = 'c_short'
     elif byte_count == 4:

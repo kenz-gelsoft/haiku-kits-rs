@@ -1542,11 +1542,11 @@ pub const B_MAIL_US_ASCII_CONVERSION: c_uint = (-3);
 pub const B_MAIL_UTF8_CONVERSION: c_uint = (-2);
 pub const BASE64_LINELENGTH: c_int = 76;
 //  ENUM: mail_encoding
-pub const base64: char = 0x62 /* 'b' */;
-pub const quoted_printable: char = 0x71 /* 'q' */;
-pub const seven_bit: char = 0x37 /* '7' */;
-pub const eight_bit: char = 0x38 /* '8' */;
-pub const uuencode: char = 0x75 /* 'u' */;
+pub const base64: char = 'b';
+pub const quoted_printable: char = 'q';
+pub const seven_bit: char = '7';
+pub const eight_bit: char = '8';
+pub const uuencode: char = 'u';
 pub const null_encoding: c_int = 0;
 pub const no_encoding: c_int = -1;
 
