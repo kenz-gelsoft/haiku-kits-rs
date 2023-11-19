@@ -229,7 +229,7 @@ class RustClassBinding:
         indent = ' ' * 4 * 1
         base = self.__model.primary_base()
         if not base:
-            base = '__WxRust'
+            base = '_WxRust'
         yield "    /// This trait represents [C++ `%s` class](%s)'s methods and inheritance." % (
             self.__model.name,
             self.__model.doc_url(),
