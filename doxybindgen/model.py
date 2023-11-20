@@ -47,6 +47,7 @@ RUST_KEYWORDS = [
     'break',
     'do',
     'impl',
+    'loop',
     'move',
     'ref',
     'type',

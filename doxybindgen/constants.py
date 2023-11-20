@@ -7,6 +7,7 @@ RE_IDENT = re.compile(r'wx([^_]\w)')
 
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
+RE_GS_ID_CAST = re.compile(r'\(gs_id\)(.*)')
 RE_INT_CAST = re.compile(r'\(int\)(.*)')
 RE_UINT_CAST = re.compile(r'\(\(uint32\)(.*)\)')
 
@@ -208,6 +209,7 @@ def translate_initializer(name, v):
     elif "'" in v:
         (t, v) = bytes_literal(t, v)
     v = RE_INT_CAST.sub(r'\1', v) # remove int cast
+    v = RE_GS_ID_CAST.sub(r'\1', v) # remove gs_id cast
     # TODO: string types
     v = re.sub(r'wxString\((".+")\)', r'\1', v)
     v = re.sub(r'wxS\((".+")\)', r'\1', v)

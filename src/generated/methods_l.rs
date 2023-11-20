@@ -173,7 +173,7 @@ pub trait LooperMethods: HandlerMethods {
     /// Run the event loop in the current thread.
     ///
     /// See [C++ `BLooper::Loop()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a5cb1d2eb7640fdcbc1085ad19583691d).
-    fn loop(&self) {
+    fn loop_(&self) {
         unsafe { ffi::BLooper_Loop(self.as_ptr()) }
     }
     /// Hook method that is called after a B_QUIT_REQUESTED message.

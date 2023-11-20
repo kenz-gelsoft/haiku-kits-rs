@@ -400,8 +400,8 @@ pub const B_DRIVER_CHANGED: c_int = 0x0001;
 pub const B_MODE_CHANGED: c_int = 0x0002;
 
 pub const B_GS_CUR_API_VERSION: c_int = B_BEOS_VERSION;
-pub const B_GS_INVALID_SOUND: c_int = ((gs_id) - 1);
-pub const B_GS_MAIN_SOUND: c_int = ((gs_id) - 2);
+pub const B_GS_INVALID_SOUND: c_int = (-1);
+pub const B_GS_MAIN_SOUND: c_int = (-2);
 pub const B_GS_MIN_API_VERSION: c_int = 0x100;
 //  ENUM: @9
 pub const B_GS_BAD_HANDLE: c_int = -99999;

@@ -19,7 +19,7 @@ pub use manual::*;
 
 mod generated;
 pub use generated::class::*;
-pub use generated::RustEvent;
+//pub use generated::RustEvent;
 
 use methods::*;
 
