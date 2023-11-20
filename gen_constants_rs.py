@@ -14,7 +14,7 @@ PROLOGUE = '''\
 
 use std::os::raw::{c_int, c_long, c_uint};
 
-use crate::manual::*;
+//use crate::manual::*;
 
 pub const _VIEW_TOP_: c_int = 1;
 pub const _VIEW_LEFT_: c_int = 2;

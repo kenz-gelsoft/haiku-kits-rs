@@ -37,20 +37,20 @@ mod ffi {
         pub length: usize,
     }
     extern "C" {
-        pub fn wxObject_delete(self_: *mut c_void);
+//        pub fn wxObject_delete(self_: *mut c_void);
 
         pub fn wxApp_argc() -> c_int;
         pub fn wxApp_argv(i: c_int) -> *mut c_void;
 
         pub fn AppSetOnInit(aFn: *mut c_void, aParam: *mut c_void);
-        pub fn wxEvtHandler_Bind(
-            self_: *mut c_void,
-            eventType: c_int,
-            aFn: *mut c_void,
-            aParam: *mut c_void,
-        );
-
-        pub fn wxEvtHandler_CallAfter(self_: *mut c_void, aFn: *mut c_void, aParam: *mut c_void);
+//        pub fn wxEvtHandler_Bind(
+//            self_: *mut c_void,
+//            eventType: c_int,
+//            aFn: *mut c_void,
+//            aParam: *mut c_void,
+//        );
+//
+//        pub fn wxEvtHandler_CallAfter(self_: *mut c_void, aFn: *mut c_void, aParam: *mut c_void);
 
         // String
         pub fn wxString_new(psz: *const c_uchar, nLength: usize) -> *mut c_void;
@@ -80,13 +80,6 @@ mod ffi {
         pub fn OpaqueWeakRef_copy(obj: *mut c_void) -> *mut c_void;
         pub fn OpaqueWeakRef_delete(self_: *mut c_void);
         pub fn OpaqueWeakRef_Get(self_: *mut c_void) -> *mut c_void;
-
-        // DateTime
-        pub fn wxDateTime_ParseDate(
-            self_: *mut c_void,
-            date: *const c_void,
-            end: *mut c_void,
-        ) -> bool;
     }
 }
 
