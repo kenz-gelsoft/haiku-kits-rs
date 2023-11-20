@@ -4,9 +4,27 @@
 // FIXME: workaround for windows (LLP64)
 #![allow(overflowing_literals)]
 
-use std::os::raw::{c_int, c_long};
+use std::os::raw::{c_int, c_long, c_uint};
 
 use crate::manual::*;
+
+pub const _VIEW_TOP_: c_int = 1;
+pub const _VIEW_LEFT_: c_int = 2;
+pub const _VIEW_BOTTOM_: c_int = 3;
+pub const _VIEW_RIGHT_: c_int = 4;
+pub const _VIEW_CENTER_: c_int = 5;
+pub const B_BEOS_VERSION: c_int = 0x0500;
+pub const INT_MIN: c_int = -2147483647;
+pub const MAXPATHLEN: c_int = 1024;
+pub const NAME_MAX: c_int = 256;
+pub const O_APPEND: c_int = 0x00000800;
+pub const O_RDONLY: c_int = 00;
+pub const O_WRONLY: c_int = 01;
+pub const O_RDWR: c_int = 02;
+pub const O_EXCL: c_int = 0x0100;
+pub const O_CREAT: c_int = 0x0200;
+pub const O_TRUNC: c_int = 0x0400;
+pub const SYMLOOP_MAX: c_int = 16;
 
 //  ENUM: diff_type
 pub const B_HOURS_DIFF: c_int = 0;
@@ -853,7 +871,7 @@ pub const B_ALIGN_MIDDLE: c_int = 0x20;
 pub const B_ALIGN_BOTTOM: c_int = 0x30;
 pub const B_ALIGN_VERTICAL_CENTER: c_int = B_ALIGN_MIDDLE;
 pub const B_ALIGN_VERTICAL_UNSET: c_long = -1;
-pub const B_ALIGN_NO_VERTICAL: c_int = B_ALIGN_VERTICAL_UNSET;
+//  SKIP: B_ALIGN_NO_VERTICAL
 pub const B_ALIGN_USE_FULL_HEIGHT: c_long = -2;
 
 //  ENUM: list_view_type
@@ -1046,7 +1064,7 @@ pub const B_FLOATING_WINDOW: c_int = 21;
 //  FUNC: B_TRANSLATE_SYSTEM_NAME
 pub const B_TRANSLATION_SYSTEM_NAME_CONTEXT: &str = "System name";
 
-pub const U_ICU_NAMESPACE: c_int = icu;
+//  SKIP: U_ICU_NAMESPACE
 //  ENUM: collator_strengths
 pub const B_COLLATE_DEFAULT: c_int = -1;
 pub const B_COLLATE_PRIMARY: c_int = 1;
@@ -1055,9 +1073,9 @@ pub const B_COLLATE_TERTIARY: c_int = 1 + 2;
 pub const B_COLLATE_QUATERNARY: c_int = 1 + 3;
 pub const B_COLLATE_IDENTICAL: c_int = 127;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 //  ENUM: BWeekday
 pub const B_WEEKDAY_MONDAY: c_int = 1;
 pub const B_WEEKDAY_TUESDAY: c_int = 1 + 1;
@@ -1079,7 +1097,7 @@ pub const B_DATE_ELEMENT_MINUTE: c_int = 1 << 6;
 pub const B_DATE_ELEMENT_SECOND: c_int = 1 << 7;
 pub const B_DATE_ELEMENT_TIMEZONE: c_int = 1 << 8;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 
 //  ENUM: @52
 pub const B_CURRENCY_FIELD: c_int = 0;
@@ -1094,7 +1112,7 @@ pub const B_PERCENT_FIELD: c_int = 0 + 8;
 pub const B_PERMILLE_FIELD: c_int = 0 + 9;
 pub const B_SIGN_FIELD: c_int = 0 + 10;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 //  ENUM: BDateFormatStyle
 pub const B_FULL_DATE_FORMAT: c_int = 0;
 pub const B_LONG_DATE_FORMAT: c_int = 0 + 1;
@@ -1111,7 +1129,7 @@ pub const B_MEDIUM_TIME_FORMAT: c_int = 0 + 2;
 pub const B_SHORT_TIME_FORMAT: c_int = 0 + 3;
 pub const B_TIME_FORMAT_STYLE_COUNT: c_int = 0 + 4;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 //  ENUM: script_direction
 pub const B_LEFT_TO_RIGHT: c_int = 0;
 pub const B_RIGHT_TO_LEFT: c_int = 0 + 1;
@@ -1193,11 +1211,11 @@ pub const B_ALT_DIGITS: c_int = B_OTHER_STRINGS_BASE + 5;
 pub const B_DECIMAL_SEPARATOR: c_int = 10;
 pub const B_GROUPING_SEPARATOR: c_int = 10 + 1;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 //  ENUM: time_unit_element
 pub const B_TIME_UNIT_YEAR: c_int = 0;
 pub const B_TIME_UNIT_MONTH: c_int = 0 + 1;
@@ -1211,7 +1229,7 @@ pub const B_TIME_UNIT_LAST: c_int = B_TIME_UNIT_SECOND;
 pub const B_TIME_UNIT_ABBREVIATED: c_int = 0;
 pub const B_TIME_UNIT_FULL: c_int = 0 + 1;
 
-//   DUP: U_ICU_NAMESPACE
+//  SKIP: U_ICU_NAMESPACE
 
 //  ENUM: unicode_char_category
 pub const B_UNICODE_UNASSIGNED: c_int = 0;
@@ -1537,9 +1555,9 @@ pub const B_UNREAD: c_int = 0;
 pub const B_SEEN: c_int = 1;
 pub const B_READ: c_int = 2;
 
-pub const B_MAIL_NULL_CONVERSION: c_uint = (-1);
-pub const B_MAIL_US_ASCII_CONVERSION: c_uint = (-3);
-pub const B_MAIL_UTF8_CONVERSION: c_uint = (-2);
+pub const B_MAIL_NULL_CONVERSION: c_uint = 0xffffffffffffffff;
+pub const B_MAIL_US_ASCII_CONVERSION: c_uint = 0xfffffffffffffffd;
+pub const B_MAIL_UTF8_CONVERSION: c_uint = 0xfffffffffffffffe;
 pub const BASE64_LINELENGTH: c_int = 76;
 //  ENUM: mail_encoding
 pub const base64: char = 'b';

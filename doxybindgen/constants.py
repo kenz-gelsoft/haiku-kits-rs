@@ -8,7 +8,7 @@ RE_IDENT = re.compile(r'wx([^_]\w)')
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
 RE_INT_CAST = re.compile(r'\(int\)(.*)')
-RE_UINT_CAST = re.compile(r'\(uint32\)(.*)')
+RE_UINT_CAST = re.compile(r'\(\(uint32\)(.*)\)')
 
 RE_LONG_SUFFIX = re.compile(r'(\d+)[Ll]')
 RE_UINT_SUFFIX = re.compile(r'(\d+)[uU]')
@@ -62,6 +62,9 @@ blocklist = [
     'B_UTF8_REGISTERED',
     'B_UTF8_SMILING_FACE',
     'B_UTF8_TRADEMARK',
+    
+    # i64
+    'B_ALIGN_NO_VERTICAL',
 
     # non-trivial-object
     'B_CATALOG', # BLocaleRoster::Default()->GetCatalog()
@@ -135,6 +138,9 @@ blocklist = [
     'B_SCNxOFF',
     'B_SCNxPHYSADDR',
     'B_SCNxSIZE',
+    
+    # C++ namespace alias
+    'U_ICU_NAMESPACE',
 ]
 generated = set()
 class Define:
@@ -190,6 +196,8 @@ def translate_initializer(name, v):
         t = 'c_uint'
         v = RE_UINT_SUFFIX.sub(r'\1', v)
         v = RE_UINT_CAST.sub(r'\1', v)
+        if '-' in v:
+            v = hex(2**64 + int(v))
     elif v == 'true' or v == 'false':
         t = 'bool'
     elif has_float_suffix:
