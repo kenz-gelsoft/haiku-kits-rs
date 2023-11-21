@@ -4,17 +4,12 @@ import re
 
 
 CXX2RUST = {
-    'bigtime_t': 'i64',
     'double': 'c_double',
     'int': 'c_int',
     'int32': 'i32',
     'long': 'c_long',
     'perform_code': 'u32',
-    'sem_id': 'i32',
     'size_t': 'usize',
-    'status_t': 'i32',
-    'team_id': 'i32',
-    'thread_id': 'i32',
     'uint32': 'u32',
     'unsigned int': 'c_uint',
 }
@@ -23,6 +18,13 @@ STR_TYPES = [
 CXX_PRIMITIVES = [
     'bool',
     'void',
+
+    # Rust typedefs
+    'bigtime_t',
+    'sem_id',
+    'status_t',
+    'team_id',
+    'thread_id',
 ]
 RUST_PRIMITIVES = [
     'bool',
@@ -35,6 +37,10 @@ RUST_PRIMITIVES = [
     'i64',
     'u32',
     'usize',
+
+    # Rust typedefs
+    'bigtime_t',
+    'thread_id',
 ]
 OS_UNSUPPORTED_TYPES = [
 ]

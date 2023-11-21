@@ -9,19 +9,19 @@ pub trait LooperMethods: HandlerMethods {
     /// Post a message with the command as what identifier to this looper.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a0de6737bfbf8a8b4913adc8c74bb544e).
-    fn post_message_uint32(&self, command: u32) -> i32 {
+    fn post_message_uint32(&self, command: u32) -> status_t {
         unsafe { ffi::BLooper_PostMessage(self.as_ptr(), command) }
     }
     /// Post a message to this looper.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ae79a7818ce950d8edcd238f7948df020).
-    fn post_message_message(&self, message: *mut c_void) -> i32 {
+    fn post_message_message(&self, message: *mut c_void) -> status_t {
         unsafe { ffi::BLooper_PostMessage1(self.as_ptr(), message) }
     }
     /// Sends a message with command what identifier to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a2dc16ecf211eb7e32eaa4b08863e856d).
-    fn post_message_uint32_handler<H: HandlerMethods, H2: HandlerMethods>(&self, command: u32, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
+    fn post_message_uint32_handler<H: HandlerMethods, H2: HandlerMethods>(&self, command: u32, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
         unsafe {
             let handler = match handler {
                 Some(r) => r.as_ptr(),
@@ -37,7 +37,7 @@ pub trait LooperMethods: HandlerMethods {
     /// Send a message to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ac75eed80e72b236650f19b4015de6e99).
-    fn post_message_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> i32 {
+    fn post_message_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
         unsafe {
             let handler = match handler {
                 Some(r) => r.as_ptr(),
@@ -167,7 +167,7 @@ pub trait LooperMethods: HandlerMethods {
     /// Start the event loop.
     ///
     /// See [C++ `BLooper::Run()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a88bb85410e0c4124bdc6f16168df4811).
-    fn run(&self) -> i32 {
+    fn run(&self) -> thread_id {
         unsafe { ffi::BLooper_Run(self.as_ptr()) }
     }
     /// Run the event loop in the current thread.
@@ -209,31 +209,31 @@ pub trait LooperMethods: HandlerMethods {
     /// Lock a looper with a timeout.
     ///
     /// See [C++ `BLooper::LockWithTimeout()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a734cdb06bfe92efdea24528c9b43bfc1).
-    fn lock_with_timeout(&self, timeout: i64) -> i32 {
+    fn lock_with_timeout(&self, timeout: bigtime_t) -> status_t {
         unsafe { ffi::BLooper_LockWithTimeout(self.as_ptr(), timeout) }
     }
     /// Return the thread id of the internal message looper thread.
     ///
     /// See [C++ `BLooper::Thread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a257d396d04d128edf7a0c9669ead36c0).
-    fn thread(&self) -> i32 {
+    fn thread(&self) -> thread_id {
         unsafe { ffi::BLooper_Thread(self.as_ptr()) }
     }
     /// Return the team id in which this looper exists.
     ///
     /// See [C++ `BLooper::Team()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#afeb7a4900f26e7746d6c8bdb5cf684f3).
-    fn team(&self) -> i32 {
+    fn team(&self) -> team_id {
         unsafe { ffi::BLooper_Team(self.as_ptr()) }
     }
     /// Static method to retrieve a BLooper for a specified thread.
     ///
     /// See [C++ `BLooper::LooperForThread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#acf16bb9628e7dbbace3920ebeff6dc34).
-    fn looper_for_thread(thread: i32) -> Option<LooperFromCpp<true>> {
+    fn looper_for_thread(thread: thread_id) -> Option<LooperFromCpp<true>> {
         unsafe { Looper::option_from(ffi::BLooper_LooperForThread(thread)) }
     }
     /// Return the thread id of the thread that currently holds the lock.
     ///
     /// See [C++ `BLooper::LockingThread()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a1d5d9dbc9d890ed1329b69fbfe9254b3).
-    fn locking_thread(&self) -> i32 {
+    fn locking_thread(&self) -> thread_id {
         unsafe { ffi::BLooper_LockingThread(self.as_ptr()) }
     }
     /// Return the number of recursive locks that are currently being held on this looper.
@@ -251,7 +251,7 @@ pub trait LooperMethods: HandlerMethods {
     /// Return the id of the semaphore that is used to lock this looper.
     ///
     /// See [C++ `BLooper::Sem()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aa96df67561b0ce1428ae45148c21e01f).
-    fn sem(&self) -> i32 {
+    fn sem(&self) -> sem_id {
         unsafe { ffi::BLooper_Sem(self.as_ptr()) }
     }
     /// Add a common filter to the list of filters that are applied to all incoming messages.

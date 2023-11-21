@@ -45,7 +45,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// Sets the interval that the B_PULSE messages are sent.
     ///
     /// See [C++ `BApplication::SetPulseRate()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a565e7ede16cd6a0e7df384c3c97ba860).
-    fn set_pulse_rate(&self, rate: i64) {
+    fn set_pulse_rate(&self, rate: bigtime_t) {
         unsafe { ffi::BApplication_SetPulseRate(self.as_ptr(), rate) }
     }
     /// Restores the cursor.
@@ -123,7 +123,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// Fills out the info parameter with information about the application.
     ///
     /// See [C++ `BApplication::GetAppInfo()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a2b27a6149b1bf53e71a8d83382708308).
-    fn get_app_info(&self, info: *mut c_void) -> i32 {
+    fn get_app_info(&self, info: *mut c_void) -> status_t {
         unsafe { ffi::BApplication_GetAppInfo(self.as_ptr(), info) }
     }
     /// Returns a BResources object for the application.
@@ -135,7 +135,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// Register a looper to quit when the application quits.
     ///
     /// See [C++ `BApplication::RegisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a2b46141e108da1167be0d3427ca37716).
-    fn register_looper<L: LooperMethods>(&self, looper: Option<&L>) -> i32 {
+    fn register_looper<L: LooperMethods>(&self, looper: Option<&L>) -> status_t {
         unsafe {
             let looper = match looper {
                 Some(r) => r.as_ptr(),
@@ -147,7 +147,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// Remove a previously registered Looper from the quit-list.
     ///
     /// See [C++ `BApplication::UnregisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aac40a7828ef8cc9c65f65a30b14594f6).
-    fn unregister_looper<L: LooperMethods>(&self, looper: Option<&L>) -> i32 {
+    fn unregister_looper<L: LooperMethods>(&self, looper: Option<&L>) -> status_t {
         unsafe {
             let looper = match looper {
                 Some(r) => r.as_ptr(),
@@ -160,7 +160,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// Returns the status of the constructor.
     ///
     /// See [C++ `BApplication::InitCheck()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aef81a1f9e59c305f2af7a7ad8e240ae0).
-    fn init_check(&self) -> i32 {
+    fn init_check(&self) -> status_t {
         unsafe { ffi::BApplication_InitCheck(self.as_ptr()) }
     }
 }
@@ -174,25 +174,25 @@ pub trait ArchivableMethods: WxRustMethods {
     /// Method relating to the use of BArchiver.
     ///
     /// See [C++ `BArchivable::AllArchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a4075315c407443a3b0dbb3d7551b53c9).
-    fn all_archived(&self, archive: *mut c_void) -> i32 {
+    fn all_archived(&self, archive: *mut c_void) -> status_t {
         unsafe { ffi::BArchivable_AllArchived(self.as_ptr(), archive) }
     }
     /// Method relating to the use of BUnarchiver.
     ///
     /// See [C++ `BArchivable::AllUnarchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a2b1d74c147ea18e4b4bfacd42f11e0d2).
-    fn all_unarchived(&self, archive: *const c_void) -> i32 {
+    fn all_unarchived(&self, archive: *const c_void) -> status_t {
         unsafe { ffi::BArchivable_AllUnarchived(self.as_ptr(), archive) }
     }
     /// Archive the object into a BMessage.
     ///
     /// See [C++ `BArchivable::Archive()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a051c5263dd1a75dcf28787b60825dc44).
-    fn archive(&self, into: *mut c_void, deep: bool) -> i32 {
+    fn archive(&self, into: *mut c_void, deep: bool) -> status_t {
         unsafe { ffi::BArchivable_Archive(self.as_ptr(), into, deep) }
     }
     /// Perform some action (Internal method defined for binary compatibility purposes).
     ///
     /// See [C++ `BArchivable::Perform()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a827fa92febcf925f07545aa9777df9de).
-    fn perform(&self, d: u32, arg: *mut c_void) -> i32 {
+    fn perform(&self, d: u32, arg: *mut c_void) -> status_t {
         unsafe { ffi::BArchivable_Perform(self.as_ptr(), d, arg) }
     }
     /// Static member to restore objects from messages.

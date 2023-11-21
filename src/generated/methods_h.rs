@@ -81,7 +81,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Lock the looper associated with this handler, with a time out value.
     ///
     /// See [C++ `BHandler::LockLooperWithTimeout()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#afa0099ff6defcb6d64e3ee1c2fb47afe).
-    fn lock_looper_with_timeout(&self, timeout: i64) -> i32 {
+    fn lock_looper_with_timeout(&self, timeout: bigtime_t) -> status_t {
         unsafe { ffi::BHandler_LockLooperWithTimeout(self.as_ptr(), timeout) }
     }
     /// Unlock the looper.
@@ -99,7 +99,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Reports the suites of messages and specifiers that derived classes understand.
     ///
     /// See [C++ `BHandler::GetSupportedSuites()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#acf34435dada239f411e8e034e0ea36b5).
-    fn get_supported_suites(&self, data: *mut c_void) -> i32 {
+    fn get_supported_suites(&self, data: *mut c_void) -> status_t {
         unsafe { ffi::BHandler_GetSupportedSuites(self.as_ptr(), data) }
     }
     // NOT_SUPPORTED: fn StartWatching()
@@ -109,7 +109,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Subscribe an observer for a specific state change of this handler.
     ///
     /// See [C++ `BHandler::StartWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a20713ff6ee9df49a014f391374eaf689).
-    fn start_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> i32 {
+    fn start_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> status_t {
         unsafe {
             let observer = match observer {
                 Some(r) => r.as_ptr(),
@@ -121,7 +121,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Subscribe an observer for a all state changes.
     ///
     /// See [C++ `BHandler::StartWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a31927c51d89e0e3b3bf609a786ee6c3b).
-    fn start_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> i32 {
+    fn start_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> status_t {
         unsafe {
             let observer = match observer {
                 Some(r) => r.as_ptr(),
@@ -133,7 +133,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Unsubscribe an observer from watching a specific state.
     ///
     /// See [C++ `BHandler::StopWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#ad3544be491270f856a0af8d36ce02d78).
-    fn stop_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> i32 {
+    fn stop_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> status_t {
         unsafe {
             let observer = match observer {
                 Some(r) => r.as_ptr(),
@@ -145,7 +145,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Unsubscribe an observer from watching all states.
     ///
     /// See [C++ `BHandler::StopWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a8b9a424ce63f5932666094b6eadf10cf).
-    fn stop_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> i32 {
+    fn stop_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> status_t {
         unsafe {
             let observer = match observer {
                 Some(r) => r.as_ptr(),

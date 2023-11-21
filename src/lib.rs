@@ -28,6 +28,17 @@ type ArgChar = u16;
 #[cfg(not(windows))]
 type ArgChar = u8;
 
+#[allow(non_camel_case_types)]
+pub type bigtime_t = i64;
+#[allow(non_camel_case_types)]
+pub type sem_id = i32;
+#[allow(non_camel_case_types)]
+pub type status_t = i32;
+#[allow(non_camel_case_types)]
+pub type team_id = i32;
+#[allow(non_camel_case_types)]
+pub type thread_id = i32;
+
 mod ffi {
     use std::os::raw::{c_int, c_uchar, c_void};
 
