@@ -169,7 +169,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// This trait represents [C++ `BArchivable` class](https://www.haiku-os.org/docs/api/classBArchivable.html)'s methods and inheritance.
     ///
     /// See [`ArchivableFromCpp`] documentation for the class usage.
-pub trait ArchivableMethods: WxRustMethods {
+pub trait ArchivableMethods: RustBindingMethods {
     // DTOR: fn ~BArchivable()
     /// Method relating to the use of BArchiver.
     ///

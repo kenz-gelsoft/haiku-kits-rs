@@ -1,6 +1,6 @@
 use std::os::raw::c_void;
 
-pub trait WxRustMethods {
+pub trait RustBindingMethods {
     type CppManaged;
     unsafe fn as_ptr(&self) -> *mut c_void;
     unsafe fn from_ptr(ptr: *mut c_void) -> Self;

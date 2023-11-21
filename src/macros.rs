@@ -15,7 +15,7 @@ macro_rules! wxwidgets {
         $(
             impl<const FROM_CPP: bool> $methods for $typeFromCpp<FROM_CPP> {}
         )*
-        impl<const FROM_CPP: bool> WxRustMethods for $typeFromCpp<FROM_CPP> {
+        impl<const FROM_CPP: bool> RustBindingMethods for $typeFromCpp<FROM_CPP> {
             type CppManaged = $typeFromCpp<true>;
             unsafe fn as_ptr(&self) -> *mut c_void { self.0 }
             unsafe fn from_ptr(ptr: *mut c_void) -> Self {

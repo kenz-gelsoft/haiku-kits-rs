@@ -102,7 +102,7 @@ pub mod methods {
 //        fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F);
 //    }
 
-    pub trait ArrayIntMethods: WxRustMethods {
+    pub trait ArrayIntMethods: RustBindingMethods {
         fn add(&self, i: c_int) {
             unsafe { ffi::wxArrayInt_Add(self.as_ptr(), i) }
         }
@@ -111,7 +111,7 @@ pub mod methods {
         }
     }
 
-    pub trait ArrayStringMethods: WxRustMethods {
+    pub trait ArrayStringMethods: RustBindingMethods {
         fn add(&self, s: &str) {
             unsafe {
                 let s = WxString::from(s);
@@ -120,7 +120,7 @@ pub mod methods {
         }
     }
 
-    pub trait StringConstIteratorMethods: WxRustMethods {
+    pub trait StringConstIteratorMethods: RustBindingMethods {
         fn index_in(&self, s: *const c_void) -> usize {
             unsafe { ffi::wxStringConstIterator_IndexIn(self.as_ptr(), s) }
         }
@@ -374,7 +374,7 @@ pub fn entry() {
 
 // wxWeakRef
 pub struct WeakRef<T>(*mut c_void, PhantomData<T>);
-impl<T: WxRustMethods> WeakRef<T> {
+impl<T: RustBindingMethods> WeakRef<T> {
     pub unsafe fn from(ptr: *mut c_void) -> Self {
         let ptr = if ptr.is_null() {
             ptr
@@ -399,7 +399,7 @@ impl<T: WxRustMethods> WeakRef<T> {
         }
     }
 }
-impl<T: WxRustMethods> Clone for WeakRef<T> {
+impl<T: RustBindingMethods> Clone for WeakRef<T> {
     fn clone(&self) -> Self {
         unsafe {
             let ptr = ffi::OpaqueWeakRef_copy(self.0);
