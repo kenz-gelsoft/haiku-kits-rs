@@ -273,7 +273,7 @@ impl App {
     }
 }
 
-wxwidgets! {
+binding! {
     class ArrayInt
         = ArrayIntFromCpp<false>(wxArrayInt) impl
         ArrayIntMethods
@@ -291,7 +291,7 @@ impl<const FROM_CPP: bool> Drop for ArrayIntFromCpp<FROM_CPP> {
     }
 }
 
-wxwidgets! {
+binding! {
     class ArrayString
         = ArrayStringFromCpp<false>(wxArrayString) impl
         ArrayStringMethods
@@ -324,7 +324,7 @@ where
 }
 
 // (wx)String::const_iterator
-wxwidgets! {
+binding! {
     class StringConstIterator
         = StringConstIteratorFromCpp<false>(wxStringConstIterator) impl
         StringConstIteratorMethods

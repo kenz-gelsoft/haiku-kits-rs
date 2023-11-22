@@ -47,7 +47,7 @@ class RustClassBinding:
                 yield line
         else:
             unprefixed = self.__model.unprefixed()
-            yield 'wxwidgets! {'
+            yield 'binding! {'
             yield '    /// %s' % (self.__model.doc,)
             yield "    /// - [`%s`] represents a C++ `%s` class instance which your code has ownership, [`%sFromCpp`]`<true>` represents one which don't own." % (
                 unprefixed,

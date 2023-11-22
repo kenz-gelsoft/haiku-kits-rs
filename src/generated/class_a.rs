@@ -2,7 +2,7 @@ use super::*;
 
 
 // BApplication
-wxwidgets! {
+binding! {
     /// A container object for an application.
     /// - [`Application`] represents a C++ `BApplication` class instance which your code has ownership, [`ApplicationFromCpp`]`<true>` represents one which don't own.
     /// - See [C++ `BApplication` class's documentation](https://www.haiku-os.org/docs/api/classBApplication.html) for more details.
@@ -75,7 +75,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for ApplicationFromCpp<FROM_CPP> {
 }
 
 // BArchivable
-wxwidgets! {
+binding! {
     /// Interface for objects that can be archived into a BMessage.
     /// - [`Archivable`] represents a C++ `BArchivable` class instance which your code has ownership, [`ArchivableFromCpp`]`<true>` represents one which don't own.
     /// - See [C++ `BArchivable` class's documentation](https://www.haiku-os.org/docs/api/classBArchivable.html) for more details.

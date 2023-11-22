@@ -2,7 +2,7 @@ use super::*;
 
 
 // BLooper
-wxwidgets! {
+binding! {
     /// Receive and process messages in a separate thread.
     /// - [`Looper`] represents a C++ `BLooper` class instance which your code has ownership, [`LooperFromCpp`]`<true>` represents one which don't own.
     /// - See [C++ `BLooper` class's documentation](https://www.haiku-os.org/docs/api/classBLooper.html) for more details.

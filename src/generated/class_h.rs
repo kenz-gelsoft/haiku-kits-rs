@@ -2,7 +2,7 @@ use super::*;
 
 
 // BHandler
-wxwidgets! {
+binding! {
     /// Handles messages that are passed on by a BLooper.
     /// - [`Handler`] represents a C++ `BHandler` class instance which your code has ownership, [`HandlerFromCpp`]`<true>` represents one which don't own.
     /// - See [C++ `BHandler` class's documentation](https://www.haiku-os.org/docs/api/classBHandler.html) for more details.

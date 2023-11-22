@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! wxwidgets {
+macro_rules! binding {
     (
         $(#[doc = $docComment:tt])*
         $(#[doc($docAttrKey:ident = $docAttrValue:tt)])*
