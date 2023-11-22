@@ -4,7 +4,7 @@ macro_rules! binding {
         $(#[doc = $docComment:tt])*
         $(#[doc($docAttrKey:ident = $docAttrValue:tt)])*
         class $type:ident
-            = $typeFromCpp:ident<false>($wxType:ident) impl
+            = $typeFromCpp:ident<false>($cppType:ident) impl
             $($methods:ident),*
     ) => {
         $(#[doc = $docComment])*
