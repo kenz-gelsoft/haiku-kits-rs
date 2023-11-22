@@ -32,6 +32,7 @@ pub use typedefs::*;
 #[allow(non_camel_case_types)]
 mod typedefs {
     pub type bigtime_t = i64;
+    pub type perform_code = u32;
     pub type sem_id = i32;
     pub type status_t = i32;
     pub type team_id = i32;

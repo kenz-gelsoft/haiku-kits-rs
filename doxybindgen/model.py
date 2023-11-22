@@ -8,7 +8,6 @@ CXX2RUST = {
     'int': 'c_int',
     'int32': 'i32',
     'long': 'c_long',
-    'perform_code': 'u32',
     'size_t': 'usize',
     'uint32': 'u32',
     'unsigned int': 'c_uint',
@@ -21,6 +20,7 @@ CXX_PRIMITIVES = [
 
     # Rust typedefs
     'bigtime_t',
+    'perform_code',
     'sem_id',
     'status_t',
     'team_id',
@@ -40,6 +40,7 @@ RUST_PRIMITIVES = [
 
     # Rust typedefs
     'bigtime_t',
+    'perform_code',
     'thread_id',
 ]
 OS_UNSUPPORTED_TYPES = [

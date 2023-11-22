@@ -192,7 +192,7 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// Perform some action (Internal method defined for binary compatibility purposes).
     ///
     /// See [C++ `BArchivable::Perform()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a827fa92febcf925f07545aa9777df9de).
-    fn perform(&self, d: u32, arg: *mut c_void) -> status_t {
+    fn perform(&self, d: perform_code, arg: *mut c_void) -> status_t {
         unsafe { ffi::BArchivable_Perform(self.as_ptr(), d, arg) }
     }
     /// Static member to restore objects from messages.
