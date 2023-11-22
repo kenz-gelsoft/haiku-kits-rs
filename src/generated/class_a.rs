@@ -61,7 +61,7 @@ impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for ArchivableFrom
 impl<const FROM_CPP: bool> Drop for ApplicationFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
-            unsafe { ffi::BApplication_delete(self.0) }
+            unsafe { ffi::BArchivable_delete(self.0) }
         }
     }
 }

@@ -3,7 +3,6 @@ use super::*;
 extern "C" {
 
     // BLooper
-    pub fn BLooper_delete(self_: *mut c_void);
     pub fn BLooper_new(data: *mut c_void) -> *mut c_void;
     pub fn BLooper_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BLooper_PostMessage(self_: *mut c_void, command: u32) -> status_t;

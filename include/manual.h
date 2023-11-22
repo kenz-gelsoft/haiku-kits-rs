@@ -1,6 +1,9 @@
 #pragma once
 // TODO include haiku-api headers
 
+#include <Archivable.h>
+
+#if 0
 // wxEvtHandler
 template <typename T>
 class CxxClosure {
@@ -34,17 +37,21 @@ public:
         mTyped(/*unused*/0);
     }
 };
+#endif
 
 extern "C" {
 
+#if 0
 // wxApp
 void AppSetOnInit(void *aFn, void *aParam);
 class App : public wxApp {
     virtual bool OnInit();
 };
+#endif
 
-void wxObject_delete(wxObject *self);
+void BArchivable_delete(BArchivable *self);
 
+#if 0
 // String
 struct UTF8Data {
     const char *data;
@@ -66,5 +73,6 @@ typedef wxChar ArgChar;
 typedef char ArgChar;
 #endif // __WXMSW__
 int wxRustEntry(int *argc, ArgChar **argv);
+#endif
 
 } // extern "C"

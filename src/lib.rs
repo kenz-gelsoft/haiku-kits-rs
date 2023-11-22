@@ -47,7 +47,7 @@ mod ffi {
         pub length: usize,
     }
     extern "C" {
-//        pub fn wxObject_delete(self_: *mut c_void);
+        pub fn BArchivable_delete(self_: *mut c_void);
 
         pub fn wxApp_argc() -> c_int;
         pub fn wxApp_argv(i: c_int) -> *mut c_void;

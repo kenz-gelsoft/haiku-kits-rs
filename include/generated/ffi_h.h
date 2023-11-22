@@ -5,7 +5,6 @@
 extern "C" {
 
 // CLASS: BHandler
-void BHandler_delete(BHandler *self);
 BHandler *BHandler_new(BMessage * data);
 void BHandler_MessageReceived(BHandler * self, BMessage * message);
 BLooper * BHandler_Looper(const BHandler * self);

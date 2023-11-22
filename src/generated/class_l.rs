@@ -49,7 +49,7 @@ impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ArchivableFromCpp<F
 impl<const FROM_CPP: bool> Drop for LooperFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
-            unsafe { ffi::BLooper_delete(self.0) }
+            unsafe { ffi::BArchivable_delete(self.0) }
         }
     }
 }

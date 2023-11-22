@@ -3,9 +3,6 @@
 extern "C" {
 
 // CLASS: BApplication
-void BApplication_delete(BApplication *self) {
-    delete self;
-}
 BApplication *BApplication_new(BMessage * data) {
     return new BApplication(data);
 }
@@ -92,9 +89,6 @@ status_t BApplication_InitCheck(const BApplication * self) {
 }
 
 // CLASS: BArchivable
-void BArchivable_delete(BArchivable *self) {
-    delete self;
-}
 BArchivable *BArchivable_new() {
     return new BArchivable();
 }

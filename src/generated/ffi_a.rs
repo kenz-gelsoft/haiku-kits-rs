@@ -3,7 +3,6 @@ use super::*;
 extern "C" {
 
     // BApplication
-    pub fn BApplication_delete(self_: *mut c_void);
     pub fn BApplication_new(data: *mut c_void) -> *mut c_void;
     pub fn BApplication_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BApplication_ReadyToRun(self_: *mut c_void);
@@ -35,7 +34,6 @@ extern "C" {
     pub fn BApplication_InitCheck(self_: *const c_void) -> status_t;
 
     // BArchivable
-    pub fn BArchivable_delete(self_: *mut c_void);
     pub fn BArchivable_new() -> *mut c_void;
     pub fn BArchivable_new1(from: *mut c_void) -> *mut c_void;
     // DTOR: pub fn BArchivable_~BArchivable(self_: *mut c_void);

@@ -43,7 +43,7 @@ impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for ArchivableFromCpp<
 impl<const FROM_CPP: bool> Drop for HandlerFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
-            unsafe { ffi::BHandler_delete(self.0) }
+            unsafe { ffi::BArchivable_delete(self.0) }
         }
     }
 }

@@ -3,9 +3,6 @@
 extern "C" {
 
 // CLASS: BHandler
-void BHandler_delete(BHandler *self) {
-    delete self;
-}
 BHandler *BHandler_new(BMessage * data) {
     return new BHandler(data);
 }

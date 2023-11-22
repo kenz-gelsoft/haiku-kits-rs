@@ -1,5 +1,6 @@
 #include "manual.h"
 
+#if 0
 // wxApp
 wxIMPLEMENT_APP_NO_MAIN(App);
 
@@ -12,11 +13,13 @@ bool App::OnInit() {
     globalOnInit(/*unused*/0);
     return true;
 }
+#endif
 
-void wxObject_delete(wxObject *self) {
+void BArchivable_delete(BArchivable *self) {
     delete self;
 }
 
+#if 0
 // String
 wxString *wxString_new(const unsigned char *psz, const size_t nLength) {
     return new wxString(psz, wxConvUTF8, nLength);
@@ -84,3 +87,4 @@ void *OpaqueWeakRef_Get(void *self) {
 int wxRustEntry(int *argc, ArgChar **argv) {
     return wxEntry(*argc, argv);
 }
+#endif

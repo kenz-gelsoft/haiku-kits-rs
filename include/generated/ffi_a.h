@@ -6,7 +6,6 @@
 extern "C" {
 
 // CLASS: BApplication
-void BApplication_delete(BApplication *self);
 BApplication *BApplication_new(BMessage * data);
 BArchivable * BApplication_Instantiate(BMessage * data);
 void BApplication_ReadyToRun(BApplication * self);
@@ -37,7 +36,6 @@ BApplication *BApplication_new2(const char * signature, status_t * error);
 status_t BApplication_InitCheck(const BApplication * self);
 
 // CLASS: BArchivable
-void BArchivable_delete(BArchivable *self);
 BArchivable *BArchivable_new();
 BArchivable *BArchivable_new1(BMessage * from);
 status_t BArchivable_AllArchived(const BArchivable * self, BMessage * archive);

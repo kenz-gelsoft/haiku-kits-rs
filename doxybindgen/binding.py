@@ -33,9 +33,10 @@ class RustClassBinding:
             self.__model.name,
         )
         if for_ffi:
-            yield 'pub fn %s_delete(self_: *mut c_void);' % (
-                self.__model.name,
-            )
+            if not self.is_a('BArchivable'):
+                yield 'pub fn %s_delete(self_: *mut c_void);' % (
+                    self.__model.name,
+                )
             for method in self.__methods:
                 for line in method.lines(for_ffi=True):
                     yield line
@@ -158,8 +159,8 @@ class RustClassBinding:
             self.is_a('wxSizer')):
             return
         deleter_class = self.__model.name
-        if self.is_a('wxObject'):
-            deleter_class = 'wxObject'
+        if self.is_a('BArchivable'):
+            deleter_class = 'BArchivable'
         yield 'impl<const FROM_CPP: bool> Drop for %sFromCpp<FROM_CPP> {' % (self.__model.unprefixed(),)
         yield '    fn drop(&mut self) {'
         yield '        if !FROM_CPP {'
@@ -628,7 +629,7 @@ class CxxClassBinding:
         return (m for m in self.__methods if m.is_ctor)
     
     def _dtor_lines(self, is_cc):
-        if (self.__model.manager.is_a(self.__model, 'wxObject') or
+        if (self.__model.manager.is_a(self.__model, 'BArchivable') or
             self.__model.manager.is_a(self.__model, 'wxRefCounter') or
             # FIXME: wxObjectRefData is a typedef of wxRefCounter
             self.__model.manager.is_a(self.__model, 'wxObjectRefData') or

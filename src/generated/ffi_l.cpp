@@ -3,9 +3,6 @@
 extern "C" {
 
 // CLASS: BLooper
-void BLooper_delete(BLooper *self) {
-    delete self;
-}
 BLooper *BLooper_new(BMessage * data) {
     return new BLooper(data);
 }
