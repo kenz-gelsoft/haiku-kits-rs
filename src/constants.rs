@@ -928,24 +928,17 @@ pub const B_UNDO_DROP: c_int = 0 + 5;
 
 pub const _RESIZE_MASK_: c_int = (0xffff);
 pub const B_FOLLOW_ALL: c_int = B_FOLLOW_ALL_SIDES;
-pub const B_FOLLOW_ALL_SIDES: c_int =
-    (((_VIEW_TOP_) << 12) | ((_VIEW_LEFT_) << 8) | ((_VIEW_BOTTOM_) << 4) | (_VIEW_RIGHT_));
-pub const B_FOLLOW_BOTTOM: c_int =
-    (((_VIEW_BOTTOM_) << 12) | ((0) << 8) | ((_VIEW_BOTTOM_) << 4) | (0));
-pub const B_FOLLOW_H_CENTER: c_int =
-    (((0) << 12) | ((_VIEW_CENTER_) << 8) | ((0) << 4) | (_VIEW_CENTER_));
-pub const B_FOLLOW_LEFT: c_int = (((0) << 12) | ((_VIEW_LEFT_) << 8) | ((0) << 4) | (_VIEW_LEFT_));
-pub const B_FOLLOW_LEFT_RIGHT: c_int =
-    (((0) << 12) | ((_VIEW_LEFT_) << 8) | ((0) << 4) | (_VIEW_RIGHT_));
+pub const B_FOLLOW_ALL_SIDES: c_int = _rule_(_VIEW_TOP_, _VIEW_LEFT_, _VIEW_BOTTOM_, _VIEW_RIGHT_);
+pub const B_FOLLOW_BOTTOM: c_int = _rule_(_VIEW_BOTTOM_, 0, _VIEW_BOTTOM_, 0);
+pub const B_FOLLOW_H_CENTER: c_int = _rule_(0, _VIEW_CENTER_, 0, _VIEW_CENTER_);
+pub const B_FOLLOW_LEFT: c_int = _rule_(0, _VIEW_LEFT_, 0, _VIEW_LEFT_);
+pub const B_FOLLOW_LEFT_RIGHT: c_int = _rule_(0, _VIEW_LEFT_, 0, _VIEW_RIGHT_);
 pub const B_FOLLOW_LEFT_TOP: c_int = B_FOLLOW_TOP | B_FOLLOW_LEFT;
 pub const B_FOLLOW_NONE: c_int = 0;
-pub const B_FOLLOW_RIGHT: c_int =
-    (((0) << 12) | ((_VIEW_RIGHT_) << 8) | ((0) << 4) | (_VIEW_RIGHT_));
-pub const B_FOLLOW_TOP: c_int = (((_VIEW_TOP_) << 12) | ((0) << 8) | ((_VIEW_TOP_) << 4) | (0));
-pub const B_FOLLOW_TOP_BOTTOM: c_int =
-    (((_VIEW_TOP_) << 12) | ((0) << 8) | ((_VIEW_BOTTOM_) << 4) | (0));
-pub const B_FOLLOW_V_CENTER: c_int =
-    (((_VIEW_CENTER_) << 12) | ((0) << 8) | ((_VIEW_CENTER_) << 4) | (0));
+pub const B_FOLLOW_RIGHT: c_int = _rule_(0, _VIEW_RIGHT_, 0, _VIEW_RIGHT_);
+pub const B_FOLLOW_TOP: c_int = _rule_(_VIEW_TOP_, 0, _VIEW_TOP_, 0);
+pub const B_FOLLOW_TOP_BOTTOM: c_int = _rule_(_VIEW_TOP_, 0, _VIEW_BOTTOM_, 0);
+pub const B_FOLLOW_V_CENTER: c_int = _rule_(_VIEW_CENTER_, 0, _VIEW_CENTER_, 0);
 //  FUNC: B_MOUSE_BUTTON
 //  ENUM: @44
 pub const B_PRIMARY_MOUSE_BUTTON: c_int = (1 << ((1) - 1));
