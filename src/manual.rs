@@ -3,51 +3,37 @@
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
 
-use std::os::raw::c_long;
+use std::os::raw::c_int;
 
-pub const fn PG_IT_CHILDREN(A: c_long) -> c_long {
-    (A) << 16
+pub const fn _rule_(t: c_int, l: c_int, b: c_int, r: c_int) -> c_int {
+    (t << 12) | (l << 8) | (b << 4) | r
 }
 
-// wxDeprecatedGUIConstants
-/*  Text font families */
-pub const DEFAULT: i32 = 70;
-pub const DECORATIVE: i32 = 71;
-pub const ROMAN: i32 = 72;
-pub const SCRIPT: i32 = 73;
-pub const SWISS: i32 = 74;
-pub const MODERN: i32 = 75;
-pub const TELETYPE: i32 = 76;
+pub const fn B_TO_POSIX_ERROR(v: c_int) -> c_int {
+    v
+}
+pub const fn B_FROM_POSIX_ERROR(v: c_int) -> c_int {
+    v
+}
 
-/*  Proportional or Fixed width fonts (not yet used) */
-pub const VARIABLE: i32 = 80;
-pub const FIXED: i32 = 81;
+pub const fn B_MOUSE_BUTTON(v: c_int) -> c_int {
+    1 << (v - 1)
+}
 
-pub const NORMAL: i32 = 90;
-pub const LIGHT: i32 = 91;
-pub const BOLD: i32 = 92;
-/*  Also wxNORMAL for normal (non-italic text) */
-pub const ITALIC: i32 = 93;
-pub const SLANT: i32 = 94;
-
-/*  Pen styles */
-pub const SOLID: i32 = 100;
-pub const DOT: i32 = 101;
-pub const LONG_DASH: i32 = 102;
-pub const SHORT_DASH: i32 = 103;
-pub const DOT_DASH: i32 = 104;
-pub const USER_DASH: i32 = 105;
-
-pub const TRANSPARENT: i32 = 106;
-
-/*  Brush & Pen Stippling. Note that a stippled pen cannot be dashed!! */
-/*  Note also that stippling a Pen IS meaningful, because a Line is */
-pub const STIPPLE_MASK_OPAQUE: i32 = 107;
-pub const STIPPLE_MASK: i32 = 108;
-/*  drawn with a Pen, and without any Brush -- and it can be stippled. */
-pub const STIPPLE: i32 = 110;
-
-#[cfg(target_os = "windows")]
-pub const FILE_SELECTOR_DEFAULT_WILDCARD_STR: &str = "*.*";
-#[cfg(not(target_os = "windows"))]
-pub const FILE_SELECTOR_DEFAULT_WILDCARD_STR: &str = "*";
+pub const _VIEW_TOP_: c_int = 1;
+pub const _VIEW_LEFT_: c_int = 2;
+pub const _VIEW_BOTTOM_: c_int = 3;
+pub const _VIEW_RIGHT_: c_int = 4;
+pub const _VIEW_CENTER_: c_int = 5;
+pub const B_BEOS_VERSION: c_int = 0x0500;
+pub const INT_MIN: c_int = -2147483647;
+pub const MAXPATHLEN: c_int = 1024;
+pub const NAME_MAX: c_int = 256;
+pub const O_APPEND: c_int = 0x00000800;
+pub const O_RDONLY: c_int = 00;
+pub const O_WRONLY: c_int = 01;
+pub const O_RDWR: c_int = 02;
+pub const O_EXCL: c_int = 0x0100;
+pub const O_CREAT: c_int = 0x0200;
+pub const O_TRUNC: c_int = 0x0400;
+pub const SYMLOOP_MAX: c_int = 16;
