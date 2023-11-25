@@ -20,21 +20,6 @@ void BArchivable_delete(BArchivable *self) {
 }
 
 #if 0
-// String
-wxString *wxString_new(const unsigned char *psz, const size_t nLength) {
-    return new wxString(psz, wxConvUTF8, nLength);
-}
-void wxString_delete(wxString *self) {
-    delete self;
-}
-UTF8Data wxString_UTF8Data(wxString *self) {
-    auto utf8 = self->ToUTF8();
-    return {
-        utf8.data(),
-        utf8.length()
-    };
-}
-
 class OpaqueWeakRef : public wxTrackerNode
 {
 public:

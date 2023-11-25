@@ -5,7 +5,6 @@ use std::marker::PhantomData;
 use std::mem;
 use std::os::raw::{c_int, c_void};
 use std::ptr;
-use std::slice;
 use std::str;
 
 mod macros;
@@ -40,18 +39,10 @@ mod typedefs {
 }
 
 mod ffi {
-    use std::os::raw::{c_int, c_uchar, c_void};
+    use std::os::raw::{c_int, c_void};
 
-    #[repr(C)]
-    pub struct UTF8Data {
-        pub data: *mut c_uchar,
-        pub length: usize,
-    }
     extern "C" {
         pub fn BArchivable_delete(self_: *mut c_void);
-
-        pub fn wxApp_argc() -> c_int;
-        pub fn wxApp_argv(i: c_int) -> *mut c_void;
 
         pub fn AppSetOnInit(aFn: *mut c_void, aParam: *mut c_void);
 //        pub fn wxEvtHandler_Bind(
@@ -63,26 +54,11 @@ mod ffi {
 //
 //        pub fn wxEvtHandler_CallAfter(self_: *mut c_void, aFn: *mut c_void, aParam: *mut c_void);
 
-        // String
-        pub fn wxString_new(psz: *const c_uchar, nLength: usize) -> *mut c_void;
-        pub fn wxString_delete(self_: *mut c_void);
-        pub fn wxString_UTF8Data(self_: *mut c_void) -> UTF8Data;
-
-        // (wx)String::const_iterator
-        pub fn wxStringConstIterator_new() -> *mut c_void;
-        pub fn wxStringConstIterator_delete(self_: *mut c_void);
-        pub fn wxStringConstIterator_IndexIn(self_: *mut c_void, s: *const c_void) -> usize;
-
         // ArrayInt
         pub fn wxArrayInt_new() -> *mut c_void;
         pub fn wxArrayInt_delete(self_: *mut c_void);
         pub fn wxArrayInt_Add(self_: *mut c_void, i: c_int);
         pub fn wxArrayInt_Item(self_: *mut c_void, index: usize) -> c_int;
-
-        // ArrayString
-        pub fn wxArrayString_new() -> *mut c_void;
-        pub fn wxArrayString_delete(self_: *mut c_void);
-        pub fn wxArrayString_Add(self_: *mut c_void, s: *const c_void);
 
         pub fn wxRustEntry(argc: *mut c_int, argv: *mut *const super::ArgChar) -> c_int;
 
@@ -112,40 +88,6 @@ pub mod methods {
         }
     }
 
-    pub trait ArrayStringMethods: RustBindingMethods {
-        fn add(&self, s: &str) {
-            unsafe {
-                let s = WxString::from(s);
-                ffi::wxArrayString_Add(self.as_ptr(), s.as_ptr())
-            }
-        }
-    }
-
-    pub trait StringConstIteratorMethods: RustBindingMethods {
-        fn index_in(&self, s: *const c_void) -> usize {
-            unsafe { ffi::wxStringConstIterator_IndexIn(self.as_ptr(), s) }
-        }
-    }
-
-    // TODO: Support manual(semi-auto) binding in codegen
-    //
-    // This trait should be `DateTimeMethods` and, the base trait
-    // should be `DateTimeMethodsAuto` for API consistencey.
-//    pub trait DateTimeMethodsManual: DateTimeMethods {
-//        fn parse_date(&self, date: &str) -> Option<usize> {
-//            unsafe {
-//                let end = StringConstIterator::new();
-//                let date = WxString::from(date);
-//                let date = date.as_ptr();
-//                if ffi::wxDateTime_ParseDate(self.as_ptr(), date, end.as_ptr()) {
-//                    Some(end.index_in(date))
-//                } else {
-//                    None
-//                }
-//            }
-//        }
-//    }
-//
 //    pub trait DynamicCast: ObjectMethods {
 //        fn class_info() -> ClassInfoFromCpp<true>;
 //        fn dynamic_cast<T: DynamicCast>(&self) -> Option<T::CppManaged> {
@@ -160,40 +102,6 @@ pub mod methods {
 //    pub trait Trackable<T>: EvtHandlerMethods {
 //        fn to_weak_ref(&self) -> WeakRef<T>;
 //    }
-}
-
-// wxString
-pub struct WxString(*mut c_void);
-impl WxString {
-    pub unsafe fn from_ptr(ptr: *mut c_void) -> Self {
-        WxString(ptr)
-    }
-    pub unsafe fn as_ptr(&self) -> *mut c_void {
-        return self.0;
-    }
-    pub fn to_str<'a>(&'a self) -> &'a str {
-        unsafe {
-            let utf8 = ffi::wxString_UTF8Data(self.as_ptr());
-            let len = utf8.length;
-            let slice = slice::from_raw_parts(utf8.data, len);
-            str::from_utf8_unchecked(slice)
-        }
-    }
-}
-impl From<WxString> for String {
-    fn from(s: WxString) -> Self {
-        s.to_str().to_owned()
-    }
-}
-impl From<&str> for WxString {
-    fn from(s: &str) -> Self {
-        unsafe { WxString(ffi::wxString_new(s.as_ptr(), s.len())) }
-    }
-}
-impl Drop for WxString {
-    fn drop(&mut self) {
-        unsafe { ffi::wxString_delete(self.0) }
-    }
 }
 
 // Rust closure to wx calablle function+param pair.
@@ -233,24 +141,6 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //    }
 //}
 
-pub struct WxArgs {
-    argc: c_int,
-    i: c_int,
-}
-impl Iterator for WxArgs {
-    type Item = String;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let i = self.i;
-        self.i += 1;
-        if i == self.argc {
-            None
-        } else {
-            unsafe { Some(WxString::from_ptr(ffi::wxApp_argv(i)).into()) }
-        }
-    }
-}
-
 // wxApp
 pub enum App {}
 impl App {
@@ -263,14 +153,6 @@ impl App {
     pub fn run<F: Fn(*mut c_void) + 'static>(closure: F) {
         Self::on_init(closure);
         entry();
-    }
-    pub fn args() -> WxArgs {
-        unsafe {
-            WxArgs {
-                argc: ffi::wxApp_argc(),
-                i: 0,
-            }
-        }
     }
 }
 
@@ -288,57 +170,6 @@ impl<const FROM_CPP: bool> Drop for ArrayIntFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
             unsafe { ffi::wxArrayInt_delete(self.0) }
-        }
-    }
-}
-
-binding! {
-    class ArrayString
-        = ArrayStringFromCpp<false>(wxArrayString) impl
-        ArrayStringMethods
-}
-impl<const FROM_CPP: bool> ArrayStringFromCpp<FROM_CPP> {
-    pub fn new() -> Self {
-        unsafe { ArrayStringFromCpp(ffi::wxArrayString_new()) }
-    }
-}
-impl<const FROM_CPP: bool> Drop for ArrayStringFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::wxArrayString_delete(self.0) }
-        }
-    }
-}
-
-impl<T> From<T> for ArrayString
-where
-    T: IntoIterator,
-    T::Item: std::fmt::Display,
-{
-    fn from(items: T) -> Self {
-        let array_string = Self::new();
-        for item in items {
-            array_string.add(&item.to_string());
-        }
-        array_string
-    }
-}
-
-// (wx)String::const_iterator
-binding! {
-    class StringConstIterator
-        = StringConstIteratorFromCpp<false>(wxStringConstIterator) impl
-        StringConstIteratorMethods
-}
-impl<const FROM_CPP: bool> StringConstIteratorFromCpp<FROM_CPP> {
-    pub fn new() -> Self {
-        unsafe { StringConstIteratorFromCpp(ffi::wxStringConstIterator_new()) }
-    }
-}
-impl<const FROM_CPP: bool> Drop for StringConstIteratorFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::wxStringConstIterator_delete(self.0) }
         }
     }
 }

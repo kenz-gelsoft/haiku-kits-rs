@@ -52,15 +52,6 @@ class App : public wxApp {
 void BArchivable_delete(BArchivable *self);
 
 #if 0
-// String
-struct UTF8Data {
-    const char *data;
-    size_t length;
-};
-wxString *wxString_new(const unsigned char *psz, const size_t nLength);
-void wxString_delete(wxString *self);
-UTF8Data wxString_UTF8Data(wxString *self);
-
 // WeakRef
 void *OpaqueWeakRef_new(void *obj);
 void *OpaqueWeakRef_copy(void *obj);

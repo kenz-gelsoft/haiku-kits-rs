@@ -210,10 +210,6 @@ def translate_initializer(name, v):
         (t, v) = bytes_literal(t, v)
     v = RE_INT_CAST.sub(r'\1', v) # remove int cast
     v = RE_GS_ID_CAST.sub(r'\1', v) # remove gs_id cast
-    # TODO: string types
-    v = re.sub(r'wxString\((".+")\)', r'\1', v)
-    v = re.sub(r'wxS\((".+")\)', r'\1', v)
-    v = re.sub(r'wxT\((".+")\)', r'\1', v)
     # Don't strip `wx` prefix of string literal (c.f. IMAGE_OPTION_BMP_FORMAT)
     if '"' not in v:
         v = RE_IDENT.sub(r'\1', v)
