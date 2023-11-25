@@ -941,9 +941,9 @@ pub const B_FOLLOW_TOP_BOTTOM: c_int = _rule_(_VIEW_TOP_, 0, _VIEW_BOTTOM_, 0);
 pub const B_FOLLOW_V_CENTER: c_int = _rule_(_VIEW_CENTER_, 0, _VIEW_CENTER_, 0);
 //  FUNC: B_MOUSE_BUTTON
 //  ENUM: @44
-pub const B_PRIMARY_MOUSE_BUTTON: c_int = (1 << ((1) - 1));
-pub const B_SECONDARY_MOUSE_BUTTON: c_int = (1 << ((2) - 1));
-pub const B_TERTIARY_MOUSE_BUTTON: c_int = (1 << ((3) - 1));
+pub const B_PRIMARY_MOUSE_BUTTON: c_int = B_MOUSE_BUTTON(1);
+pub const B_SECONDARY_MOUSE_BUTTON: c_int = B_MOUSE_BUTTON(2);
+pub const B_TERTIARY_MOUSE_BUTTON: c_int = B_MOUSE_BUTTON(3);
 //  ENUM: @45
 pub const B_ENTERED_VIEW: c_int = 0;
 pub const B_INSIDE_VIEW: c_int = 0 + 1;
