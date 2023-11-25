@@ -14,6 +14,6 @@ fn main() {
         .flag_if_supported("-Wno-unused-parameter")
         .compile("haiku");
 
-    let libs = "-lhaiku"; // TODO
+    let libs = "-lhaiku -lbe"; // TODO
     println!("cargo:rustc-flags={}", libs);
 }
