@@ -26,7 +26,7 @@ BWindow * BApplication_WindowAt(const BApplication * self, int32 index);
 int32 BApplication_CountLoopers(const BApplication * self);
 BLooper * BApplication_LooperAt(const BApplication * self, int32 index);
 bool BApplication_IsLaunching(const BApplication * self);
-const char * BApplication_Signature(const BApplication * self);
+const char *BApplication_Signature(const BApplication * self);
 status_t BApplication_GetAppInfo(const BApplication * self, app_info * info);
 BResources * BApplication_AppResources();
 status_t BApplication_RegisterLooper(BApplication * self, BLooper * looper);

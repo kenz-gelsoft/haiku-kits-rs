@@ -41,7 +41,7 @@ extern "C" {
     pub fn BLooper_RemoveCommonFilter(self_: *mut c_void, filter: *mut c_void) -> bool;
     pub fn BLooper_SetCommonFilterList(self_: *mut c_void, filters: *mut c_void);
     pub fn BLooper_CommonFilterList(self_: *const c_void) -> *mut c_void;
-    pub fn BLooper_new1(name: *const c_void, priority: i32, port_capacity: i32) -> *mut c_void;
+    pub fn BLooper_new1(name: *const c_char, priority: i32, port_capacity: i32) -> *mut c_void;
     // DTOR: pub fn BLooper_~BLooper(self_: *mut c_void);
 
 }

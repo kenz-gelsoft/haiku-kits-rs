@@ -23,8 +23,12 @@ impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
     /// Construct a new handler with a name.
     ///
     /// See [C++ `BHandler::BHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a2142e21fe781b24f914ec2086e5f05b7).
-    pub fn new_with_char(name: *const c_void) -> HandlerFromCpp<FROM_CPP> {
-        unsafe { HandlerFromCpp(ffi::BHandler_new1(name)) }
+    pub fn new_with_str(name: &str) -> HandlerFromCpp<FROM_CPP> {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            HandlerFromCpp(ffi::BHandler_new1(name))
+        }
     }
     pub fn none() -> Option<&'static Self> {
         None

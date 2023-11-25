@@ -15,7 +15,7 @@ BLooper * BHandler_Looper(const BHandler * self) {
 void BHandler_SetName(BHandler * self, const char * name) {
     return self->SetName(name);
 }
-const char * BHandler_Name(const BHandler * self) {
+const char *BHandler_Name(const BHandler * self) {
     return self->Name();
 }
 void BHandler_SetNextHandler(BHandler * self, BHandler * handler) {

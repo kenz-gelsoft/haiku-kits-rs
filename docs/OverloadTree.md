@@ -2,8 +2,8 @@
 
 - 3: BApplication.BApplication: None 
     - 1: `BMessage*`: BApplication (message)
-    - 2: `const char*`: BApplication1 (char)
-        - 1: `status_t*`: BApplication2 (char, status_t)
+    - 2: `const char*`: BApplication1 (str)
+        - 1: `status_t*`: BApplication2 (str, status_t)
 - 2: BApplication.SetCursor: None 
     - 1: `const void*`: SetCursor (void)
     - 1: `const BCursor*`: None 
@@ -12,7 +12,7 @@
     - 1: `BMessage*`: BLooper (message)
     - 1: `const char*`: None 
         - 1: `int32`: None 
-            - 1: `int32`: BLooper1 (char)
+            - 1: `int32`: BLooper1 (str)
 - 4: BApplication.PostMessage: None 
     - 2: `uint32`: PostMessage (uint32)
         - 1: `BHandler*`: None 
@@ -22,21 +22,21 @@
             - 1: `BHandler*`: PostMessage3 (message, handler)
 - 2: BApplication.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
-    - 1: `const char*`: BHandler1 (char)
+    - 1: `const char*`: BHandler1 (str)
 - 2: BApplication.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
 - 2: BArchivable.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
 - 2: BHandler.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
-    - 1: `const char*`: BHandler1 (char)
+    - 1: `const char*`: BHandler1 (str)
 - 2: BHandler.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
 - 2: BLooper.BLooper: None 
     - 1: `BMessage*`: BLooper (message)
     - 1: `const char*`: None 
         - 1: `int32`: None 
-            - 1: `int32`: BLooper1 (char)
+            - 1: `int32`: BLooper1 (str)
 - 4: BLooper.PostMessage: None 
     - 2: `uint32`: PostMessage (uint32)
         - 1: `BHandler*`: None 
@@ -46,6 +46,6 @@
             - 1: `BHandler*`: PostMessage3 (message, handler)
 - 2: BLooper.BHandler: None 
     - 1: `BMessage*`: BHandler (message)
-    - 1: `const char*`: BHandler1 (char)
+    - 1: `const char*`: BHandler1 (str)
 - 2: BLooper.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)

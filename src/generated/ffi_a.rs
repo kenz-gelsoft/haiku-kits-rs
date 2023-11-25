@@ -23,13 +23,13 @@ extern "C" {
     pub fn BApplication_CountLoopers(self_: *const c_void) -> i32;
     pub fn BApplication_LooperAt(self_: *const c_void, index: i32) -> *mut c_void;
     pub fn BApplication_IsLaunching(self_: *const c_void) -> bool;
-    pub fn BApplication_Signature(self_: *const c_void) -> *const c_void;
+    pub fn BApplication_Signature(self_: *const c_void) -> *const c_char;
     pub fn BApplication_GetAppInfo(self_: *const c_void, info: *mut c_void) -> status_t;
     pub fn BApplication_AppResources() -> *mut c_void;
     pub fn BApplication_RegisterLooper(self_: *mut c_void, looper: *mut c_void) -> status_t;
     pub fn BApplication_UnregisterLooper(self_: *mut c_void, looper: *mut c_void) -> status_t;
-    pub fn BApplication_new1(signature: *const c_void) -> *mut c_void;
-    pub fn BApplication_new2(signature: *const c_void, error: *mut c_void) -> *mut c_void;
+    pub fn BApplication_new1(signature: *const c_char) -> *mut c_void;
+    pub fn BApplication_new2(signature: *const c_char, error: *mut c_void) -> *mut c_void;
     // DTOR: pub fn BApplication_~BApplication(self_: *mut c_void);
     pub fn BApplication_InitCheck(self_: *const c_void) -> status_t;
 

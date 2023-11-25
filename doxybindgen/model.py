@@ -13,6 +13,7 @@ CXX2RUST = {
     'unsigned int': 'c_uint',
 }
 STR_TYPES = [
+    'char',
 ]
 CXX_PRIMITIVES = [
     'bool',
@@ -197,6 +198,7 @@ class Method:
     def wrap_return_type(self, allows_ptr):
         if (self.is_ctor or
             self.returns_new() or
+            self.returns._is_const_ptr_to_string() or
             self.returns.is_const_ref_to_binding() or 
             allows_ptr and (self.returns.is_ptr_to_binding() or
                             self.returns.is_ref_to_binding())):
@@ -208,7 +210,7 @@ class Method:
         if self.is_blocked():
             return False
         if self.returns.is_str():
-            return True
+            return False
         if self.returns.needs_new():
             return True
         return False
@@ -263,6 +265,8 @@ class ReturnTypeWrapper:
         self.is_trackable = method.returns_trackable()
     
     def in_cxx(self):
+        if self.__returns.is_str():
+            return 'const char'
         return self.__wrapped
 
     def returns(self):
@@ -274,8 +278,8 @@ class ReturnTypeWrapper:
     def _wrap(self, call=""):
         returns = self.__wrapped[1:]
         if self.__returns.is_str():
-            return ['String',
-                    'WxString::from_ptr(%s).into()' % (call,)]
+            return ['&CStr',
+                    'CStr::from_ptr(%s)' % (call,)]
         if self.is_ctor:
             return ['%sFromCpp<FROM_CPP>' % (returns,),
                     '%sFromCpp(%s)' % (returns, call)]
@@ -321,6 +325,8 @@ class RustType:
         return None
 
     def in_rust(self, for_ffi=False):
+        if self.is_str():
+            return '*const c_char'
         mut = 'const' if self.const else 'mut'
         return '*%s c_void' % (mut,)
     
@@ -478,15 +484,15 @@ class CxxType:
     
     def marshal(self, param):
         name = camel_to_snake(param.name)
-        if self._is_const_ref_to_string():
-            # This variable keeps temporary wxString object in this scope.
-            yield 'let %s = WxString::from(%s);' % (
+        if self._is_const_ptr_to_string():
+            # This variable keeps temporary CString object in this scope.
+            yield 'let %s = CString::from_vec_unchecked(%s.into());' % (
                 name,
                 name,
             )
         if (self.is_ref_to_binding() or
             # So, taking pointer must be another expression for its lifetime.
-            self._is_const_ref_to_string()):
+            self._is_const_ptr_to_string()):
             yield 'let %s = %s;' % (
                 name,
                 param.rust_ffi_ref(),
@@ -505,7 +511,7 @@ class CxxType:
     def in_rust(self, for_ffi=False):
         t = self.typename
         if not for_ffi:
-            if self._is_const_ref_to_string():
+            if self._is_const_ptr_to_string():
                 return '&str'
             if self.is_const_ref_to_binding():
                 return '&%s' % (t[1:])
@@ -514,6 +520,8 @@ class CxxType:
         if t in CXX2RUST:
             t = CXX2RUST[t]
         if self.__indirection:
+            if self._is_const_ptr_to_string():
+                return '*const c_char'
             mut = 'mut' if self.__is_mut else 'const'
             return '*%s c_void' % (mut,)
         return prefixed(t, with_ffi=not for_ffi)
@@ -526,8 +534,8 @@ class CxxType:
     def is_ref_to_binding(self):
         return self.is_ref() and self._is_binding_type()
 
-    def _is_const_ref_to_string(self):
-        return (self._is_const_ref() and
+    def _is_const_ptr_to_string(self):
+        return (self._is_const_ptr() and
                 self.typename in STR_TYPES)
 
     def is_const_ref_to_binding(self):
@@ -571,6 +579,11 @@ class CxxType:
         
     def is_ptr(self):
         return self.__indirection.startswith('*')
+    
+    def _is_const_ptr(self):
+        if self.__is_mut:
+            return False
+        return self.is_ptr()
     
     def is_self_ref(self, cls_name):
         return (self.is_ref() and 

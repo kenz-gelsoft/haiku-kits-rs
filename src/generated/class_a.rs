@@ -25,14 +25,22 @@ impl<const FROM_CPP: bool> ApplicationFromCpp<FROM_CPP> {
     /// Initialize a BApplication with the passed in signature.
     ///
     /// See [C++ `BApplication::BApplication()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a43b0671b327a0883720c6cc18d908149).
-    pub fn new_with_char(signature: *const c_void) -> ApplicationFromCpp<FROM_CPP> {
-        unsafe { ApplicationFromCpp(ffi::BApplication_new1(signature)) }
+    pub fn new_with_str(signature: &str) -> ApplicationFromCpp<FROM_CPP> {
+        unsafe {
+            let signature = CString::from_vec_unchecked(signature.into());
+            let signature = signature.as_ptr();
+            ApplicationFromCpp(ffi::BApplication_new1(signature))
+        }
     }
     /// Initialize a BApplication with the passed in signature and a pointer to an error message.
     ///
     /// See [C++ `BApplication::BApplication()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a998f767f4ddcbb5588455c8b63e08f74).
-    pub fn new_with_char_status_t(signature: *const c_void, error: *mut c_void) -> ApplicationFromCpp<FROM_CPP> {
-        unsafe { ApplicationFromCpp(ffi::BApplication_new2(signature, error)) }
+    pub fn new_with_str_status_t(signature: &str, error: *mut c_void) -> ApplicationFromCpp<FROM_CPP> {
+        unsafe {
+            let signature = CString::from_vec_unchecked(signature.into());
+            let signature = signature.as_ptr();
+            ApplicationFromCpp(ffi::BApplication_new2(signature, error))
+        }
     }
     pub fn none() -> Option<&'static Self> {
         None

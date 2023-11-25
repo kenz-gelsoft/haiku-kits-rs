@@ -9,7 +9,7 @@ BHandler *BHandler_new(BMessage * data);
 void BHandler_MessageReceived(BHandler * self, BMessage * message);
 BLooper * BHandler_Looper(const BHandler * self);
 void BHandler_SetName(BHandler * self, const char * name);
-const char * BHandler_Name(const BHandler * self);
+const char *BHandler_Name(const BHandler * self);
 void BHandler_SetNextHandler(BHandler * self, BHandler * handler);
 BHandler * BHandler_NextHandler(const BHandler * self);
 void BHandler_AddFilter(BHandler * self, BMessageFilter * filter);

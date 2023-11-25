@@ -21,14 +21,18 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Set or change the name of this handler.
     ///
     /// See [C++ `BHandler::SetName()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#abf861126df4b6e71b9261a99da4ad0eb).
-    fn set_name(&self, name: *const c_void) {
-        unsafe { ffi::BHandler_SetName(self.as_ptr(), name) }
+    fn set_name(&self, name: &str) {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BHandler_SetName(self.as_ptr(), name)
+        }
     }
     /// Return the name of this handler.
     ///
     /// See [C++ `BHandler::Name()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a40b246ac272e09b2f641d1290be21200).
-    fn name(&self) -> *const c_void {
-        unsafe { ffi::BHandler_Name(self.as_ptr()) }
+    fn name(&self) -> &CStr {
+        unsafe { CStr::from_ptr(ffi::BHandler_Name(self.as_ptr())) }
     }
     /// Set the next handler in the chain that the message is passed on to if this handler cannot process it.
     ///
@@ -93,8 +97,12 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Determine the proper handler for a scripting message.
     ///
     /// See [C++ `BHandler::ResolveSpecifier()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a76439ffaf84e65232698d2a4a3317d22).
-    fn resolve_specifier(&self, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: *const c_void) -> Option<HandlerFromCpp<true>> {
-        unsafe { Handler::option_from(ffi::BHandler_ResolveSpecifier(self.as_ptr(), message, index, specifier, what, property)) }
+    fn resolve_specifier(&self, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: &str) -> Option<HandlerFromCpp<true>> {
+        unsafe {
+            let property = CString::from_vec_unchecked(property.into());
+            let property = property.as_ptr();
+            Handler::option_from(ffi::BHandler_ResolveSpecifier(self.as_ptr(), message, index, specifier, what, property))
+        }
     }
     /// Reports the suites of messages and specifiers that derived classes understand.
     ///

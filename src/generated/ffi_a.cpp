@@ -63,7 +63,7 @@ BLooper * BApplication_LooperAt(const BApplication * self, int32 index) {
 bool BApplication_IsLaunching(const BApplication * self) {
     return self->IsLaunching();
 }
-const char * BApplication_Signature(const BApplication * self) {
+const char *BApplication_Signature(const BApplication * self) {
     return self->Signature();
 }
 status_t BApplication_GetAppInfo(const BApplication * self, app_info * info) {
