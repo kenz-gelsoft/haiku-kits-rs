@@ -3,6 +3,7 @@ wxml_files = [
     'bxml/classBArchivable.xml',
     'bxml/classBHandler.xml',
     'bxml/classBLooper.xml',
+    'bxml/classBWindow.xml',
 ]
 
 [conditions]

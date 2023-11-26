@@ -93,8 +93,8 @@ pub trait ApplicationMethods: LooperMethods {
     /// Returns the BWindow object at the specified index in the application's window list.
     ///
     /// See [C++ `BApplication::WindowAt()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a8850d9542d628e11d91a4fd25279b65d).
-    fn window_at(&self, index: i32) -> *mut c_void {
-        unsafe { ffi::BApplication_WindowAt(self.as_ptr(), index) }
+    fn window_at(&self, index: i32) -> Option<WindowFromCpp<true>> {
+        unsafe { Window::option_from(ffi::BApplication_WindowAt(self.as_ptr(), index)) }
     }
     /// Returns the number of BLoopers created by the application.
     ///

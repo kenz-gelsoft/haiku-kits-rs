@@ -142,6 +142,8 @@ class Method:
             is_array = param.find('array') is not None
             ptype = CxxType(cls.manager, param.find('type'), is_array)
             pname = param.findtext('declname')
+            if not pname:
+                pname = param.findtext('defname')
             self.params.append(Param(ptype, pname))
         is_virtual = e.get('virt') == 'virtual'
         is_override = e.find('reimplements') is not None

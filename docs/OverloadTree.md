@@ -49,3 +49,35 @@
     - 1: `const char*`: BHandler1 (str)
 - 2: BLooper.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
+- 2: BWindow.AddShortcut: None 
+    - 2: `uint32`: None 
+        - 2: `uint32`: None 
+            - 2: `BMessage*`: AddShortcut ()
+                - 1: `BHandler*`: AddShortcut1 (handler)
+- 2: BWindow.AddChild: None 
+    - 1: `BLayoutItem*`: AddChild (layoutitem)
+    - 1: `BView*`: None 
+        - 1: `BView*`: AddChild1 (view)
+- 2: BWindow.ConvertFromScreen: None 
+    - 1: `BPoint*`: ConvertFromScreen (point)
+    - 1: `BRect*`: ConvertFromScreen2 (rect)
+- 2: BWindow.ConvertToScreen: None 
+    - 1: `BPoint*`: ConvertToScreen (point)
+    - 1: `BRect*`: ConvertToScreen2 (rect)
+- 2: BWindow.BLooper: None 
+    - 1: `BMessage*`: BLooper (message)
+    - 1: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `int32`: BLooper1 (str)
+- 4: BWindow.PostMessage: None 
+    - 2: `uint32`: PostMessage (uint32)
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage2 (uint32, handler)
+    - 2: `BMessage*`: PostMessage1 (message)
+        - 1: `BHandler*`: None 
+            - 1: `BHandler*`: PostMessage3 (message, handler)
+- 2: BWindow.BHandler: None 
+    - 1: `BMessage*`: BHandler (message)
+    - 1: `const char*`: BHandler1 (str)
+- 2: BWindow.BArchivable: BArchivable ()
+    - 1: `BMessage*`: BArchivable1 (message)
