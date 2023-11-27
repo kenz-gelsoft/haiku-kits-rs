@@ -9,8 +9,14 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Handle message that has been received by the associated looper.
     ///
     /// See [C++ `BHandler::MessageReceived()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#aeecda5017e0081db617f23bbff71fb53).
-    fn message_received(&self, message: *mut c_void) {
-        unsafe { ffi::BHandler_MessageReceived(self.as_ptr(), message) }
+    fn message_received<M: MessageMethods>(&self, message: Option<&M>) {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BHandler_MessageReceived(self.as_ptr(), message)
+        }
     }
     /// Return a pointer to the looper that this handler is associated with.
     ///
@@ -97,8 +103,16 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Determine the proper handler for a scripting message.
     ///
     /// See [C++ `BHandler::ResolveSpecifier()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a76439ffaf84e65232698d2a4a3317d22).
-    fn resolve_specifier(&self, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: &str) -> Option<HandlerFromCpp<true>> {
+    fn resolve_specifier<M: MessageMethods, M2: MessageMethods>(&self, message: Option<&M>, index: i32, specifier: Option<&M2>, what: i32, property: &str) -> Option<HandlerFromCpp<true>> {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let specifier = match specifier {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let property = CString::from_vec_unchecked(property.into());
             let property = property.as_ptr();
             Handler::option_from(ffi::BHandler_ResolveSpecifier(self.as_ptr(), message, index, specifier, what, property))
@@ -107,8 +121,14 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Reports the suites of messages and specifiers that derived classes understand.
     ///
     /// See [C++ `BHandler::GetSupportedSuites()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#acf34435dada239f411e8e034e0ea36b5).
-    fn get_supported_suites(&self, data: *mut c_void) -> status_t {
-        unsafe { ffi::BHandler_GetSupportedSuites(self.as_ptr(), data) }
+    fn get_supported_suites<M: MessageMethods>(&self, data: Option<&M>) -> status_t {
+        unsafe {
+            let data = match data {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BHandler_GetSupportedSuites(self.as_ptr(), data)
+        }
     }
     // NOT_SUPPORTED: fn StartWatching()
     // NOT_SUPPORTED: fn StartWatchingAll()
@@ -165,8 +185,14 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Emit a state change to the observers.
     ///
     /// See [C++ `BHandler::SendNotices()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a71bf72dc17a64bcd42656722271a9e0c).
-    fn send_notices(&self, what: u32, notice: *const c_void) {
-        unsafe { ffi::BHandler_SendNotices(self.as_ptr(), what, notice) }
+    fn send_notices<M: MessageMethods>(&self, what: u32, notice: Option<&M>) {
+        unsafe {
+            let notice = match notice {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BHandler_SendNotices(self.as_ptr(), what, notice)
+        }
     }
     /// Check if there are any observers watching this handler.
     ///

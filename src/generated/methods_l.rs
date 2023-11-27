@@ -15,8 +15,14 @@ pub trait LooperMethods: HandlerMethods {
     /// Post a message to this looper.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ae79a7818ce950d8edcd238f7948df020).
-    fn post_message_message(&self, message: *mut c_void) -> status_t {
-        unsafe { ffi::BLooper_PostMessage1(self.as_ptr(), message) }
+    fn post_message_message<M: MessageMethods>(&self, message: Option<&M>) -> status_t {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BLooper_PostMessage1(self.as_ptr(), message)
+        }
     }
     /// Sends a message with command what identifier to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
@@ -37,8 +43,12 @@ pub trait LooperMethods: HandlerMethods {
     /// Send a message to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ac75eed80e72b236650f19b4015de6e99).
-    fn post_message_message_handler<H: HandlerMethods, H2: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
+    fn post_message_message_handler<M: MessageMethods, H: HandlerMethods, H2: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let handler = match handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
@@ -53,8 +63,12 @@ pub trait LooperMethods: HandlerMethods {
     /// Dispatch a message to a handler. Override if there are messages that you want to catch before they are sent to the handlers.
     ///
     /// See [C++ `BLooper::DispatchMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#add21ca8765c67b0dbf95b8f0361afa73).
-    fn dispatch_message<H: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>) {
+    fn dispatch_message<M: MessageMethods, H: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>) {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let handler = match handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
@@ -65,20 +79,24 @@ pub trait LooperMethods: HandlerMethods {
     /// Retrieve the current message.
     ///
     /// See [C++ `BLooper::CurrentMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a6d244af065c4a12ea795bbbc7bb20e07).
-    fn current_message(&self) -> *mut c_void {
-        unsafe { ffi::BLooper_CurrentMessage(self.as_ptr()) }
+    fn current_message(&self) -> Option<MessageFromCpp<true>> {
+        unsafe { Message::option_from(ffi::BLooper_CurrentMessage(self.as_ptr())) }
     }
     /// Get ownership of the message currently being processed.
     ///
     /// See [C++ `BLooper::DetachCurrentMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a7c8f05bcc354bc1d53026417417120e3).
-    fn detach_current_message(&self) -> *mut c_void {
-        unsafe { ffi::BLooper_DetachCurrentMessage(self.as_ptr()) }
+    fn detach_current_message(&self) -> Option<MessageFromCpp<true>> {
+        unsafe { Message::option_from(ffi::BLooper_DetachCurrentMessage(self.as_ptr())) }
     }
     /// Internal method to support single-threaded GUI toolkits.
     ///
     /// See [C++ `BLooper::DispatchExternalMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a3a2d3773466de19a6c117f3a04861b11).
-    fn dispatch_external_message<H: HandlerMethods>(&self, message: *mut c_void, handler: Option<&H>, _detached: *mut c_void) {
+    fn dispatch_external_message<M: MessageMethods, H: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>, _detached: *mut c_void) {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let handler = match handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),

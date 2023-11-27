@@ -19,8 +19,14 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
     /// Archive constructor.
     ///
     /// See [C++ `BWindow::BWindow()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a967856a612c3e7ad4d5d1f4970f744e3).
-    pub fn new(archive: *mut c_void) -> WindowFromCpp<FROM_CPP> {
-        unsafe { WindowFromCpp(ffi::BWindow_new(archive)) }
+    pub fn new<M: MessageMethods>(archive: Option<&M>) -> WindowFromCpp<FROM_CPP> {
+        unsafe {
+            let archive = match archive {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            WindowFromCpp(ffi::BWindow_new(archive))
+        }
     }
     // NOT_SUPPORTED: fn BWindow1()
     // NOT_SUPPORTED: fn BWindow2()
@@ -59,7 +65,13 @@ impl<const FROM_CPP: bool> ArchivableMethods for WindowFromCpp<FROM_CPP> {
     /// Creates a new BWindow object from the data message.
     ///
     /// See [C++ `BWindow::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af03c3109307589d67a1888a26f516f3f).
-    fn instantiate(archive: *mut c_void) -> Option<ArchivableFromCpp<true>> {
-        unsafe { Archivable::option_from(ffi::BWindow_Instantiate(archive)) }
+    fn instantiate<M: MessageMethods>(archive: Option<&M>) -> Option<ArchivableFromCpp<true>> {
+        unsafe {
+            let archive = match archive {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            Archivable::option_from(ffi::BWindow_Instantiate(archive))
+        }
     }
 }

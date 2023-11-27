@@ -9,14 +9,24 @@ pub trait WindowMethods: LooperMethods {
     /// Creates a keyboard shortcut that sends a message to the window.
     ///
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a5b05894e227eb22cba63ddaff289a95b).
-    fn add_shortcut(&self, key: u32, modifiers: u32, message: *mut c_void) {
-        unsafe { ffi::BWindow_AddShortcut(self.as_ptr(), key, modifiers, message) }
+    fn add_shortcut<M: MessageMethods>(&self, key: u32, modifiers: u32, message: Option<&M>) {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_AddShortcut(self.as_ptr(), key, modifiers, message)
+        }
     }
     /// Creates a keyboard shortcut that sends a message to the specified target.
     ///
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a169c891ff22f6a76f10c15bd16cde3c5).
-    fn add_shortcut_handler<H: HandlerMethods>(&self, key: u32, modifiers: u32, message: *mut c_void, target: Option<&H>) {
+    fn add_shortcut_handler<M: MessageMethods, H: HandlerMethods>(&self, key: u32, modifiers: u32, message: Option<&M>, target: Option<&H>) {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let target = match target {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
@@ -194,8 +204,14 @@ pub trait WindowMethods: LooperMethods {
     /// Fill out the window's decorator settings into settings.
     ///
     /// See [C++ `BWindow::GetDecoratorSettings()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a58fba1b0ad6c2035cf1dac6304d21912).
-    fn get_decorator_settings(&self, settings: *mut c_void) -> status_t {
-        unsafe { ffi::BWindow_GetDecoratorSettings(self.as_ptr(), settings) }
+    fn get_decorator_settings<M: MessageMethods>(&self, settings: Option<&M>) -> status_t {
+        unsafe {
+            let settings = match settings {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_GetDecoratorSettings(self.as_ptr(), settings)
+        }
     }
     /// Get the layout of the window.
     ///
@@ -375,8 +391,11 @@ pub trait WindowMethods: LooperMethods {
     /// Set the window decorator settings according to settings.
     ///
     /// See [C++ `BWindow::SetDecoratorSettings()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aecfdd5136ed18c193357a8e3130ba578).
-    fn set_decorator_settings(&self, settings: *const c_void) -> status_t {
-        unsafe { ffi::BWindow_SetDecoratorSettings(self.as_ptr(), settings) }
+    fn set_decorator_settings<M: MessageMethods>(&self, settings: &M) -> status_t {
+        unsafe {
+            let settings = settings.as_ptr();
+            ffi::BWindow_SetDecoratorSettings(self.as_ptr(), settings)
+        }
     }
     /// Set the default button of the window to button.
     ///

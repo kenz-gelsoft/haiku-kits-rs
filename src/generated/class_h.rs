@@ -17,8 +17,14 @@ impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
     /// Construct a handler from an archived message.
     ///
     /// See [C++ `BHandler::BHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#add8fa081a7bb8633581e78777b215d0b).
-    pub fn new_with_message(data: *mut c_void) -> HandlerFromCpp<FROM_CPP> {
-        unsafe { HandlerFromCpp(ffi::BHandler_new(data)) }
+    pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> HandlerFromCpp<FROM_CPP> {
+        unsafe {
+            let data = match data {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            HandlerFromCpp(ffi::BHandler_new(data))
+        }
     }
     /// Construct a new handler with a name.
     ///
@@ -55,7 +61,13 @@ impl<const FROM_CPP: bool> ArchivableMethods for HandlerFromCpp<FROM_CPP> {
     /// Static method to instantiate a handler from an archived message.
     ///
     /// See [C++ `BHandler::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a0c23aeb48d578525f81ba6d47f968528).
-    fn instantiate(data: *mut c_void) -> Option<ArchivableFromCpp<true>> {
-        unsafe { Archivable::option_from(ffi::BHandler_Instantiate(data)) }
+    fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
+        unsafe {
+            let data = match data {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            Archivable::option_from(ffi::BHandler_Instantiate(data))
+        }
     }
 }
