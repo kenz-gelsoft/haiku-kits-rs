@@ -44,7 +44,7 @@ extern "C" {
     pub fn BWindow_Flush(self_: *const c_void);
     // NOT_SUPPORTED: pub fn BWindow_Frame(self_: *const c_void) -> BRect;
     // NOT_SUPPORTED: pub fn BWindow_FrameMoved(self_: *mut c_void, new_position: BPoint);
-    // NOT_SUPPORTED: pub fn BWindow_FrameResized(self_: *mut c_void, new_width: float, new_height: float);
+    pub fn BWindow_FrameResized(self_: *mut c_void, new_width: c_float, new_height: c_float);
     pub fn BWindow_GetDecoratorSettings(self_: *const c_void, settings: *mut c_void) -> status_t;
     pub fn BWindow_GetLayout(self_: *const c_void) -> *mut c_void;
     pub fn BWindow_GetSizeLimits(self_: *mut c_void, min_width: *mut c_void, max_width: *mut c_void, min_height: *mut c_void, max_height: *mut c_void);
@@ -66,16 +66,16 @@ extern "C" {
     pub fn BWindow_MenusBeginning(self_: *mut c_void);
     pub fn BWindow_MenusEnded(self_: *mut c_void);
     pub fn BWindow_Minimize(self_: *mut c_void, minimize: bool);
-    // NOT_SUPPORTED: pub fn BWindow_MoveBy(self_: *mut c_void, dx: float, dy: float);
+    pub fn BWindow_MoveBy(self_: *mut c_void, dx: c_float, dy: c_float);
     pub fn BWindow_MoveOnScreen(self_: *mut c_void, flags: u32);
     // NOT_SUPPORTED: pub fn BWindow_MoveTo(self_: *mut c_void, point: BPoint);
-    // NOT_SUPPORTED: pub fn BWindow_MoveTo1(self_: *mut c_void, x: float, y: float);
+    pub fn BWindow_MoveTo1(self_: *mut c_void, x: c_float, y: c_float);
     pub fn BWindow_NeedsUpdate(self_: *const c_void) -> bool;
     pub fn BWindow_PulseRate(self_: *const c_void) -> bigtime_t;
     pub fn BWindow_RemoveChild(self_: *mut c_void, child: *mut c_void) -> bool;
     pub fn BWindow_RemoveFromSubset(self_: *mut c_void, window: *mut c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BWindow_ResizeBy(self_: *mut c_void, dx: float, dy: float);
-    // NOT_SUPPORTED: pub fn BWindow_ResizeTo(self_: *mut c_void, width: float, height: float);
+    pub fn BWindow_ResizeBy(self_: *mut c_void, dx: c_float, dy: c_float);
+    pub fn BWindow_ResizeTo(self_: *mut c_void, width: c_float, height: c_float);
     pub fn BWindow_ResizeToPreferred(self_: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_ScreenChanged(self_: *mut c_void, screen_size: BRect, depth: color_space);
     pub fn BWindow_SendBehind(self_: *mut c_void, window: *const c_void) -> status_t;
@@ -87,12 +87,12 @@ extern "C" {
     pub fn BWindow_SetLayout(self_: *mut c_void, layout: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_SetLook(self_: *mut c_void, look: window_look) -> status_t;
     pub fn BWindow_SetPulseRate(self_: *mut c_void, rate: bigtime_t);
-    // NOT_SUPPORTED: pub fn BWindow_SetSizeLimits(self_: *mut c_void, min_width: float, max_width: float, min_height: float, max_height: float);
+    pub fn BWindow_SetSizeLimits(self_: *mut c_void, min_width: c_float, max_width: c_float, min_height: c_float, max_height: c_float);
     pub fn BWindow_SetTitle(self_: *mut c_void, title: *const c_char);
     // NOT_SUPPORTED: pub fn BWindow_SetType(self_: *mut c_void, type_: window_type) -> status_t;
     // NOT_SUPPORTED: pub fn BWindow_SetWindowAlignment(self_: *mut c_void, mode: window_alignment, h: i32, h_offset: i32, width: i32, width_offset: i32, v: i32, v_offset: i32, height: i32, height_offset: i32) -> status_t;
     pub fn BWindow_SetWorkspaces(self_: *mut c_void, workspaces: u32);
-    // NOT_SUPPORTED: pub fn BWindow_SetZoomLimits(self_: *mut c_void, max_width: float, max_height: float);
+    pub fn BWindow_SetZoomLimits(self_: *mut c_void, max_width: c_float, max_height: c_float);
     pub fn BWindow_Show(self_: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_Size(self_: *const c_void) -> BSize;
     pub fn BWindow_Sync(self_: *const c_void);
@@ -105,7 +105,7 @@ extern "C" {
     pub fn BWindow_Workspaces(self_: *const c_void) -> u32;
     pub fn BWindow_WorkspacesChanged(self_: *mut c_void, old_workspaces: u32, new_workspaces: u32);
     pub fn BWindow_Zoom(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BWindow_Zoom1(self_: *mut c_void, origin: BPoint, width: float, height: float);
+    // NOT_SUPPORTED: pub fn BWindow_Zoom1(self_: *mut c_void, origin: BPoint, width: c_float, height: c_float);
     pub fn BWindow_Instantiate(archive: *mut c_void) -> *mut c_void;
 
 }

@@ -61,7 +61,7 @@ extern "C" {
     pub fn BMessage_AddInt64(self_: *mut c_void, name: *const c_char, value: i64) -> status_t;
     pub fn BMessage_AddUInt64(self_: *mut c_void, name: *const c_char, value: u64) -> status_t;
     pub fn BMessage_AddBool(self_: *mut c_void, name: *const c_char, value: bool) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_AddFloat(self_: *mut c_void, name: *const c_char, value: float) -> status_t;
+    pub fn BMessage_AddFloat(self_: *mut c_void, name: *const c_char, value: c_float) -> status_t;
     pub fn BMessage_AddDouble(self_: *mut c_void, name: *const c_char, value: c_double) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_AddColor(self_: *mut c_void, name: *const c_char, value: rgb_color) -> status_t;
     pub fn BMessage_AddPointer(self_: *mut c_void, name: *const c_char, pointer: *const c_void) -> status_t;
@@ -157,8 +157,8 @@ extern "C" {
     pub fn BMessage_ReplaceUInt641(self_: *mut c_void, name: *const c_char, index: i32, value: u64) -> status_t;
     pub fn BMessage_ReplaceBool(self_: *mut c_void, name: *const c_char, a_boolean: bool) -> status_t;
     pub fn BMessage_ReplaceBool1(self_: *mut c_void, name: *const c_char, index: i32, value: bool) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceFloat(self_: *mut c_void, name: *const c_char, value: float) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceFloat1(self_: *mut c_void, name: *const c_char, index: i32, value: float) -> status_t;
+    pub fn BMessage_ReplaceFloat(self_: *mut c_void, name: *const c_char, value: c_float) -> status_t;
+    pub fn BMessage_ReplaceFloat1(self_: *mut c_void, name: *const c_char, index: i32, value: c_float) -> status_t;
     pub fn BMessage_ReplaceDouble(self_: *mut c_void, name: *const c_char, value: c_double) -> status_t;
     pub fn BMessage_ReplaceDouble1(self_: *mut c_void, name: *const c_char, index: i32, value: c_double) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_ReplaceColor(self_: *mut c_void, name: *const c_char, value: rgb_color) -> status_t;
@@ -211,7 +211,7 @@ extern "C" {
     // BLOCKED: pub fn BMessage_FindInt322(self_: *const c_void, name: *const c_char, n: i32) -> i32;
     pub fn BMessage_FindInt642(self_: *const c_void, name: *const c_char, n: i32) -> i64;
     pub fn BMessage_FindBool2(self_: *const c_void, name: *const c_char, n: i32) -> bool;
-    // NOT_SUPPORTED: pub fn BMessage_FindFloat2(self_: *const c_void, name: *const c_char, n: i32) -> float;
+    pub fn BMessage_FindFloat2(self_: *const c_void, name: *const c_char, n: i32) -> c_float;
     pub fn BMessage_FindDouble2(self_: *const c_void, name: *const c_char, n: i32) -> c_double;
     pub fn BMessage_GetBool(self_: *const c_void, name: *const c_char, default_value: bool) -> bool;
     pub fn BMessage_GetBool1(self_: *const c_void, name: *const c_char, index: i32, default_value: bool) -> bool;
@@ -231,8 +231,8 @@ extern "C" {
     pub fn BMessage_GetInt641(self_: *const c_void, name: *const c_char, index: i32, default_value: i64) -> i64;
     pub fn BMessage_GetUInt64(self_: *const c_void, name: *const c_char, default_value: u64) -> u64;
     pub fn BMessage_GetUInt641(self_: *const c_void, name: *const c_char, index: i32, default_value: u64) -> u64;
-    // NOT_SUPPORTED: pub fn BMessage_GetFloat(self_: *const c_void, name: *const c_char, default_value: float) -> float;
-    // NOT_SUPPORTED: pub fn BMessage_GetFloat1(self_: *const c_void, name: *const c_char, index: i32, default_value: float) -> float;
+    pub fn BMessage_GetFloat(self_: *const c_void, name: *const c_char, default_value: c_float) -> c_float;
+    pub fn BMessage_GetFloat1(self_: *const c_void, name: *const c_char, index: i32, default_value: c_float) -> c_float;
     pub fn BMessage_GetDouble(self_: *const c_void, name: *const c_char, default_value: c_double) -> c_double;
     pub fn BMessage_GetDouble1(self_: *const c_void, name: *const c_char, index: i32, default_value: c_double) -> c_double;
     // NOT_SUPPORTED: pub fn BMessage_GetColor(self_: *const c_void, name: *const c_char, default_value: rgb_color) -> rgb_color;
@@ -262,7 +262,7 @@ extern "C" {
     pub fn BMessage_SetPointer(self_: *mut c_void, name: *const c_char, value: *const c_void) -> status_t;
     pub fn BMessage_SetString(self_: *mut c_void, name: *const c_char, string: *const c_char) -> status_t;
     pub fn BMessage_SetString1(self_: *mut c_void, name: *const c_char, string: *const c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_SetFloat(self_: *mut c_void, name: *const c_char, value: float) -> status_t;
+    pub fn BMessage_SetFloat(self_: *mut c_void, name: *const c_char, value: c_float) -> status_t;
     pub fn BMessage_SetDouble(self_: *mut c_void, name: *const c_char, value: c_double) -> status_t;
     pub fn BMessage_SetAlignment(self_: *mut c_void, name: *const c_char, value: *const c_void) -> status_t;
     pub fn BMessage_SetPoint(self_: *mut c_void, name: *const c_char, value: *const c_void) -> status_t;

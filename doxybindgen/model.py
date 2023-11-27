@@ -5,6 +5,7 @@ import re
 
 CXX2RUST = {
     'double': 'c_double',
+    'float': 'c_float',
     'int': 'c_int',
     'int8': 'i8',
     'int16': 'i16',
@@ -36,6 +37,7 @@ CXX_PRIMITIVES = [
 RUST_PRIMITIVES = [
     'bool',
     'c_double',
+    'c_float',
     'c_int',
     'c_long',
     'c_uchar',

@@ -413,7 +413,16 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_AddBool(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn AddFloat()
+    /// Convenience method to add a float to the label name.
+    ///
+    /// See [C++ `BMessage::AddFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#acdffd573b491074deef980df9f7f6e07).
+    fn add_float(&self, name: &str, value: c_float) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddFloat(self.as_ptr(), name, value)
+        }
+    }
     /// Convenience method to add a double to the label name.
     ///
     /// See [C++ `BMessage::AddDouble()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a77a042d689d478572e23e87c3ad9982f).
@@ -835,7 +844,7 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a float at the label name at an index.
     ///
     /// See [C++ `BMessage::FindFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#af5d62fe0dba7074556b877a52d1cecb2).
-    fn find_float_int32(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
+    fn find_float_int32_float(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1262,8 +1271,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_ReplaceBool1(self.as_ptr(), name, index, value)
         }
     }
-    // NOT_SUPPORTED: fn ReplaceFloat()
-    // NOT_SUPPORTED: fn ReplaceFloat1()
+    /// Replace a float at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ab0c54a885d2cf1826dcb2fa53cfd0175).
+    fn replace_float_float(&self, name: &str, value: c_float) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceFloat(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace a float at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad081e12c8b593d03c7fbee4ea61c8f34).
+    fn replace_float_int32(&self, name: &str, index: i32, value: c_float) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceFloat1(self.as_ptr(), name, index, value)
+        }
+    }
     /// Replace a double at the label name.
     ///
     /// See [C++ `BMessage::ReplaceDouble()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a023f8e3aa932cd312acd5653ecebaca4).
@@ -1701,7 +1728,16 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_FindBool2(self.as_ptr(), name, n)
         }
     }
-    // NOT_SUPPORTED: fn FindFloat2()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6d647b74485e51f9831b7e18e455b55a).
+    fn find_float_int32(&self, name: &str, n: i32) -> c_float {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_FindFloat2(self.as_ptr(), name, n)
+        }
+    }
     /// Deprecated.
     ///
     /// See [C++ `BMessage::FindDouble()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aa58f382932f2bfdcdb5f3a390c8312de).
@@ -1892,8 +1928,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_GetUInt641(self.as_ptr(), name, index, default_value)
         }
     }
-    // NOT_SUPPORTED: fn GetFloat()
-    // NOT_SUPPORTED: fn GetFloat1()
+    /// Return the float value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2f5426192ec8ca235dd9f936510c4e93).
+    fn get_float_float(&self, name: &str, default_value: c_float) -> c_float {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetFloat(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the float value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad60572e86e9e605b27afcc50efcb1d24).
+    fn get_float_int32(&self, name: &str, index: i32, default_value: c_float) -> c_float {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetFloat1(self.as_ptr(), name, index, default_value)
+        }
+    }
     /// Return the double value from message with name, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetDouble()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a018eed03b3b69e4248518e2a7c4a1c03).
@@ -2091,7 +2145,16 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_SetString1(self.as_ptr(), name, string)
         }
     }
-    // NOT_SUPPORTED: fn SetFloat()
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetFloat()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a70bada6ab725e3c49d6be3f7b9cd32b0).
+    fn set_float(&self, name: &str, value: c_float) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetFloat(self.as_ptr(), name, value)
+        }
+    }
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetDouble()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac63da648d43ba6f4ac4b6b78ce20fc14).

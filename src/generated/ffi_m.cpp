@@ -132,6 +132,9 @@ status_t BMessage_AddUInt64(BMessage * self, const char * name, uint64 value) {
 status_t BMessage_AddBool(BMessage * self, const char * name, bool value) {
     return self->AddBool(name, value);
 }
+status_t BMessage_AddFloat(BMessage * self, const char * name, float value) {
+    return self->AddFloat(name, value);
+}
 status_t BMessage_AddDouble(BMessage * self, const char * name, double value) {
     return self->AddDouble(name, value);
 }
@@ -378,6 +381,12 @@ status_t BMessage_ReplaceBool(BMessage * self, const char * name, bool a_boolean
 status_t BMessage_ReplaceBool1(BMessage * self, const char * name, int32 index, bool value) {
     return self->ReplaceBool(name, index, value);
 }
+status_t BMessage_ReplaceFloat(BMessage * self, const char * name, float value) {
+    return self->ReplaceFloat(name, value);
+}
+status_t BMessage_ReplaceFloat1(BMessage * self, const char * name, int32 index, float value) {
+    return self->ReplaceFloat(name, index, value);
+}
 status_t BMessage_ReplaceDouble(BMessage * self, const char * name, double value) {
     return self->ReplaceDouble(name, value);
 }
@@ -504,6 +513,9 @@ int64 BMessage_FindInt642(const BMessage * self, const char * name, int32 n) {
 bool BMessage_FindBool2(const BMessage * self, const char * name, int32 n) {
     return self->FindBool(name, n);
 }
+float BMessage_FindFloat2(const BMessage * self, const char * name, int32 n) {
+    return self->FindFloat(name, n);
+}
 double BMessage_FindDouble2(const BMessage * self, const char * name, int32 n) {
     return self->FindDouble(name, n);
 }
@@ -561,6 +573,12 @@ uint64 BMessage_GetUInt64(const BMessage * self, const char * name, uint64 defau
 uint64 BMessage_GetUInt641(const BMessage * self, const char * name, int32 index, uint64 default_value) {
     return self->GetUInt64(name, index, default_value);
 }
+float BMessage_GetFloat(const BMessage * self, const char * name, float default_value) {
+    return self->GetFloat(name, default_value);
+}
+float BMessage_GetFloat1(const BMessage * self, const char * name, int32 index, float default_value) {
+    return self->GetFloat(name, index, default_value);
+}
 double BMessage_GetDouble(const BMessage * self, const char * name, double default_value) {
     return self->GetDouble(name, default_value);
 }
@@ -614,6 +632,9 @@ status_t BMessage_SetString(BMessage * self, const char * name, const char * str
 }
 status_t BMessage_SetString1(BMessage * self, const char * name, const BString * string) {
     return self->SetString(name, *string);
+}
+status_t BMessage_SetFloat(BMessage * self, const char * name, float value) {
+    return self->SetFloat(name, value);
 }
 status_t BMessage_SetDouble(BMessage * self, const char * name, double value) {
     return self->SetDouble(name, value);

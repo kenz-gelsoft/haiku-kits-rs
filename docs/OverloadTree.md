@@ -145,11 +145,11 @@
         - 1: `bool*`: FindBool (bool)
         - 2: `int32`: FindBool2 (int32)
             - 1: `bool*`: FindBool1 (int32, bool)
-- 2: BMessage.FindFloat: None 
-    - 2: `const char*`: None 
+- 3: BMessage.FindFloat: None 
+    - 3: `const char*`: None 
         - 1: `float*`: FindFloat (float)
-        - 1: `int32`: None 
-            - 1: `float*`: FindFloat1 (int32)
+        - 2: `int32`: FindFloat2 (int32)
+            - 1: `float*`: FindFloat1 (int32, float)
 - 3: BMessage.FindDouble: None 
     - 3: `const char*`: None 
         - 1: `double*`: FindDouble (double)
@@ -246,6 +246,11 @@
         - 1: `bool`: ReplaceBool (bool)
         - 1: `int32`: None 
             - 1: `bool`: ReplaceBool1 (int32)
+- 2: BMessage.ReplaceFloat: None 
+    - 2: `const char*`: None 
+        - 1: `float`: ReplaceFloat (float)
+        - 1: `int32`: None 
+            - 1: `float`: ReplaceFloat1 (int32)
 - 2: BMessage.ReplaceDouble: None 
     - 2: `const char*`: None 
         - 1: `double`: ReplaceDouble (double)
@@ -325,6 +330,11 @@
         - 1: `uint64`: GetUInt64 (uint64)
         - 1: `int32`: None 
             - 1: `uint64`: GetUInt641 (int32)
+- 2: BMessage.GetFloat: None 
+    - 2: `const char*`: None 
+        - 1: `float`: GetFloat (float)
+        - 1: `int32`: None 
+            - 1: `float`: GetFloat1 (int32)
 - 2: BMessage.GetDouble: None 
     - 2: `const char*`: None 
         - 1: `double`: GetDouble (double)
