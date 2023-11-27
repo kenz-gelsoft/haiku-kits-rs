@@ -343,8 +343,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_AddUInt8(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn AddInt16()
-    // NOT_SUPPORTED: fn AddUInt16()
+    /// Convenience method to add an int16 to the label name.
+    ///
+    /// See [C++ `BMessage::AddInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a8e865679288281553721414aa17a7fea).
+    fn add_int16(&self, name: &str, value: i16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddInt16(self.as_ptr(), name, value)
+        }
+    }
+    /// Convenience method to add an uint16 to the label name.
+    ///
+    /// See [C++ `BMessage::AddUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aa43cedc7a1d6ecdc26041e6657c9288d).
+    fn add_u_int16(&self, name: &str, value: u16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddUInt16(self.as_ptr(), name, value)
+        }
+    }
     /// Convenience method to add an int32 to the label name.
     ///
     /// See [C++ `BMessage::AddInt32()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aa4d9d24d521c499aefd512b18d1e38c5).
@@ -668,7 +686,7 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find an integer at the label name at an index.
     ///
     /// See [C++ `BMessage::FindInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afedef75ac1e9c5a1d3f069b641975041).
-    fn find_int16_int32(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
+    fn find_int16_int32_int16(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1086,10 +1104,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_ReplaceUInt81(self.as_ptr(), name, index, value)
         }
     }
-    // NOT_SUPPORTED: fn ReplaceInt16()
-    // NOT_SUPPORTED: fn ReplaceInt161()
-    // NOT_SUPPORTED: fn ReplaceUInt16()
-    // NOT_SUPPORTED: fn ReplaceUInt161()
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a525deaa699950007c8fdab78c82ada32).
+    fn replace_int16_int16(&self, name: &str, value: i16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt16(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a05b21498414818bc51e76451a26a143f).
+    fn replace_int16_int32(&self, name: &str, index: i32, value: i16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt161(self.as_ptr(), name, index, value)
+        }
+    }
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a0029cb535e97ed753ee9529c646d763b).
+    fn replace_u_int16_uint16(&self, name: &str, value: u16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt16(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ab5d7606278375f280ab402b9f7e388be).
+    fn replace_u_int16_int32(&self, name: &str, index: i32, value: u16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt161(self.as_ptr(), name, index, value)
+        }
+    }
     /// Replace an integer at the label name.
     ///
     /// See [C++ `BMessage::ReplaceInt32()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad7b41f02b8a298bcd6699e972b88c82e).
@@ -1562,7 +1616,16 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_FindInt82(self.as_ptr(), name, n)
         }
     }
-    // NOT_SUPPORTED: fn FindInt162()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a7fb486ea27ffbf2711e2290bb65ab106).
+    fn find_int16_int32(&self, name: &str, n: i32) -> i16 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_FindInt162(self.as_ptr(), name, n)
+        }
+    }
     // BLOCKED: fn FindInt322()
     // NOT_SUPPORTED: fn FindInt642()
     /// Deprecated.
@@ -1646,10 +1709,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_GetUInt81(self.as_ptr(), name, index, default_value)
         }
     }
-    // NOT_SUPPORTED: fn GetInt16()
-    // NOT_SUPPORTED: fn GetInt161()
-    // NOT_SUPPORTED: fn GetUInt16()
-    // NOT_SUPPORTED: fn GetUInt161()
+    /// Return the int16 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aafc68a78c8b550fec01c4129683520b2).
+    fn get_int16_int16(&self, name: &str, default_value: i16) -> i16 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt16(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the int16 value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afd2db75cacae2f4b44f93c5ea3fb0e0f).
+    fn get_int16_int32(&self, name: &str, index: i32, default_value: i16) -> i16 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt161(self.as_ptr(), name, index, default_value)
+        }
+    }
+    /// Return the uint16 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a20d02e3b2687cf4d884d5e308c5a55cb).
+    fn get_u_int16_uint16(&self, name: &str, default_value: u16) -> u16 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt16(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the uint16 value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9a3612c486e40bc08800f72e48d2b214).
+    fn get_u_int16_int32(&self, name: &str, index: i32, default_value: u16) -> u16 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt161(self.as_ptr(), name, index, default_value)
+        }
+    }
     /// Return the int32 value from message with name, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetInt32()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a526ebda92481d1c0da2786b93253efd1).
@@ -1800,8 +1899,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_SetUInt8(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn SetInt16()
-    // NOT_SUPPORTED: fn SetUInt16()
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a8572ce07a58fb1d08e21bf10aefd3f61).
+    fn set_int16(&self, name: &str, value: i16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetInt16(self.as_ptr(), name, value)
+        }
+    }
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetUInt16()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#adc67eb8a3f7f7b25d0581bf839d8f994).
+    fn set_u_int16(&self, name: &str, value: u16) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetUInt16(self.as_ptr(), name, value)
+        }
+    }
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetInt32()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad3912ab5d568e4035ffb12aa74feda3f).

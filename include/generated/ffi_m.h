@@ -41,6 +41,8 @@ status_t BMessage_AddString1(BMessage * self, const char * name, const BString *
 status_t BMessage_AddStrings(BMessage * self, const char * name, const BStringList * list);
 status_t BMessage_AddInt8(BMessage * self, const char * name, int8 value);
 status_t BMessage_AddUInt8(BMessage * self, const char * name, uint8 value);
+status_t BMessage_AddInt16(BMessage * self, const char * name, int16 value);
+status_t BMessage_AddUInt16(BMessage * self, const char * name, uint16 value);
 status_t BMessage_AddInt32(BMessage * self, const char * name, int32 value);
 status_t BMessage_AddUInt32(BMessage * self, const char * name, uint32 value);
 status_t BMessage_AddBool(BMessage * self, const char * name, bool value);
@@ -112,6 +114,10 @@ status_t BMessage_ReplaceInt8(BMessage * self, const char * name, int8 value);
 status_t BMessage_ReplaceInt81(BMessage * self, const char * name, int32 index, int8 value);
 status_t BMessage_ReplaceUInt8(BMessage * self, const char * name, uint8 value);
 status_t BMessage_ReplaceUInt81(BMessage * self, const char * name, int32 index, uint8 value);
+status_t BMessage_ReplaceInt16(BMessage * self, const char * name, int16 value);
+status_t BMessage_ReplaceInt161(BMessage * self, const char * name, int32 index, int16 value);
+status_t BMessage_ReplaceUInt16(BMessage * self, const char * name, uint16 value);
+status_t BMessage_ReplaceUInt161(BMessage * self, const char * name, int32 index, uint16 value);
 status_t BMessage_ReplaceInt32(BMessage * self, const char * name, int32 value);
 status_t BMessage_ReplaceInt321(BMessage * self, const char * name, int32 index, int32 value);
 status_t BMessage_ReplaceUInt32(BMessage * self, const char * name, uint32 value);
@@ -157,6 +163,7 @@ bool BMessage_HasFlat(const BMessage * self, const char * name, const BFlattenab
 bool BMessage_HasFlat1(const BMessage * self, const char * name, int32 n, const BFlattenable * object);
 const char *BMessage_FindString4(const BMessage * self, const char * name, int32 n);
 int8 BMessage_FindInt82(const BMessage * self, const char * name, int32 n);
+int16 BMessage_FindInt162(const BMessage * self, const char * name, int32 n);
 bool BMessage_FindBool2(const BMessage * self, const char * name, int32 n);
 double BMessage_FindDouble2(const BMessage * self, const char * name, int32 n);
 bool BMessage_GetBool(const BMessage * self, const char * name, bool default_value);
@@ -165,6 +172,10 @@ int8 BMessage_GetInt8(const BMessage * self, const char * name, int8 default_val
 int8 BMessage_GetInt81(const BMessage * self, const char * name, int32 index, int8 default_value);
 uint8 BMessage_GetUInt8(const BMessage * self, const char * name, uint8 default_value);
 uint8 BMessage_GetUInt81(const BMessage * self, const char * name, int32 index, uint8 default_value);
+int16 BMessage_GetInt16(const BMessage * self, const char * name, int16 default_value);
+int16 BMessage_GetInt161(const BMessage * self, const char * name, int32 index, int16 default_value);
+uint16 BMessage_GetUInt16(const BMessage * self, const char * name, uint16 default_value);
+uint16 BMessage_GetUInt161(const BMessage * self, const char * name, int32 index, uint16 default_value);
 int32 BMessage_GetInt32(const BMessage * self, const char * name, int32 default_value);
 int32 BMessage_GetInt321(const BMessage * self, const char * name, int32 index, int32 default_value);
 uint32 BMessage_GetUInt32(const BMessage * self, const char * name, uint32 default_value);
@@ -178,6 +189,8 @@ const char *BMessage_GetString1(const BMessage * self, const char * name, int32 
 status_t BMessage_SetBool(BMessage * self, const char * name, bool value);
 status_t BMessage_SetInt8(BMessage * self, const char * name, int8 value);
 status_t BMessage_SetUInt8(BMessage * self, const char * name, uint8 value);
+status_t BMessage_SetInt16(BMessage * self, const char * name, int16 value);
+status_t BMessage_SetUInt16(BMessage * self, const char * name, uint16 value);
 status_t BMessage_SetInt32(BMessage * self, const char * name, int32 value);
 status_t BMessage_SetUInt32(BMessage * self, const char * name, uint32 value);
 status_t BMessage_SetPointer(BMessage * self, const char * name, const void * value);
