@@ -383,8 +383,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_AddUInt32(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn AddInt64()
-    // NOT_SUPPORTED: fn AddUInt64()
+    /// Convenience method to add an int64 to the label name.
+    ///
+    /// See [C++ `BMessage::AddInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad172f4c606396d8457a686fb16d0be31).
+    fn add_int64(&self, name: &str, value: i64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddInt64(self.as_ptr(), name, value)
+        }
+    }
+    /// Convenience method to add an uint64 to the label name.
+    ///
+    /// See [C++ `BMessage::AddUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a1c6b3d4ee371ccb4ddfc6c0fd1dc8e58).
+    fn add_u_int64(&self, name: &str, value: u64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddUInt64(self.as_ptr(), name, value)
+        }
+    }
     /// Convenience method to add a bool to the label name.
     ///
     /// See [C++ `BMessage::AddBool()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2976642c2259ebad33704d1b127bae60).
@@ -757,7 +775,7 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find an integer at the label name at an index.
     ///
     /// See [C++ `BMessage::FindInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ab3eef33595e98a3df56d18ade5f41a98).
-    fn find_int64_int32(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
+    fn find_int64_int32_int64(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1184,10 +1202,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_ReplaceUInt321(self.as_ptr(), name, index, value)
         }
     }
-    // NOT_SUPPORTED: fn ReplaceInt64()
-    // NOT_SUPPORTED: fn ReplaceInt641()
-    // NOT_SUPPORTED: fn ReplaceUInt64()
-    // NOT_SUPPORTED: fn ReplaceUInt641()
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a97220953786ff1cbb286e7e1113510ff).
+    fn replace_int64_int64(&self, name: &str, value: i64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt64(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac92d2b43a1dbc3e6591e0ddb03880e9b).
+    fn replace_int64_int32(&self, name: &str, index: i32, value: i64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt641(self.as_ptr(), name, index, value)
+        }
+    }
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad906dc7124f3dab9f41ca94f678c29d4).
+    fn replace_u_int64_uint64(&self, name: &str, value: u64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt64(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a66c1638d29c7474762e7ce3799785ffa).
+    fn replace_u_int64_int32(&self, name: &str, index: i32, value: u64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt641(self.as_ptr(), name, index, value)
+        }
+    }
     /// Replace a boolean at the label name.
     ///
     /// See [C++ `BMessage::ReplaceBool()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a64357e8743595d49dd53975e3f534a3f).
@@ -1627,7 +1681,16 @@ pub trait MessageMethods: RustBindingMethods {
         }
     }
     // BLOCKED: fn FindInt322()
-    // NOT_SUPPORTED: fn FindInt642()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac098297494e5013484455204339a17d7).
+    fn find_int64_int32(&self, name: &str, n: i32) -> i64 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_FindInt642(self.as_ptr(), name, n)
+        }
+    }
     /// Deprecated.
     ///
     /// See [C++ `BMessage::FindBool()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#acbb4500a7a1118cd1ee554fbc726d19f).
@@ -1789,10 +1852,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_GetUInt321(self.as_ptr(), name, index, default_value)
         }
     }
-    // NOT_SUPPORTED: fn GetInt64()
-    // NOT_SUPPORTED: fn GetInt641()
-    // NOT_SUPPORTED: fn GetUInt64()
-    // NOT_SUPPORTED: fn GetUInt641()
+    /// Return the int64 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2bb8e387b504dfe4ff47b7860ead1be9).
+    fn get_int64_int64(&self, name: &str, default_value: i64) -> i64 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt64(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the int64 value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a00e136d7bdfa978b2376ae993b200e64).
+    fn get_int64_int32(&self, name: &str, index: i32, default_value: i64) -> i64 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt641(self.as_ptr(), name, index, default_value)
+        }
+    }
+    /// Return the uint64 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a4d8f178f02212949cdd497c392ff6f13).
+    fn get_u_int64_uint64(&self, name: &str, default_value: u64) -> u64 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt64(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the uint64 value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9dce5b9af2a32cc3b1f185b3521ee61a).
+    fn get_u_int64_int32(&self, name: &str, index: i32, default_value: u64) -> u64 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt641(self.as_ptr(), name, index, default_value)
+        }
+    }
     // NOT_SUPPORTED: fn GetFloat()
     // NOT_SUPPORTED: fn GetFloat1()
     /// Return the double value from message with name, or defaultValue if not found.
@@ -1939,8 +2038,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_SetUInt32(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn SetInt64()
-    // NOT_SUPPORTED: fn SetUInt64()
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a488e4670f9d00491385a5a85f42c67d9).
+    fn set_int64(&self, name: &str, value: i64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetInt64(self.as_ptr(), name, value)
+        }
+    }
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetUInt64()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a39ea15b60e3551cf3f81af7ff2e8a6ee).
+    fn set_u_int64(&self, name: &str, value: u64) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetUInt64(self.as_ptr(), name, value)
+        }
+    }
     // NOT_SUPPORTED: fn SetColor()
     /// Set the data with at the label name to value.
     ///
