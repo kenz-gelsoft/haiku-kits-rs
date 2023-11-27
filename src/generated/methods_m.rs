@@ -323,8 +323,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_AddStrings(self.as_ptr(), name, list)
         }
     }
-    // NOT_SUPPORTED: fn AddInt8()
-    // NOT_SUPPORTED: fn AddUInt8()
+    /// Convenience method to add an int8 to the label name.
+    ///
+    /// See [C++ `BMessage::AddInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a224c55f626ae3a4552d06788539c7d60).
+    fn add_int8(&self, name: &str, value: i8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddInt8(self.as_ptr(), name, value)
+        }
+    }
+    /// Convenience method to add an uint8 to the label name.
+    ///
+    /// See [C++ `BMessage::AddUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a98bbc2ca6c4fcb26bcd162c06ea0f46f).
+    fn add_u_int8(&self, name: &str, value: u8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddUInt8(self.as_ptr(), name, value)
+        }
+    }
     // NOT_SUPPORTED: fn AddInt16()
     // NOT_SUPPORTED: fn AddUInt16()
     /// Convenience method to add an int32 to the label name.
@@ -610,7 +628,7 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find an integer at the label name at an index.
     ///
     /// See [C++ `BMessage::FindInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aed840d1a802546534eaa95e5f1247a53).
-    fn find_int8_int32(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
+    fn find_int8_int32_int8(&self, name: &str, index: i32, value: *mut c_void) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1028,10 +1046,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_ReplaceString3(self.as_ptr(), name, index, string)
         }
     }
-    // NOT_SUPPORTED: fn ReplaceInt8()
-    // NOT_SUPPORTED: fn ReplaceInt81()
-    // NOT_SUPPORTED: fn ReplaceUInt8()
-    // NOT_SUPPORTED: fn ReplaceUInt81()
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a55f909d237c7c1abfca5f918a8a5ffb9).
+    fn replace_int8_int8(&self, name: &str, value: i8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt8(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a8ae3786000645416e1911fe2b618c432).
+    fn replace_int8_int32(&self, name: &str, index: i32, value: i8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceInt81(self.as_ptr(), name, index, value)
+        }
+    }
+    /// Replace an integer at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aee573704ea412f6b53e1904e22e65454).
+    fn replace_u_int8_uint8(&self, name: &str, value: u8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt8(self.as_ptr(), name, value)
+        }
+    }
+    /// Replace an integer at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aff3cffe95f04bf5576393f65bb378a1c).
+    fn replace_u_int8_int32(&self, name: &str, index: i32, value: u8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceUInt81(self.as_ptr(), name, index, value)
+        }
+    }
     // NOT_SUPPORTED: fn ReplaceInt16()
     // NOT_SUPPORTED: fn ReplaceInt161()
     // NOT_SUPPORTED: fn ReplaceUInt16()
@@ -1498,7 +1552,16 @@ pub trait MessageMethods: RustBindingMethods {
             CStr::from_ptr(ffi::BMessage_FindString4(self.as_ptr(), name, n))
         }
     }
-    // NOT_SUPPORTED: fn FindInt82()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a941d54ffe9d43bc4f06b0f51b05fc9a4).
+    fn find_int8_int32(&self, name: &str, n: i32) -> i8 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_FindInt82(self.as_ptr(), name, n)
+        }
+    }
     // NOT_SUPPORTED: fn FindInt162()
     // BLOCKED: fn FindInt322()
     // NOT_SUPPORTED: fn FindInt642()
@@ -1543,10 +1606,46 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_GetBool1(self.as_ptr(), name, index, default_value)
         }
     }
-    // NOT_SUPPORTED: fn GetInt8()
-    // NOT_SUPPORTED: fn GetInt81()
-    // NOT_SUPPORTED: fn GetUInt8()
-    // NOT_SUPPORTED: fn GetUInt81()
+    /// Return the int8 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a822fcf4b8182566bfaebb8dd04cd2b97).
+    fn get_int8_int8(&self, name: &str, default_value: i8) -> i8 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt8(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the int8 value from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aad10c23206e76e694eb6d8ee90ae7710).
+    fn get_int8_int32(&self, name: &str, index: i32, default_value: i8) -> i8 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetInt81(self.as_ptr(), name, index, default_value)
+        }
+    }
+    /// Return the uint8 value from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a146182cecba5ad8a802d0c60627b695a).
+    fn get_u_int8_uint8(&self, name: &str, default_value: u8) -> u8 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt8(self.as_ptr(), name, default_value)
+        }
+    }
+    /// Return the uint8 message from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#af8f4251e140340b254a26f62fe3df880).
+    fn get_u_int8_int32(&self, name: &str, index: i32, default_value: u8) -> u8 {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_GetUInt81(self.as_ptr(), name, index, default_value)
+        }
+    }
     // NOT_SUPPORTED: fn GetInt16()
     // NOT_SUPPORTED: fn GetInt161()
     // NOT_SUPPORTED: fn GetUInt16()
@@ -1681,8 +1780,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_SetBool(self.as_ptr(), name, value)
         }
     }
-    // NOT_SUPPORTED: fn SetInt8()
-    // NOT_SUPPORTED: fn SetUInt8()
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a43dd2dd4ef948377bd1c208e8fb1397a).
+    fn set_int8(&self, name: &str, value: i8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetInt8(self.as_ptr(), name, value)
+        }
+    }
+    /// Set the data with at the label name to value.
+    ///
+    /// See [C++ `BMessage::SetUInt8()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2b2c442855633f18d2575f081c426cfb).
+    fn set_u_int8(&self, name: &str, value: u8) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_SetUInt8(self.as_ptr(), name, value)
+        }
+    }
     // NOT_SUPPORTED: fn SetInt16()
     // NOT_SUPPORTED: fn SetUInt16()
     /// Set the data with at the label name to value.

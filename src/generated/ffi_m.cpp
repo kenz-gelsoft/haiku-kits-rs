@@ -105,6 +105,12 @@ status_t BMessage_AddString1(BMessage * self, const char * name, const BString *
 status_t BMessage_AddStrings(BMessage * self, const char * name, const BStringList * list) {
     return self->AddStrings(name, *list);
 }
+status_t BMessage_AddInt8(BMessage * self, const char * name, int8 value) {
+    return self->AddInt8(name, value);
+}
+status_t BMessage_AddUInt8(BMessage * self, const char * name, uint8 value) {
+    return self->AddUInt8(name, value);
+}
 status_t BMessage_AddInt32(BMessage * self, const char * name, int32 value) {
     return self->AddInt32(name, value);
 }
@@ -306,6 +312,18 @@ status_t BMessage_ReplaceString2(BMessage * self, const char * name, const BStri
 status_t BMessage_ReplaceString3(BMessage * self, const char * name, int32 index, const BString * string) {
     return self->ReplaceString(name, index, *string);
 }
+status_t BMessage_ReplaceInt8(BMessage * self, const char * name, int8 value) {
+    return self->ReplaceInt8(name, value);
+}
+status_t BMessage_ReplaceInt81(BMessage * self, const char * name, int32 index, int8 value) {
+    return self->ReplaceInt8(name, index, value);
+}
+status_t BMessage_ReplaceUInt8(BMessage * self, const char * name, uint8 value) {
+    return self->ReplaceUInt8(name, value);
+}
+status_t BMessage_ReplaceUInt81(BMessage * self, const char * name, int32 index, uint8 value) {
+    return self->ReplaceUInt8(name, index, value);
+}
 status_t BMessage_ReplaceInt32(BMessage * self, const char * name, int32 value) {
     return self->ReplaceInt32(name, value);
 }
@@ -438,6 +456,9 @@ bool BMessage_HasFlat1(const BMessage * self, const char * name, int32 n, const 
 const char *BMessage_FindString4(const BMessage * self, const char * name, int32 n) {
     return self->FindString(name, n);
 }
+int8 BMessage_FindInt82(const BMessage * self, const char * name, int32 n) {
+    return self->FindInt8(name, n);
+}
 bool BMessage_FindBool2(const BMessage * self, const char * name, int32 n) {
     return self->FindBool(name, n);
 }
@@ -449,6 +470,18 @@ bool BMessage_GetBool(const BMessage * self, const char * name, bool default_val
 }
 bool BMessage_GetBool1(const BMessage * self, const char * name, int32 index, bool default_value) {
     return self->GetBool(name, index, default_value);
+}
+int8 BMessage_GetInt8(const BMessage * self, const char * name, int8 default_value) {
+    return self->GetInt8(name, default_value);
+}
+int8 BMessage_GetInt81(const BMessage * self, const char * name, int32 index, int8 default_value) {
+    return self->GetInt8(name, index, default_value);
+}
+uint8 BMessage_GetUInt8(const BMessage * self, const char * name, uint8 default_value) {
+    return self->GetUInt8(name, default_value);
+}
+uint8 BMessage_GetUInt81(const BMessage * self, const char * name, int32 index, uint8 default_value) {
+    return self->GetUInt8(name, index, default_value);
 }
 int32 BMessage_GetInt32(const BMessage * self, const char * name, int32 default_value) {
     return self->GetInt32(name, default_value);
@@ -482,6 +515,12 @@ const char *BMessage_GetString1(const BMessage * self, const char * name, int32 
 }
 status_t BMessage_SetBool(BMessage * self, const char * name, bool value) {
     return self->SetBool(name, value);
+}
+status_t BMessage_SetInt8(BMessage * self, const char * name, int8 value) {
+    return self->SetInt8(name, value);
+}
+status_t BMessage_SetUInt8(BMessage * self, const char * name, uint8 value) {
+    return self->SetUInt8(name, value);
 }
 status_t BMessage_SetInt32(BMessage * self, const char * name, int32 value) {
     return self->SetInt32(name, value);

@@ -7,9 +7,11 @@ CXX2RUST = {
     'double': 'c_double',
     'int': 'c_int',
     'int32': 'i32',
+    'int8': 'i8',
     'long': 'c_long',
     'size_t': 'usize',
     'uint32': 'u32',
+    'uint8': 'u8',
     'unsigned int': 'c_uint',
 }
 STR_TYPES = [
@@ -36,7 +38,9 @@ RUST_PRIMITIVES = [
     'c_uint',
     'i32',
     'i64',
+    'i8',
     'u32',
+    'u8',
     'usize',
 
     # Rust typedefs

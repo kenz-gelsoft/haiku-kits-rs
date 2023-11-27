@@ -105,11 +105,11 @@
             - 1: `const char**`: FindString1 (int32, str)
             - 1: `BString*`: FindString3 (int32, string)
         - 1: `BString*`: FindString2 (string)
-- 2: BMessage.FindInt8: None 
-    - 2: `const char*`: None 
+- 3: BMessage.FindInt8: None 
+    - 3: `const char*`: None 
         - 1: `int8*`: FindInt8 (int8)
-        - 1: `int32`: None 
-            - 1: `int8*`: FindInt81 (int32)
+        - 2: `int32`: FindInt82 (int32)
+            - 1: `int8*`: FindInt81 (int32, int8)
 - 2: BMessage.FindUInt8: None 
     - 2: `const char*`: None 
         - 1: `uint8*`: FindUInt8 (uint8)
@@ -202,6 +202,16 @@
             - 1: `const char*`: ReplaceString1 (int32, str)
             - 1: `const BString&`: ReplaceString3 (int32, string)
         - 1: `const BString&`: ReplaceString2 (string)
+- 2: BMessage.ReplaceInt8: None 
+    - 2: `const char*`: None 
+        - 1: `int8`: ReplaceInt8 (int8)
+        - 1: `int32`: None 
+            - 1: `int8`: ReplaceInt81 (int32)
+- 2: BMessage.ReplaceUInt8: None 
+    - 2: `const char*`: None 
+        - 1: `uint8`: ReplaceUInt8 (uint8)
+        - 1: `int32`: None 
+            - 1: `uint8`: ReplaceUInt81 (int32)
 - 2: BMessage.ReplaceInt32: None 
     - 2: `const char*`: None 
         - 2: `int32`: ReplaceInt32 ()
@@ -256,6 +266,16 @@
         - 1: `bool`: GetBool (bool)
         - 1: `int32`: None 
             - 1: `bool`: GetBool1 (int32)
+- 2: BMessage.GetInt8: None 
+    - 2: `const char*`: None 
+        - 1: `int8`: GetInt8 (int8)
+        - 1: `int32`: None 
+            - 1: `int8`: GetInt81 (int32)
+- 2: BMessage.GetUInt8: None 
+    - 2: `const char*`: None 
+        - 1: `uint8`: GetUInt8 (uint8)
+        - 1: `int32`: None 
+            - 1: `uint8`: GetUInt81 (int32)
 - 2: BMessage.GetInt32: None 
     - 2: `const char*`: None 
         - 2: `int32`: GetInt32 ()
