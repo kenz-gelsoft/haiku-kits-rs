@@ -84,6 +84,9 @@ uint32 BWindow_Flags(const BWindow * self) {
 void BWindow_Flush(const BWindow * self) {
     return self->Flush();
 }
+void BWindow_FrameResized(BWindow * self, float new_width, float new_height) {
+    return self->FrameResized(new_width, new_height);
+}
 status_t BWindow_GetDecoratorSettings(const BWindow * self, BMessage * settings) {
     return self->GetDecoratorSettings(settings);
 }
@@ -144,8 +147,14 @@ void BWindow_MenusEnded(BWindow * self) {
 void BWindow_Minimize(BWindow * self, bool minimize) {
     return self->Minimize(minimize);
 }
+void BWindow_MoveBy(BWindow * self, float dx, float dy) {
+    return self->MoveBy(dx, dy);
+}
 void BWindow_MoveOnScreen(BWindow * self, uint32 flags) {
     return self->MoveOnScreen(flags);
+}
+void BWindow_MoveTo1(BWindow * self, float x, float y) {
+    return self->MoveTo(x, y);
 }
 bool BWindow_NeedsUpdate(const BWindow * self) {
     return self->NeedsUpdate();
@@ -158,6 +167,12 @@ bool BWindow_RemoveChild(BWindow * self, BView * child) {
 }
 status_t BWindow_RemoveFromSubset(BWindow * self, BWindow * window) {
     return self->RemoveFromSubset(window);
+}
+void BWindow_ResizeBy(BWindow * self, float dx, float dy) {
+    return self->ResizeBy(dx, dy);
+}
+void BWindow_ResizeTo(BWindow * self, float width, float height) {
+    return self->ResizeTo(width, height);
 }
 void BWindow_ResizeToPreferred(BWindow * self) {
     return self->ResizeToPreferred();
@@ -183,11 +198,17 @@ void BWindow_SetLayout(BWindow * self, BLayout * layout) {
 void BWindow_SetPulseRate(BWindow * self, bigtime_t rate) {
     return self->SetPulseRate(rate);
 }
+void BWindow_SetSizeLimits(BWindow * self, float min_width, float max_width, float min_height, float max_height) {
+    return self->SetSizeLimits(min_width, max_width, min_height, max_height);
+}
 void BWindow_SetTitle(BWindow * self, const char * title) {
     return self->SetTitle(title);
 }
 void BWindow_SetWorkspaces(BWindow * self, uint32 workspaces) {
     return self->SetWorkspaces(workspaces);
+}
+void BWindow_SetZoomLimits(BWindow * self, float max_width, float max_height) {
+    return self->SetZoomLimits(max_width, max_height);
 }
 void BWindow_Show(BWindow * self) {
     return self->Show();

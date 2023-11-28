@@ -18,8 +18,14 @@ impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// Construct a looper from an archived message.
     ///
     /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aad314758fd652fb48d61bcccab8b6ae3).
-    pub fn new_with_message(data: *mut c_void) -> LooperFromCpp<FROM_CPP> {
-        unsafe { LooperFromCpp(ffi::BLooper_new(data)) }
+    pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> LooperFromCpp<FROM_CPP> {
+        unsafe {
+            let data = match data {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            LooperFromCpp(ffi::BLooper_new(data))
+        }
     }
     /// Construct a new BLooper with a priority and an capacity.
     ///
@@ -61,7 +67,13 @@ impl<const FROM_CPP: bool> ArchivableMethods for LooperFromCpp<FROM_CPP> {
     /// Static method to instantiate a looper from an archived message.
     ///
     /// See [C++ `BLooper::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aee61314ab77c54a64f8122440189b73a).
-    fn instantiate(data: *mut c_void) -> Option<ArchivableFromCpp<true>> {
-        unsafe { Archivable::option_from(ffi::BLooper_Instantiate(data)) }
+    fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
+        unsafe {
+            let data = match data {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            Archivable::option_from(ffi::BLooper_Instantiate(data))
+        }
     }
 }

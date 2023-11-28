@@ -5,11 +5,18 @@ import re
 
 CXX2RUST = {
     'double': 'c_double',
+    'float': 'c_float',
     'int': 'c_int',
+    'int8': 'i8',
+    'int16': 'i16',
     'int32': 'i32',
+    'int64': 'i64',
     'long': 'c_long',
     'size_t': 'usize',
+    'uint8': 'u8',
+    'uint16': 'u16',
     'uint32': 'u32',
+    'uint64': 'u64',
     'unsigned int': 'c_uint',
 }
 STR_TYPES = [
@@ -30,13 +37,19 @@ CXX_PRIMITIVES = [
 RUST_PRIMITIVES = [
     'bool',
     'c_double',
+    'c_float',
     'c_int',
     'c_long',
     'c_uchar',
     'c_uint',
+    'i8',
+    'i16',
     'i32',
     'i64',
+    'u8',
+    'u16',
     'u32',
+    'u64',
     'usize',
 
     # Rust typedefs

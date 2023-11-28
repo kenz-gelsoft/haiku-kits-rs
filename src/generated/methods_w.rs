@@ -9,14 +9,24 @@ pub trait WindowMethods: LooperMethods {
     /// Creates a keyboard shortcut that sends a message to the window.
     ///
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a5b05894e227eb22cba63ddaff289a95b).
-    fn add_shortcut(&self, key: u32, modifiers: u32, message: *mut c_void) {
-        unsafe { ffi::BWindow_AddShortcut(self.as_ptr(), key, modifiers, message) }
+    fn add_shortcut<M: MessageMethods>(&self, key: u32, modifiers: u32, message: Option<&M>) {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_AddShortcut(self.as_ptr(), key, modifiers, message)
+        }
     }
     /// Creates a keyboard shortcut that sends a message to the specified target.
     ///
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a169c891ff22f6a76f10c15bd16cde3c5).
-    fn add_shortcut_handler<H: HandlerMethods>(&self, key: u32, modifiers: u32, message: *mut c_void, target: Option<&H>) {
+    fn add_shortcut_handler<M: MessageMethods, H: HandlerMethods>(&self, key: u32, modifiers: u32, message: Option<&M>, target: Option<&H>) {
         unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let target = match target {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
@@ -190,12 +200,23 @@ pub trait WindowMethods: LooperMethods {
     }
     // NOT_SUPPORTED: fn Frame()
     // NOT_SUPPORTED: fn FrameMoved()
-    // NOT_SUPPORTED: fn FrameResized()
+    /// Hook method that gets called when the window is resized.
+    ///
+    /// See [C++ `BWindow::FrameResized()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a280fab2b2900abc61dd4bcb7a2a4793f).
+    fn frame_resized(&self, new_width: c_float, new_height: c_float) {
+        unsafe { ffi::BWindow_FrameResized(self.as_ptr(), new_width, new_height) }
+    }
     /// Fill out the window's decorator settings into settings.
     ///
     /// See [C++ `BWindow::GetDecoratorSettings()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a58fba1b0ad6c2035cf1dac6304d21912).
-    fn get_decorator_settings(&self, settings: *mut c_void) -> status_t {
-        unsafe { ffi::BWindow_GetDecoratorSettings(self.as_ptr(), settings) }
+    fn get_decorator_settings<M: MessageMethods>(&self, settings: Option<&M>) -> status_t {
+        unsafe {
+            let settings = match settings {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_GetDecoratorSettings(self.as_ptr(), settings)
+        }
     }
     /// Get the layout of the window.
     ///
@@ -312,7 +333,12 @@ pub trait WindowMethods: LooperMethods {
     fn minimize(&self, minimize: bool) {
         unsafe { ffi::BWindow_Minimize(self.as_ptr(), minimize) }
     }
-    // NOT_SUPPORTED: fn MoveBy()
+    /// Move the window by dx pixels horizontally and dy pixels vertically.
+    ///
+    /// See [C++ `BWindow::MoveBy()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a146584fa5815bd413f71671f33a9de89).
+    fn move_by(&self, dx: c_float, dy: c_float) {
+        unsafe { ffi::BWindow_MoveBy(self.as_ptr(), dx, dy) }
+    }
     /// Update window size and position to make it visible on screen.
     ///
     /// See [C++ `BWindow::MoveOnScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ae426291c30652864d0a464518f9cda12).
@@ -320,7 +346,12 @@ pub trait WindowMethods: LooperMethods {
         unsafe { ffi::BWindow_MoveOnScreen(self.as_ptr(), flags) }
     }
     // NOT_SUPPORTED: fn MoveTo()
-    // NOT_SUPPORTED: fn MoveTo1()
+    /// Move the window to the specified x and y coordinates.
+    ///
+    /// See [C++ `BWindow::MoveTo()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af419313a1b9b73a2c1cdb2365ff16189).
+    fn move_to(&self, x: c_float, y: c_float) {
+        unsafe { ffi::BWindow_MoveTo1(self.as_ptr(), x, y) }
+    }
     /// Returns whether or not any of the attached views need to be updated.
     ///
     /// See [C++ `BWindow::NeedsUpdate()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a9c03d9a6a454edec5eb38657e5c66490).
@@ -351,8 +382,18 @@ pub trait WindowMethods: LooperMethods {
             ffi::BWindow_RemoveFromSubset(self.as_ptr(), window)
         }
     }
-    // NOT_SUPPORTED: fn ResizeBy()
-    // NOT_SUPPORTED: fn ResizeTo()
+    /// Resize the window by dx pixels horizontally and dy pixels vertically.
+    ///
+    /// See [C++ `BWindow::ResizeBy()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a6aba4ddafc654f362799b6a96e6c76cd).
+    fn resize_by(&self, dx: c_float, dy: c_float) {
+        unsafe { ffi::BWindow_ResizeBy(self.as_ptr(), dx, dy) }
+    }
+    /// Resize the window to the specified width and height.
+    ///
+    /// See [C++ `BWindow::ResizeTo()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a31e2ea325258646128cfe8618cb79edc).
+    fn resize_to(&self, width: c_float, height: c_float) {
+        unsafe { ffi::BWindow_ResizeTo(self.as_ptr(), width, height) }
+    }
     /// Resize the window to the preferred size of the window's layout.
     ///
     /// See [C++ `BWindow::ResizeToPreferred()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a68db6173b92973252fc1876c5376bcd4).
@@ -375,8 +416,11 @@ pub trait WindowMethods: LooperMethods {
     /// Set the window decorator settings according to settings.
     ///
     /// See [C++ `BWindow::SetDecoratorSettings()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aecfdd5136ed18c193357a8e3130ba578).
-    fn set_decorator_settings(&self, settings: *const c_void) -> status_t {
-        unsafe { ffi::BWindow_SetDecoratorSettings(self.as_ptr(), settings) }
+    fn set_decorator_settings<M: MessageMethods>(&self, settings: &M) -> status_t {
+        unsafe {
+            let settings = settings.as_ptr();
+            ffi::BWindow_SetDecoratorSettings(self.as_ptr(), settings)
+        }
     }
     /// Set the default button of the window to button.
     ///
@@ -410,7 +454,12 @@ pub trait WindowMethods: LooperMethods {
     fn set_pulse_rate(&self, rate: bigtime_t) {
         unsafe { ffi::BWindow_SetPulseRate(self.as_ptr(), rate) }
     }
-    // NOT_SUPPORTED: fn SetSizeLimits()
+    /// Set size limits on the window.
+    ///
+    /// See [C++ `BWindow::SetSizeLimits()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a8668ecf18ad145391f66704c3339eb3d).
+    fn set_size_limits(&self, min_width: c_float, max_width: c_float, min_height: c_float, max_height: c_float) {
+        unsafe { ffi::BWindow_SetSizeLimits(self.as_ptr(), min_width, max_width, min_height, max_height) }
+    }
     /// Sets the window title to title.
     ///
     /// See [C++ `BWindow::SetTitle()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a7cd4bf7dc0079e9a52b0ac1e7e2f897b).
@@ -429,7 +478,12 @@ pub trait WindowMethods: LooperMethods {
     fn set_workspaces(&self, workspaces: u32) {
         unsafe { ffi::BWindow_SetWorkspaces(self.as_ptr(), workspaces) }
     }
-    // NOT_SUPPORTED: fn SetZoomLimits()
+    /// Sets the maximum size that the window will zoom to when Zoom() is called.
+    ///
+    /// See [C++ `BWindow::SetZoomLimits()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ad3c2e560e41b377456faf9bd5dabcdc0).
+    fn set_zoom_limits(&self, max_width: c_float, max_height: c_float) {
+        unsafe { ffi::BWindow_SetZoomLimits(self.as_ptr(), max_width, max_height) }
+    }
     /// Shows the window on screen, places it frontmost on the screen, adds the window to Deskbar's window list, and makes it the active window.
     ///
     /// See [C++ `BWindow::Show()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af7009117df50add72cf0e799ff7d0fa5).

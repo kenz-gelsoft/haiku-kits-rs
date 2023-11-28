@@ -49,6 +49,314 @@
     - 1: `const char*`: BHandler1 (str)
 - 2: BLooper.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
+- 3: BMessage.GetInfo: None 
+    - 3: `const char*`: None 
+        - 3: `type_code*`: None 
+            - 2: `int32*`: GetInfo1 (int32)
+                - 1: `bool*`: GetInfo3 (int32, bool)
+            - 1: `bool*`: GetInfo2 (bool)
+- 4: BMessage.SendReply: None 
+    - 2: `uint32`: None 
+        - 1: `BHandler*`: SendReply (uint32, handler)
+        - 1: `BMessage*`: SendReply3 (uint32, message)
+    - 2: `BMessage*`: None 
+        - 1: `BHandler*`: None 
+            - 1: `bigtime_t`: SendReply1 (message, handler)
+        - 1: `BMessage*`: None 
+            - 1: `bigtime_t`: None 
+                - 1: `bigtime_t`: SendReply4 (message, message)
+- 2: BMessage.Unflatten: None 
+    - 1: `const char*`: Unflatten (str)
+    - 1: `BDataIO*`: Unflatten1 (dataio)
+- 5: BMessage.AddSpecifier: None 
+    - 4: `const char*`: AddSpecifier (str)
+        - 2: `int32`: AddSpecifier1 (str, int32)
+            - 1: `int32`: AddSpecifier2 (str, int32, int32)
+        - 1: `const char*`: AddSpecifier3 (str, str)
+    - 1: `const BMessage*`: AddSpecifier4 (message)
+- 2: BMessage.AddString: None 
+    - 2: `const char*`: None 
+        - 1: `const char*`: AddString (str)
+        - 1: `const BString&`: AddString1 (string)
+- 2: BMessage.FindAlignment: None 
+    - 2: `const char*`: None 
+        - 1: `BAlignment*`: FindAlignment (alignment)
+        - 1: `int32`: None 
+            - 1: `BAlignment*`: FindAlignment1 (int32)
+- 2: BMessage.FindRect: None 
+    - 2: `const char*`: None 
+        - 1: `BRect*`: FindRect (rect)
+        - 1: `int32`: None 
+            - 1: `BRect*`: FindRect1 (int32)
+- 2: BMessage.FindPoint: None 
+    - 2: `const char*`: None 
+        - 1: `BPoint*`: FindPoint (point)
+        - 1: `int32`: None 
+            - 1: `BPoint*`: FindPoint1 (int32)
+- 2: BMessage.FindSize: None 
+    - 2: `const char*`: None 
+        - 1: `BSize*`: FindSize (size)
+        - 1: `int32`: None 
+            - 1: `BSize*`: FindSize1 (int32)
+- 5: BMessage.FindString: None 
+    - 5: `const char*`: None 
+        - 1: `const char**`: FindString (str)
+        - 3: `int32`: FindString4 (int32)
+            - 1: `const char**`: FindString1 (int32, str)
+            - 1: `BString*`: FindString3 (int32, string)
+        - 1: `BString*`: FindString2 (string)
+- 3: BMessage.FindInt8: None 
+    - 3: `const char*`: None 
+        - 1: `int8*`: FindInt8 (int8)
+        - 2: `int32`: FindInt82 (int32)
+            - 1: `int8*`: FindInt81 (int32, int8)
+- 2: BMessage.FindUInt8: None 
+    - 2: `const char*`: None 
+        - 1: `uint8*`: FindUInt8 (uint8)
+        - 1: `int32`: None 
+            - 1: `uint8*`: FindUInt81 (int32)
+- 3: BMessage.FindInt16: None 
+    - 3: `const char*`: None 
+        - 1: `int16*`: FindInt16 (int16)
+        - 2: `int32`: FindInt162 (int32)
+            - 1: `int16*`: FindInt161 (int32, int16)
+- 2: BMessage.FindUInt16: None 
+    - 2: `const char*`: None 
+        - 1: `uint16*`: FindUInt16 (uint16)
+        - 1: `int32`: None 
+            - 1: `uint16*`: FindUInt161 (int32)
+- 2: BMessage.FindUInt32: None 
+    - 2: `const char*`: None 
+        - 1: `uint32*`: FindUInt32 (uint32)
+        - 1: `int32`: None 
+            - 1: `uint32*`: FindUInt321 (int32)
+- 3: BMessage.FindInt64: None 
+    - 3: `const char*`: None 
+        - 1: `int64*`: FindInt64 (int64)
+        - 2: `int32`: FindInt642 (int32)
+            - 1: `int64*`: FindInt641 (int32, int64)
+- 2: BMessage.FindUInt64: None 
+    - 2: `const char*`: None 
+        - 1: `uint64*`: FindUInt64 (uint64)
+        - 1: `int32`: None 
+            - 1: `uint64*`: FindUInt641 (int32)
+- 3: BMessage.FindBool: None 
+    - 3: `const char*`: None 
+        - 1: `bool*`: FindBool (bool)
+        - 2: `int32`: FindBool2 (int32)
+            - 1: `bool*`: FindBool1 (int32, bool)
+- 3: BMessage.FindFloat: None 
+    - 3: `const char*`: None 
+        - 1: `float*`: FindFloat (float)
+        - 2: `int32`: FindFloat2 (int32)
+            - 1: `float*`: FindFloat1 (int32, float)
+- 3: BMessage.FindDouble: None 
+    - 3: `const char*`: None 
+        - 1: `double*`: FindDouble (double)
+        - 2: `int32`: FindDouble2 (int32)
+            - 1: `double*`: FindDouble1 (int32, double)
+- 2: BMessage.FindColor: None 
+    - 2: `const char*`: None 
+        - 1: `rgb_color*`: FindColor (rgb_color)
+        - 1: `int32`: None 
+            - 1: `rgb_color*`: FindColor1 (int32)
+- 2: BMessage.FindPointer: None 
+    - 2: `const char*`: None 
+        - 1: `void**`: FindPointer (void)
+        - 1: `int32`: None 
+            - 1: `void**`: FindPointer1 (int32)
+- 2: BMessage.FindMessenger: None 
+    - 2: `const char*`: None 
+        - 1: `BMessenger*`: FindMessenger (messenger)
+        - 1: `int32`: None 
+            - 1: `BMessenger*`: FindMessenger1 (int32)
+- 2: BMessage.FindRef: None 
+    - 2: `const char*`: None 
+        - 1: `entry_ref*`: FindRef (entry_ref)
+        - 1: `int32`: None 
+            - 1: `entry_ref*`: FindRef1 (int32)
+- 2: BMessage.FindNodeRef: None 
+    - 2: `const char*`: None 
+        - 1: `node_ref*`: FindNodeRef (node_ref)
+        - 1: `int32`: None 
+            - 1: `node_ref*`: FindNodeRef1 (int32)
+- 2: BMessage.FindMessage: None 
+    - 2: `const char*`: None 
+        - 1: `BMessage*`: FindMessage (message)
+        - 1: `int32`: None 
+            - 1: `BMessage*`: FindMessage1 (int32)
+- 2: BMessage.FindFlat: None 
+    - 2: `const char*`: None 
+        - 1: `BFlattenable*`: FindFlat (flattenable)
+        - 1: `int32`: None 
+            - 1: `BFlattenable*`: FindFlat1 (int32)
+- 2: BMessage.ReplaceAlignment: None 
+    - 2: `const char*`: None 
+        - 1: `const BAlignment&`: ReplaceAlignment (alignment)
+        - 1: `int32`: None 
+            - 1: `const BAlignment&`: ReplaceAlignment1 (int32)
+- 4: BMessage.ReplaceString: None 
+    - 4: `const char*`: None 
+        - 1: `const char*`: ReplaceString (str)
+        - 2: `int32`: None 
+            - 1: `const char*`: ReplaceString1 (int32, str)
+            - 1: `const BString&`: ReplaceString3 (int32, string)
+        - 1: `const BString&`: ReplaceString2 (string)
+- 2: BMessage.ReplaceInt8: None 
+    - 2: `const char*`: None 
+        - 1: `int8`: ReplaceInt8 (int8)
+        - 1: `int32`: None 
+            - 1: `int8`: ReplaceInt81 (int32)
+- 2: BMessage.ReplaceUInt8: None 
+    - 2: `const char*`: None 
+        - 1: `uint8`: ReplaceUInt8 (uint8)
+        - 1: `int32`: None 
+            - 1: `uint8`: ReplaceUInt81 (int32)
+- 2: BMessage.ReplaceInt16: None 
+    - 2: `const char*`: None 
+        - 1: `int16`: ReplaceInt16 (int16)
+        - 1: `int32`: None 
+            - 1: `int16`: ReplaceInt161 (int32)
+- 2: BMessage.ReplaceUInt16: None 
+    - 2: `const char*`: None 
+        - 1: `uint16`: ReplaceUInt16 (uint16)
+        - 1: `int32`: None 
+            - 1: `uint16`: ReplaceUInt161 (int32)
+- 2: BMessage.ReplaceInt32: None 
+    - 2: `const char*`: None 
+        - 2: `int32`: ReplaceInt32 ()
+            - 1: `int32`: ReplaceInt321 (int32)
+- 2: BMessage.ReplaceUInt32: None 
+    - 2: `const char*`: None 
+        - 1: `uint32`: ReplaceUInt32 (uint32)
+        - 1: `int32`: None 
+            - 1: `uint32`: ReplaceUInt321 (int32)
+- 2: BMessage.ReplaceInt64: None 
+    - 2: `const char*`: None 
+        - 1: `int64`: ReplaceInt64 (int64)
+        - 1: `int32`: None 
+            - 1: `int64`: ReplaceInt641 (int32)
+- 2: BMessage.ReplaceUInt64: None 
+    - 2: `const char*`: None 
+        - 1: `uint64`: ReplaceUInt64 (uint64)
+        - 1: `int32`: None 
+            - 1: `uint64`: ReplaceUInt641 (int32)
+- 2: BMessage.ReplaceBool: None 
+    - 2: `const char*`: None 
+        - 1: `bool`: ReplaceBool (bool)
+        - 1: `int32`: None 
+            - 1: `bool`: ReplaceBool1 (int32)
+- 2: BMessage.ReplaceFloat: None 
+    - 2: `const char*`: None 
+        - 1: `float`: ReplaceFloat (float)
+        - 1: `int32`: None 
+            - 1: `float`: ReplaceFloat1 (int32)
+- 2: BMessage.ReplaceDouble: None 
+    - 2: `const char*`: None 
+        - 1: `double`: ReplaceDouble (double)
+        - 1: `int32`: None 
+            - 1: `double`: ReplaceDouble1 (int32)
+- 2: BMessage.ReplacePointer: None 
+    - 2: `const char*`: None 
+        - 1: `const void*`: ReplacePointer (void)
+        - 1: `int32`: None 
+            - 1: `const void*`: ReplacePointer1 (int32)
+- 2: BMessage.ReplaceRef: None 
+    - 2: `const char*`: None 
+        - 1: `const entry_ref*`: ReplaceRef (entry_ref)
+        - 1: `int32`: None 
+            - 1: `const entry_ref*`: ReplaceRef1 (int32)
+- 2: BMessage.ReplaceNodeRef: None 
+    - 2: `const char*`: None 
+        - 1: `const node_ref*`: ReplaceNodeRef (node_ref)
+        - 1: `int32`: None 
+            - 1: `const node_ref*`: ReplaceNodeRef1 (int32)
+- 2: BMessage.ReplaceMessage: None 
+    - 2: `const char*`: None 
+        - 1: `const BMessage*`: ReplaceMessage (message)
+        - 1: `int32`: None 
+            - 1: `const BMessage*`: ReplaceMessage1 (int32)
+- 2: BMessage.ReplaceFlat: None 
+    - 2: `const char*`: None 
+        - 1: `BFlattenable*`: ReplaceFlat (flattenable)
+        - 1: `int32`: None 
+            - 1: `BFlattenable*`: ReplaceFlat1 (int32)
+- 2: BMessage.HasFlat: None 
+    - 2: `const char*`: None 
+        - 1: `const BFlattenable*`: HasFlat (flattenable)
+        - 1: `int32`: None 
+            - 1: `const BFlattenable*`: HasFlat1 (int32)
+- 2: BMessage.GetBool: None 
+    - 2: `const char*`: None 
+        - 1: `bool`: GetBool (bool)
+        - 1: `int32`: None 
+            - 1: `bool`: GetBool1 (int32)
+- 2: BMessage.GetInt8: None 
+    - 2: `const char*`: None 
+        - 1: `int8`: GetInt8 (int8)
+        - 1: `int32`: None 
+            - 1: `int8`: GetInt81 (int32)
+- 2: BMessage.GetUInt8: None 
+    - 2: `const char*`: None 
+        - 1: `uint8`: GetUInt8 (uint8)
+        - 1: `int32`: None 
+            - 1: `uint8`: GetUInt81 (int32)
+- 2: BMessage.GetInt16: None 
+    - 2: `const char*`: None 
+        - 1: `int16`: GetInt16 (int16)
+        - 1: `int32`: None 
+            - 1: `int16`: GetInt161 (int32)
+- 2: BMessage.GetUInt16: None 
+    - 2: `const char*`: None 
+        - 1: `uint16`: GetUInt16 (uint16)
+        - 1: `int32`: None 
+            - 1: `uint16`: GetUInt161 (int32)
+- 2: BMessage.GetInt32: None 
+    - 2: `const char*`: None 
+        - 2: `int32`: GetInt32 ()
+            - 1: `int32`: GetInt321 (int32)
+- 2: BMessage.GetUInt32: None 
+    - 2: `const char*`: None 
+        - 1: `uint32`: GetUInt32 (uint32)
+        - 1: `int32`: None 
+            - 1: `uint32`: GetUInt321 (int32)
+- 2: BMessage.GetInt64: None 
+    - 2: `const char*`: None 
+        - 1: `int64`: GetInt64 (int64)
+        - 1: `int32`: None 
+            - 1: `int64`: GetInt641 (int32)
+- 2: BMessage.GetUInt64: None 
+    - 2: `const char*`: None 
+        - 1: `uint64`: GetUInt64 (uint64)
+        - 1: `int32`: None 
+            - 1: `uint64`: GetUInt641 (int32)
+- 2: BMessage.GetFloat: None 
+    - 2: `const char*`: None 
+        - 1: `float`: GetFloat (float)
+        - 1: `int32`: None 
+            - 1: `float`: GetFloat1 (int32)
+- 2: BMessage.GetDouble: None 
+    - 2: `const char*`: None 
+        - 1: `double`: GetDouble (double)
+        - 1: `int32`: None 
+            - 1: `double`: GetDouble1 (int32)
+- 2: BMessage.GetPointer: None 
+    - 2: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `const void*`: GetPointer (int32)
+        - 1: `const void*`: GetPointer1 (void)
+- 2: BMessage.GetString: None 
+    - 2: `const char*`: None 
+        - 1: `const char*`: GetString (str)
+        - 1: `int32`: None 
+            - 1: `const char*`: GetString1 (int32)
+- 2: BMessage.SetString: None 
+    - 2: `const char*`: None 
+        - 1: `const char*`: SetString (str)
+        - 1: `const BString&`: SetString1 (string)
+- 3: BMessage.BMessage: BMessage ()
+    - 1: `const BMessage&`: BMessage1 (message)
+    - 1: `uint32`: BMessage2 (uint32)
 - 2: BWindow.AddShortcut: None 
     - 2: `uint32`: None 
         - 2: `uint32`: None 

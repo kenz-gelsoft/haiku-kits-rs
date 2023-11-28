@@ -27,8 +27,14 @@ pub trait ApplicationMethods: LooperMethods {
     /// Hook method that gets invoked when the application receives a B_REFS_RECEIVED message.
     ///
     /// See [C++ `BApplication::RefsReceived()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a5fae9740458d9aec66f3b1d5c50fae87).
-    fn refs_received(&self, message: *mut c_void) {
-        unsafe { ffi::BApplication_RefsReceived(self.as_ptr(), message) }
+    fn refs_received<M: MessageMethods>(&self, message: Option<&M>) {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BApplication_RefsReceived(self.as_ptr(), message)
+        }
     }
     /// Hook method that gets invoked when the BApplication receives a B_ABOUT_REQUESTED message.
     ///
@@ -174,20 +180,38 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// Method relating to the use of BArchiver.
     ///
     /// See [C++ `BArchivable::AllArchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a4075315c407443a3b0dbb3d7551b53c9).
-    fn all_archived(&self, archive: *mut c_void) -> status_t {
-        unsafe { ffi::BArchivable_AllArchived(self.as_ptr(), archive) }
+    fn all_archived<M: MessageMethods>(&self, archive: Option<&M>) -> status_t {
+        unsafe {
+            let archive = match archive {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BArchivable_AllArchived(self.as_ptr(), archive)
+        }
     }
     /// Method relating to the use of BUnarchiver.
     ///
     /// See [C++ `BArchivable::AllUnarchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a2b1d74c147ea18e4b4bfacd42f11e0d2).
-    fn all_unarchived(&self, archive: *const c_void) -> status_t {
-        unsafe { ffi::BArchivable_AllUnarchived(self.as_ptr(), archive) }
+    fn all_unarchived<M: MessageMethods>(&self, archive: Option<&M>) -> status_t {
+        unsafe {
+            let archive = match archive {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BArchivable_AllUnarchived(self.as_ptr(), archive)
+        }
     }
     /// Archive the object into a BMessage.
     ///
     /// See [C++ `BArchivable::Archive()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a051c5263dd1a75dcf28787b60825dc44).
-    fn archive(&self, into: *mut c_void, deep: bool) -> status_t {
-        unsafe { ffi::BArchivable_Archive(self.as_ptr(), into, deep) }
+    fn archive<M: MessageMethods>(&self, into: Option<&M>, deep: bool) -> status_t {
+        unsafe {
+            let into = match into {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BArchivable_Archive(self.as_ptr(), into, deep)
+        }
     }
     /// Perform some action (Internal method defined for binary compatibility purposes).
     ///
@@ -198,7 +222,13 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// Static member to restore objects from messages.
     ///
     /// See [C++ `BArchivable::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a04efcb17fa2a64a776923cc12303efcd).
-    fn instantiate(archive: *mut c_void) -> Option<ArchivableFromCpp<true>> {
-        unsafe { Archivable::option_from(ffi::BArchivable_Instantiate(archive)) }
+    fn instantiate<M: MessageMethods>(archive: Option<&M>) -> Option<ArchivableFromCpp<true>> {
+        unsafe {
+            let archive = match archive {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            Archivable::option_from(ffi::BArchivable_Instantiate(archive))
+        }
     }
 }

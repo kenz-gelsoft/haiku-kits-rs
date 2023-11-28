@@ -3,9 +3,26 @@ wxml_files = [
     'bxml/classBArchivable.xml',
     'bxml/classBHandler.xml',
     'bxml/classBLooper.xml',
+    'bxml/classBMessage.xml',
     'bxml/classBWindow.xml',
 ]
 
 [conditions]
 
 [types]
+[types.BMessage]
+blocklist = [
+    # Operator overload
+    'operator=',
+    'operator new',
+    'operator new1',
+    'operator new2',
+    'operator delete',
+    
+    # Deprecated
+    'FindInt322',
+    
+    # Rust doesn't support overload
+    'AddFlat',
+    'FindInt32',
+]
