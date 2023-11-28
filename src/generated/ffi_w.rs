@@ -23,11 +23,11 @@ extern "C" {
     pub fn BWindow_ChildAt(self_: *const c_void, index: i32) -> *mut c_void;
     pub fn BWindow_Close(self_: *mut c_void);
     pub fn BWindow_ConvertFromScreen(self_: *const c_void, point: *mut c_void);
-    // NOT_SUPPORTED: pub fn BWindow_ConvertFromScreen1(self_: *const c_void, point: BPoint) -> BPoint;
+    // BLOCKED: pub fn BWindow_ConvertFromScreen1(self_: *const c_void, point: *mut c_void) -> *mut c_void;
     pub fn BWindow_ConvertFromScreen2(self_: *const c_void, rect: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_ConvertFromScreen3(self_: *const c_void, rect: BRect) -> BRect;
     pub fn BWindow_ConvertToScreen(self_: *const c_void, point: *mut c_void);
-    // NOT_SUPPORTED: pub fn BWindow_ConvertToScreen1(self_: *const c_void, point: BPoint) -> BPoint;
+    // BLOCKED: pub fn BWindow_ConvertToScreen1(self_: *const c_void, point: *mut c_void) -> *mut c_void;
     pub fn BWindow_ConvertToScreen2(self_: *const c_void, rect: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_ConvertToScreen3(self_: *const c_void, rect: BRect) -> BRect;
     pub fn BWindow_CountChildren(self_: *const c_void) -> i32;
@@ -38,12 +38,12 @@ extern "C" {
     pub fn BWindow_EnableUpdates(self_: *mut c_void);
     pub fn BWindow_EndViewTransaction(self_: *mut c_void);
     // NOT_SUPPORTED: pub fn BWindow_Feel(self_: *const c_void) -> window_feel;
-    // NOT_SUPPORTED: pub fn BWindow_FindView(self_: *const c_void, point: BPoint) -> *mut c_void;
+    pub fn BWindow_FindView(self_: *const c_void, point: *mut c_void) -> *mut c_void;
     pub fn BWindow_FindView1(self_: *const c_void, view_name: *const c_char) -> *mut c_void;
     pub fn BWindow_Flags(self_: *const c_void) -> u32;
     pub fn BWindow_Flush(self_: *const c_void);
     // NOT_SUPPORTED: pub fn BWindow_Frame(self_: *const c_void) -> BRect;
-    // NOT_SUPPORTED: pub fn BWindow_FrameMoved(self_: *mut c_void, new_position: BPoint);
+    pub fn BWindow_FrameMoved(self_: *mut c_void, new_position: *mut c_void);
     pub fn BWindow_FrameResized(self_: *mut c_void, new_width: c_float, new_height: c_float);
     pub fn BWindow_GetDecoratorSettings(self_: *const c_void, settings: *mut c_void) -> status_t;
     pub fn BWindow_GetLayout(self_: *const c_void) -> *mut c_void;
@@ -68,7 +68,7 @@ extern "C" {
     pub fn BWindow_Minimize(self_: *mut c_void, minimize: bool);
     pub fn BWindow_MoveBy(self_: *mut c_void, dx: c_float, dy: c_float);
     pub fn BWindow_MoveOnScreen(self_: *mut c_void, flags: u32);
-    // NOT_SUPPORTED: pub fn BWindow_MoveTo(self_: *mut c_void, point: BPoint);
+    pub fn BWindow_MoveTo(self_: *mut c_void, point: *mut c_void);
     pub fn BWindow_MoveTo1(self_: *mut c_void, x: c_float, y: c_float);
     pub fn BWindow_NeedsUpdate(self_: *const c_void) -> bool;
     pub fn BWindow_PulseRate(self_: *const c_void) -> bigtime_t;
@@ -105,7 +105,7 @@ extern "C" {
     pub fn BWindow_Workspaces(self_: *const c_void) -> u32;
     pub fn BWindow_WorkspacesChanged(self_: *mut c_void, old_workspaces: u32, new_workspaces: u32);
     pub fn BWindow_Zoom(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BWindow_Zoom1(self_: *mut c_void, origin: BPoint, width: c_float, height: c_float);
+    pub fn BWindow_Zoom1(self_: *mut c_void, origin: *mut c_void, width: c_float, height: c_float);
     pub fn BWindow_Instantiate(archive: *mut c_void) -> *mut c_void;
 
 }

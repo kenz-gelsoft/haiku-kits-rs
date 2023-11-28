@@ -4,6 +4,7 @@ wxml_files = [
     'bxml/classBHandler.xml',
     'bxml/classBLooper.xml',
     'bxml/classBMessage.xml',
+    'bxml/classBPoint.xml',
     'bxml/classBSize.xml',
     'bxml/classBWindow.xml',
 ]
@@ -28,9 +29,27 @@ blocklist = [
     'FindInt32',
 ]
 
+[types.BPoint]
+blocklist = [
+    'operator=',
+    'operator-',
+    'operator+',
+    'operator-1',
+    'operator+=',
+    'operator-=',
+    'operator!=',
+    'operator==',
+]
+
 [types.BSize]
 blocklist = [
     'operator==',
     'operator!=',
     'operator=',
+]
+
+[types.BWindow]
+blocklist = [
+    'ConvertFromScreen1',
+    'ConvertToScreen1',
 ]

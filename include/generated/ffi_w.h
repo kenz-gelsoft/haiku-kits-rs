@@ -29,9 +29,11 @@ BButton * BWindow_DefaultButton(const BWindow * self);
 void BWindow_DisableUpdates(BWindow * self);
 void BWindow_EnableUpdates(BWindow * self);
 void BWindow_EndViewTransaction(BWindow * self);
+BView * BWindow_FindView(const BWindow * self, BPoint* point);
 BView * BWindow_FindView1(const BWindow * self, const char * view_name);
 uint32 BWindow_Flags(const BWindow * self);
 void BWindow_Flush(const BWindow * self);
+void BWindow_FrameMoved(BWindow * self, BPoint* new_position);
 void BWindow_FrameResized(BWindow * self, float new_width, float new_height);
 status_t BWindow_GetDecoratorSettings(const BWindow * self, BMessage * settings);
 BLayout * BWindow_GetLayout(const BWindow * self);
@@ -55,6 +57,7 @@ void BWindow_MenusEnded(BWindow * self);
 void BWindow_Minimize(BWindow * self, bool minimize);
 void BWindow_MoveBy(BWindow * self, float dx, float dy);
 void BWindow_MoveOnScreen(BWindow * self, uint32 flags);
+void BWindow_MoveTo(BWindow * self, BPoint* point);
 void BWindow_MoveTo1(BWindow * self, float x, float y);
 bool BWindow_NeedsUpdate(const BWindow * self);
 bigtime_t BWindow_PulseRate(const BWindow * self);
@@ -85,6 +88,7 @@ void BWindow_WorkspaceActivated(BWindow * self, int32 workspace, bool state);
 uint32 BWindow_Workspaces(const BWindow * self);
 void BWindow_WorkspacesChanged(BWindow * self, uint32 old_workspaces, uint32 new_workspaces);
 void BWindow_Zoom(BWindow * self);
+void BWindow_Zoom1(BWindow * self, BPoint* origin, float width, float height);
 BArchivable * BWindow_Instantiate(BMessage * archive);
 
 } // extern "C"

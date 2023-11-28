@@ -88,11 +88,11 @@
         - 1: `BRect*`: FindRect (rect)
         - 1: `int32`: None 
             - 1: `BRect*`: FindRect1 (int32)
-- 2: BMessage.FindPoint: None 
-    - 2: `const char*`: None 
+- 3: BMessage.FindPoint: None 
+    - 3: `const char*`: None 
         - 1: `BPoint*`: FindPoint (point)
-        - 1: `int32`: None 
-            - 1: `BPoint*`: FindPoint1 (int32)
+        - 2: `int32`: FindPoint2 (int32)
+            - 1: `BPoint*`: FindPoint1 (int32, point)
 - 2: BMessage.FindSize: None 
     - 2: `const char*`: None 
         - 1: `BSize*`: FindSize (size)
@@ -195,6 +195,11 @@
         - 1: `const BAlignment&`: ReplaceAlignment (alignment)
         - 1: `int32`: None 
             - 1: `const BAlignment&`: ReplaceAlignment1 (int32)
+- 2: BMessage.ReplacePoint: None 
+    - 2: `const char*`: None 
+        - 1: `BPoint`: ReplacePoint (point)
+        - 1: `int32`: None 
+            - 1: `BPoint`: ReplacePoint1 (int32)
 - 2: BMessage.ReplaceSize: None 
     - 2: `const char*`: None 
         - 1: `BSize`: ReplaceSize (size)
@@ -355,6 +360,11 @@
         - 1: `const char*`: GetString (str)
         - 1: `int32`: None 
             - 1: `const char*`: GetString1 (int32)
+- 2: BMessage.GetPoint: None 
+    - 2: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `const BPoint&`: GetPoint (int32)
+        - 1: `const BPoint&`: GetPoint1 (point)
 - 2: BMessage.GetSize: None 
     - 2: `const char*`: None 
         - 1: `int32`: None 
@@ -367,6 +377,10 @@
 - 3: BMessage.BMessage: BMessage ()
     - 1: `const BMessage&`: BMessage1 (message)
     - 1: `uint32`: BMessage2 (uint32)
+- 3: BPoint.BPoint: BPoint ()
+    - 1: `const BPoint&`: BPoint1 (point)
+    - 1: `float`: None 
+        - 1: `float`: BPoint2 (float)
 - 3: BSize.BSize: BSize ()
     - 1: `const BSize&`: BSize1 (size)
     - 1: `float`: None 
@@ -386,6 +400,17 @@
 - 2: BWindow.ConvertToScreen: None 
     - 1: `BPoint*`: ConvertToScreen (point)
     - 1: `BRect*`: ConvertToScreen2 (rect)
+- 2: BWindow.FindView: None 
+    - 1: `BPoint`: FindView (point)
+    - 1: `const char*`: FindView1 (str)
+- 2: BWindow.MoveTo: None 
+    - 1: `BPoint`: MoveTo (point)
+    - 1: `float`: None 
+        - 1: `float`: MoveTo1 (float)
+- 2: BWindow.Zoom: Zoom ()
+    - 1: `BPoint`: None 
+        - 1: `float`: None 
+            - 1: `float`: Zoom1 (point)
 - 2: BWindow.BLooper: None 
     - 1: `BMessage*`: BLooper (message)
     - 1: `const char*`: None 

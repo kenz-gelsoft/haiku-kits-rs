@@ -110,7 +110,18 @@ pub trait MessageMethods: RustBindingMethods {
     fn was_dropped(&self) -> bool {
         unsafe { ffi::BMessage_WasDropped(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn DropPoint()
+    /// Get the coordinates of the drop point of the message.
+    ///
+    /// See [C++ `BMessage::DropPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6785e345338000b685a3b5b182cc993a).
+    fn drop_point<P: PointMethods>(&self, offset: Option<&P>) -> Point {
+        unsafe {
+            let offset = match offset {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            Point::from_ptr(ffi::BMessage_DropPoint(self.as_ptr(), offset))
+        }
+    }
     /// Asynchronously send a reply to this message.
     ///
     /// See [C++ `BMessage::SendReply()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aad1eb085346e2c91133e372e7924637c).
@@ -289,7 +300,16 @@ pub trait MessageMethods: RustBindingMethods {
         }
     }
     // NOT_SUPPORTED: fn AddRect()
-    // NOT_SUPPORTED: fn AddPoint()
+    /// Convenience method to add a BPoint to the label name.
+    ///
+    /// See [C++ `BMessage::AddPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afde5dc7d76c57e5d062de58954fb2548).
+    fn add_point(&self, name: &str, point: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddPoint(self.as_ptr(), name, point)
+        }
+    }
     /// Convenience method to add a BSize to the label name.
     ///
     /// See [C++ `BMessage::AddSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a37d4771d6d726a439e0c0f36943d9e52).
@@ -578,20 +598,28 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a point at the label name.
     ///
     /// See [C++ `BMessage::FindPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a88507a5c41974ab5c13dd5da800a68d7).
-    fn find_point_point(&self, name: &str, point: *mut c_void) -> status_t {
+    fn find_point_point<P: PointMethods>(&self, name: &str, point: Option<&P>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let point = match point {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindPoint(self.as_ptr(), name, point)
         }
     }
     /// Find a point at the label name at an index.
     ///
     /// See [C++ `BMessage::FindPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9a53e98aa4593529103051dbcd0186d4).
-    fn find_point_int32(&self, name: &str, index: i32, point: *mut c_void) -> status_t {
+    fn find_point_int32_point<P: PointMethods>(&self, name: &str, index: i32, point: Option<&P>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let point = match point {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindPoint1(self.as_ptr(), name, index, point)
         }
     }
@@ -1060,8 +1088,26 @@ pub trait MessageMethods: RustBindingMethods {
     }
     // NOT_SUPPORTED: fn ReplaceRect()
     // NOT_SUPPORTED: fn ReplaceRect1()
-    // NOT_SUPPORTED: fn ReplacePoint()
-    // NOT_SUPPORTED: fn ReplacePoint1()
+    /// Replace a point at the label name.
+    ///
+    /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac1b948f0c5867720173ef96450201859).
+    fn replace_point_point(&self, name: &str, a_point: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplacePoint(self.as_ptr(), name, a_point)
+        }
+    }
+    /// Replace a point at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a4897600b32e200802cf7c5d397f7e8cf).
+    fn replace_point_int32(&self, name: &str, index: i32, a_point: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplacePoint1(self.as_ptr(), name, index, a_point)
+        }
+    }
     /// Replace a size at the label name.
     ///
     /// See [C++ `BMessage::ReplaceSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a440d37083df7c8845d3337cc8c9d695a).
@@ -1711,7 +1757,16 @@ pub trait MessageMethods: RustBindingMethods {
     }
     // NOT_SUPPORTED: fn HasData()
     // NOT_SUPPORTED: fn FindRect2()
-    // NOT_SUPPORTED: fn FindPoint2()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a813615a6d10f5ec02573a45f14c1241c).
+    fn find_point_int32(&self, name: &str, n: i32) -> Point {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            Point::from_ptr(ffi::BMessage_FindPoint2(self.as_ptr(), name, n))
+        }
+    }
     /// Deprecated.
     ///
     /// See [C++ `BMessage::FindString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a36103667f4d215f1a06add5b381c2037).
@@ -2053,8 +2108,28 @@ pub trait MessageMethods: RustBindingMethods {
     // NOT_SUPPORTED: fn GetAlignment1()
     // NOT_SUPPORTED: fn GetRect()
     // NOT_SUPPORTED: fn GetRect1()
-    // NOT_SUPPORTED: fn GetPoint()
-    // NOT_SUPPORTED: fn GetPoint1()
+    /// Return the BPoint object from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a46167045bba07334db6acaa3c37e0498).
+    fn get_point_int32<P: PointMethods>(&self, name: &str, index: i32, default_value: &P) -> Point {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Point::from_ptr(ffi::BMessage_GetPoint(self.as_ptr(), name, index, default_value))
+        }
+    }
+    /// Return the BPoint object from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad68b28e3f6a38b8d832f2277c8be9372).
+    fn get_point_point<P: PointMethods>(&self, name: &str, default_value: &P) -> Point {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Point::from_ptr(ffi::BMessage_GetPoint1(self.as_ptr(), name, default_value))
+        }
+    }
     /// Return the BSize object from message with name and index, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ae88c4239718d5a5ad14162e03889db9f).
@@ -2233,10 +2308,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a5c573737d146370197cbbac1d0b85a12).
-    fn set_point(&self, name: &str, value: *const c_void) -> status_t {
+    fn set_point<P: PointMethods>(&self, name: &str, value: &P) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let value = value.as_ptr();
             ffi::BMessage_SetPoint(self.as_ptr(), name, value)
         }
     }

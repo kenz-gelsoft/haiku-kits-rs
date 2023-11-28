@@ -45,6 +45,9 @@ const BMessage * BMessage_Previous(const BMessage * self) {
 bool BMessage_WasDropped(const BMessage * self) {
     return self->WasDropped();
 }
+BPoint *BMessage_DropPoint(const BMessage * self, BPoint * offset) {
+    return new BPoint(self->DropPoint(offset));
+}
 status_t BMessage_SendReply(BMessage * self, uint32 command, BHandler * reply_to) {
     return self->SendReply(command, reply_to);
 }
@@ -95,6 +98,9 @@ status_t BMessage_PopSpecifier(BMessage * self) {
 }
 status_t BMessage_AddAlignment(BMessage * self, const char * name, const BAlignment * alignment) {
     return self->AddAlignment(name, *alignment);
+}
+status_t BMessage_AddPoint(BMessage * self, const char * name, BPoint* point) {
+    return self->AddPoint(name, *point);
 }
 status_t BMessage_AddSize(BMessage * self, const char * name, BSize* size) {
     return self->AddSize(name, *size);
@@ -318,6 +324,12 @@ status_t BMessage_ReplaceAlignment(BMessage * self, const char * name, const BAl
 status_t BMessage_ReplaceAlignment1(BMessage * self, const char * name, int32 index, const BAlignment * alignment) {
     return self->ReplaceAlignment(name, index, *alignment);
 }
+status_t BMessage_ReplacePoint(BMessage * self, const char * name, BPoint* a_point) {
+    return self->ReplacePoint(name, *a_point);
+}
+status_t BMessage_ReplacePoint1(BMessage * self, const char * name, int32 index, BPoint* a_point) {
+    return self->ReplacePoint(name, index, *a_point);
+}
 status_t BMessage_ReplaceSize(BMessage * self, const char * name, BSize* a_size) {
     return self->ReplaceSize(name, *a_size);
 }
@@ -507,6 +519,9 @@ bool BMessage_HasFlat(const BMessage * self, const char * name, const BFlattenab
 bool BMessage_HasFlat1(const BMessage * self, const char * name, int32 n, const BFlattenable * object) {
     return self->HasFlat(name, n, object);
 }
+BPoint *BMessage_FindPoint2(const BMessage * self, const char * name, int32 n) {
+    return new BPoint(self->FindPoint(name, n));
+}
 const char *BMessage_FindString4(const BMessage * self, const char * name, int32 n) {
     return self->FindString(name, n);
 }
@@ -605,6 +620,12 @@ const char *BMessage_GetString(const BMessage * self, const char * name, const c
 }
 const char *BMessage_GetString1(const BMessage * self, const char * name, int32 index, const char * default_value) {
     return self->GetString(name, index, default_value);
+}
+BPoint *BMessage_GetPoint(const BMessage * self, const char * name, int32 index, const BPoint * default_value) {
+    return new BPoint(self->GetPoint(name, index, *default_value));
+}
+BPoint *BMessage_GetPoint1(const BMessage * self, const char * name, const BPoint * default_value) {
+    return new BPoint(self->GetPoint(name, *default_value));
 }
 BSize *BMessage_GetSize(const BMessage * self, const char * name, int32 index, const BSize * default_value) {
     return new BSize(self->GetSize(name, index, *default_value));
