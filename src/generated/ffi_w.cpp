@@ -213,6 +213,9 @@ void BWindow_SetZoomLimits(BWindow * self, float max_width, float max_height) {
 void BWindow_Show(BWindow * self) {
     return self->Show();
 }
+BSize *BWindow_Size(const BWindow * self) {
+    return new BSize(self->Size());
+}
 void BWindow_Sync(const BWindow * self) {
     return self->Sync();
 }

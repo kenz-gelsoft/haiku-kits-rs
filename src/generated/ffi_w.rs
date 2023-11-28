@@ -94,7 +94,7 @@ extern "C" {
     pub fn BWindow_SetWorkspaces(self_: *mut c_void, workspaces: u32);
     pub fn BWindow_SetZoomLimits(self_: *mut c_void, max_width: c_float, max_height: c_float);
     pub fn BWindow_Show(self_: *mut c_void);
-    // NOT_SUPPORTED: pub fn BWindow_Size(self_: *const c_void) -> BSize;
+    pub fn BWindow_Size(self_: *const c_void) -> *mut c_void;
     pub fn BWindow_Sync(self_: *const c_void);
     pub fn BWindow_Title(self_: *const c_void) -> *const c_char;
     // NOT_SUPPORTED: pub fn BWindow_Type(self_: *const c_void) -> window_type;

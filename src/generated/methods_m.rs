@@ -290,7 +290,16 @@ pub trait MessageMethods: RustBindingMethods {
     }
     // NOT_SUPPORTED: fn AddRect()
     // NOT_SUPPORTED: fn AddPoint()
-    // NOT_SUPPORTED: fn AddSize()
+    /// Convenience method to add a BSize to the label name.
+    ///
+    /// See [C++ `BMessage::AddSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a37d4771d6d726a439e0c0f36943d9e52).
+    fn add_size(&self, name: &str, size: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddSize(self.as_ptr(), name, size)
+        }
+    }
     /// Convenience method to add a C-string to the label name.
     ///
     /// See [C++ `BMessage::AddString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a342311ccdf68206c4b879bcd0f2d6e83).
@@ -589,20 +598,28 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a size at the label name.
     ///
     /// See [C++ `BMessage::FindSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a463777b0384a8ee580709c62dfbfa2ca).
-    fn find_size_size(&self, name: &str, size: *mut c_void) -> status_t {
+    fn find_size_size<S: SizeMethods>(&self, name: &str, size: Option<&S>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let size = match size {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindSize(self.as_ptr(), name, size)
         }
     }
     /// Find a size at the label name at an index.
     ///
     /// See [C++ `BMessage::FindSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a769dcfc011f91c8372512f7396e6e59e).
-    fn find_size_int32(&self, name: &str, index: i32, size: *mut c_void) -> status_t {
+    fn find_size_int32<S: SizeMethods>(&self, name: &str, index: i32, size: Option<&S>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let size = match size {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindSize1(self.as_ptr(), name, index, size)
         }
     }
@@ -1045,8 +1062,26 @@ pub trait MessageMethods: RustBindingMethods {
     // NOT_SUPPORTED: fn ReplaceRect1()
     // NOT_SUPPORTED: fn ReplacePoint()
     // NOT_SUPPORTED: fn ReplacePoint1()
-    // NOT_SUPPORTED: fn ReplaceSize()
-    // NOT_SUPPORTED: fn ReplaceSize1()
+    /// Replace a size at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a440d37083df7c8845d3337cc8c9d695a).
+    fn replace_size_size(&self, name: &str, a_size: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceSize(self.as_ptr(), name, a_size)
+        }
+    }
+    /// Replace a size at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9ff6d6940725e22e2fab190bf42a1659).
+    fn replace_size_int32(&self, name: &str, index: i32, a_size: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceSize1(self.as_ptr(), name, index, a_size)
+        }
+    }
     /// Replace a string at the label name.
     ///
     /// See [C++ `BMessage::ReplaceString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a3a606679aa72f7530034994f9cf4ad32).
@@ -2020,8 +2055,28 @@ pub trait MessageMethods: RustBindingMethods {
     // NOT_SUPPORTED: fn GetRect1()
     // NOT_SUPPORTED: fn GetPoint()
     // NOT_SUPPORTED: fn GetPoint1()
-    // NOT_SUPPORTED: fn GetSize()
-    // NOT_SUPPORTED: fn GetSize1()
+    /// Return the BSize object from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ae88c4239718d5a5ad14162e03889db9f).
+    fn get_size_int32<S: SizeMethods>(&self, name: &str, index: i32, default_value: &S) -> Size {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Size::from_ptr(ffi::BMessage_GetSize(self.as_ptr(), name, index, default_value))
+        }
+    }
+    /// Return the BSize object from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a8e61a348444f29b08027d99eb5042ac8).
+    fn get_size_size<S: SizeMethods>(&self, name: &str, default_value: &S) -> Size {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Size::from_ptr(ffi::BMessage_GetSize1(self.as_ptr(), name, default_value))
+        }
+    }
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetBool()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a60e079b535d604425d79d21f6c2ff331).
@@ -2198,10 +2253,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6981d8f08fd09740c20d1ba96cd5b85f).
-    fn set_size(&self, name: &str, value: *const c_void) -> status_t {
+    fn set_size<S: SizeMethods>(&self, name: &str, value: &S) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let value = value.as_ptr();
             ffi::BMessage_SetSize(self.as_ptr(), name, value)
         }
     }

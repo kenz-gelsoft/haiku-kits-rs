@@ -48,7 +48,7 @@ extern "C" {
     pub fn BMessage_AddAlignment(self_: *mut c_void, name: *const c_char, alignment: *const c_void) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_AddRect(self_: *mut c_void, name: *const c_char, rect: BRect) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_AddPoint(self_: *mut c_void, name: *const c_char, point: BPoint) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_AddSize(self_: *mut c_void, name: *const c_char, size: BSize) -> status_t;
+    pub fn BMessage_AddSize(self_: *mut c_void, name: *const c_char, size: *mut c_void) -> status_t;
     pub fn BMessage_AddString(self_: *mut c_void, name: *const c_char, string: *const c_char) -> status_t;
     pub fn BMessage_AddString1(self_: *mut c_void, name: *const c_char, string: *const c_void) -> status_t;
     pub fn BMessage_AddStrings(self_: *mut c_void, name: *const c_char, list: *const c_void) -> status_t;
@@ -133,8 +133,8 @@ extern "C" {
     // NOT_SUPPORTED: pub fn BMessage_ReplaceRect1(self_: *mut c_void, name: *const c_char, index: i32, rect: BRect) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_ReplacePoint(self_: *mut c_void, name: *const c_char, a_point: BPoint) -> status_t;
     // NOT_SUPPORTED: pub fn BMessage_ReplacePoint1(self_: *mut c_void, name: *const c_char, index: i32, a_point: BPoint) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceSize(self_: *mut c_void, name: *const c_char, a_size: BSize) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceSize1(self_: *mut c_void, name: *const c_char, index: i32, a_size: BSize) -> status_t;
+    pub fn BMessage_ReplaceSize(self_: *mut c_void, name: *const c_char, a_size: *mut c_void) -> status_t;
+    pub fn BMessage_ReplaceSize1(self_: *mut c_void, name: *const c_char, index: i32, a_size: *mut c_void) -> status_t;
     pub fn BMessage_ReplaceString(self_: *mut c_void, name: *const c_char, string: *const c_char) -> status_t;
     pub fn BMessage_ReplaceString1(self_: *mut c_void, name: *const c_char, index: i32, string: *const c_char) -> status_t;
     pub fn BMessage_ReplaceString2(self_: *mut c_void, name: *const c_char, string: *const c_void) -> status_t;
@@ -247,8 +247,8 @@ extern "C" {
     // NOT_SUPPORTED: pub fn BMessage_GetRect1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> BRect;
     // NOT_SUPPORTED: pub fn BMessage_GetPoint(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> BPoint;
     // NOT_SUPPORTED: pub fn BMessage_GetPoint1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> BPoint;
-    // NOT_SUPPORTED: pub fn BMessage_GetSize(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> BSize;
-    // NOT_SUPPORTED: pub fn BMessage_GetSize1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> BSize;
+    pub fn BMessage_GetSize(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> *mut c_void;
+    pub fn BMessage_GetSize1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> *mut c_void;
     pub fn BMessage_SetBool(self_: *mut c_void, name: *const c_char, value: bool) -> status_t;
     pub fn BMessage_SetInt8(self_: *mut c_void, name: *const c_char, value: i8) -> status_t;
     pub fn BMessage_SetUInt8(self_: *mut c_void, name: *const c_char, value: u8) -> status_t;

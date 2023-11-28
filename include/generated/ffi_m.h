@@ -36,6 +36,7 @@ status_t BMessage_GetCurrentSpecifier(const BMessage * self, int32 * index, BMes
 bool BMessage_HasSpecifiers(const BMessage * self);
 status_t BMessage_PopSpecifier(BMessage * self);
 status_t BMessage_AddAlignment(BMessage * self, const char * name, const BAlignment * alignment);
+status_t BMessage_AddSize(BMessage * self, const char * name, BSize* size);
 status_t BMessage_AddString(BMessage * self, const char * name, const char * string);
 status_t BMessage_AddString1(BMessage * self, const char * name, const BString * string);
 status_t BMessage_AddStrings(BMessage * self, const char * name, const BStringList * list);
@@ -109,6 +110,8 @@ status_t BMessage_FindFlat(const BMessage * self, const char * name, BFlattenabl
 status_t BMessage_FindFlat1(const BMessage * self, const char * name, int32 index, BFlattenable * object);
 status_t BMessage_ReplaceAlignment(BMessage * self, const char * name, const BAlignment * alignment);
 status_t BMessage_ReplaceAlignment1(BMessage * self, const char * name, int32 index, const BAlignment * alignment);
+status_t BMessage_ReplaceSize(BMessage * self, const char * name, BSize* a_size);
+status_t BMessage_ReplaceSize1(BMessage * self, const char * name, int32 index, BSize* a_size);
 status_t BMessage_ReplaceString(BMessage * self, const char * name, const char * string);
 status_t BMessage_ReplaceString1(BMessage * self, const char * name, int32 index, const char * string);
 status_t BMessage_ReplaceString2(BMessage * self, const char * name, const BString * string);
@@ -203,6 +206,8 @@ const void * BMessage_GetPointer(const BMessage * self, const char * name, int32
 const void * BMessage_GetPointer1(const BMessage * self, const char * name, const void * default_value);
 const char *BMessage_GetString(const BMessage * self, const char * name, const char * default_value);
 const char *BMessage_GetString1(const BMessage * self, const char * name, int32 index, const char * default_value);
+BSize *BMessage_GetSize(const BMessage * self, const char * name, int32 index, const BSize * default_value);
+BSize *BMessage_GetSize1(const BMessage * self, const char * name, const BSize * default_value);
 status_t BMessage_SetBool(BMessage * self, const char * name, bool value);
 status_t BMessage_SetInt8(BMessage * self, const char * name, int8 value);
 status_t BMessage_SetUInt8(BMessage * self, const char * name, uint8 value);

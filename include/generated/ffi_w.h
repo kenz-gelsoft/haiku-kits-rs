@@ -75,6 +75,7 @@ void BWindow_SetTitle(BWindow * self, const char * title);
 void BWindow_SetWorkspaces(BWindow * self, uint32 workspaces);
 void BWindow_SetZoomLimits(BWindow * self, float max_width, float max_height);
 void BWindow_Show(BWindow * self);
+BSize *BWindow_Size(const BWindow * self);
 void BWindow_Sync(const BWindow * self);
 const char *BWindow_Title(const BWindow * self);
 void BWindow_UpdateIfNeeded(BWindow * self);

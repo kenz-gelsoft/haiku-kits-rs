@@ -4,6 +4,7 @@ wxml_files = [
     'bxml/classBHandler.xml',
     'bxml/classBLooper.xml',
     'bxml/classBMessage.xml',
+    'bxml/classBSize.xml',
     'bxml/classBWindow.xml',
 ]
 
@@ -25,4 +26,11 @@ blocklist = [
     # Rust doesn't support overload
     'AddFlat',
     'FindInt32',
+]
+
+[types.BSize]
+blocklist = [
+    'operator==',
+    'operator!=',
+    'operator=',
 ]

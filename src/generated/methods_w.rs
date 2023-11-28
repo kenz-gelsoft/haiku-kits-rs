@@ -490,7 +490,12 @@ pub trait WindowMethods: LooperMethods {
     fn show(&self) {
         unsafe { ffi::BWindow_Show(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Size()
+    /// Returns the size of the window.
+    ///
+    /// See [C++ `BWindow::Size()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#afc61a0c6129f233e56fa373107bd8790).
+    fn size(&self) -> Size {
+        unsafe { Size::from_ptr(ffi::BWindow_Size(self.as_ptr())) }
+    }
     /// Synchronizes the attached window's connection to App Server causing any pending messages to be processed and then waits for the App Server to respond.
     ///
     /// See [C++ `BWindow::Sync()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a332bea9ef16fedc16134bf587b52fa09).

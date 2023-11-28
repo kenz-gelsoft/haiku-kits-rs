@@ -195,6 +195,11 @@
         - 1: `const BAlignment&`: ReplaceAlignment (alignment)
         - 1: `int32`: None 
             - 1: `const BAlignment&`: ReplaceAlignment1 (int32)
+- 2: BMessage.ReplaceSize: None 
+    - 2: `const char*`: None 
+        - 1: `BSize`: ReplaceSize (size)
+        - 1: `int32`: None 
+            - 1: `BSize`: ReplaceSize1 (int32)
 - 4: BMessage.ReplaceString: None 
     - 4: `const char*`: None 
         - 1: `const char*`: ReplaceString (str)
@@ -350,6 +355,11 @@
         - 1: `const char*`: GetString (str)
         - 1: `int32`: None 
             - 1: `const char*`: GetString1 (int32)
+- 2: BMessage.GetSize: None 
+    - 2: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `const BSize&`: GetSize (int32)
+        - 1: `const BSize&`: GetSize1 (size)
 - 2: BMessage.SetString: None 
     - 2: `const char*`: None 
         - 1: `const char*`: SetString (str)
@@ -357,6 +367,10 @@
 - 3: BMessage.BMessage: BMessage ()
     - 1: `const BMessage&`: BMessage1 (message)
     - 1: `uint32`: BMessage2 (uint32)
+- 3: BSize.BSize: BSize ()
+    - 1: `const BSize&`: BSize1 (size)
+    - 1: `float`: None 
+        - 1: `float`: BSize2 (float)
 - 2: BWindow.AddShortcut: None 
     - 2: `uint32`: None 
         - 2: `uint32`: None 

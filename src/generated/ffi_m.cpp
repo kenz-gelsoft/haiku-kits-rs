@@ -96,6 +96,9 @@ status_t BMessage_PopSpecifier(BMessage * self) {
 status_t BMessage_AddAlignment(BMessage * self, const char * name, const BAlignment * alignment) {
     return self->AddAlignment(name, *alignment);
 }
+status_t BMessage_AddSize(BMessage * self, const char * name, BSize* size) {
+    return self->AddSize(name, *size);
+}
 status_t BMessage_AddString(BMessage * self, const char * name, const char * string) {
     return self->AddString(name, string);
 }
@@ -314,6 +317,12 @@ status_t BMessage_ReplaceAlignment(BMessage * self, const char * name, const BAl
 }
 status_t BMessage_ReplaceAlignment1(BMessage * self, const char * name, int32 index, const BAlignment * alignment) {
     return self->ReplaceAlignment(name, index, *alignment);
+}
+status_t BMessage_ReplaceSize(BMessage * self, const char * name, BSize* a_size) {
+    return self->ReplaceSize(name, *a_size);
+}
+status_t BMessage_ReplaceSize1(BMessage * self, const char * name, int32 index, BSize* a_size) {
+    return self->ReplaceSize(name, index, *a_size);
 }
 status_t BMessage_ReplaceString(BMessage * self, const char * name, const char * string) {
     return self->ReplaceString(name, string);
@@ -596,6 +605,12 @@ const char *BMessage_GetString(const BMessage * self, const char * name, const c
 }
 const char *BMessage_GetString1(const BMessage * self, const char * name, int32 index, const char * default_value) {
     return self->GetString(name, index, default_value);
+}
+BSize *BMessage_GetSize(const BMessage * self, const char * name, int32 index, const BSize * default_value) {
+    return new BSize(self->GetSize(name, index, *default_value));
+}
+BSize *BMessage_GetSize1(const BMessage * self, const char * name, const BSize * default_value) {
+    return new BSize(self->GetSize(name, *default_value));
 }
 status_t BMessage_SetBool(BMessage * self, const char * name, bool value) {
     return self->SetBool(name, value);
