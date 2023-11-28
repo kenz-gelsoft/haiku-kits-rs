@@ -15,7 +15,7 @@ extern "C" {
     pub fn BPoint_new() -> *mut c_void;
     pub fn BPoint_new1(p: *const c_void) -> *mut c_void;
     pub fn BPoint_new2(x: c_float, y: c_float) -> *mut c_void;
-    // NOT_SUPPORTED: pub fn BPoint_ConstrainTo(self_: *mut c_void, rect: BRect);
+    pub fn BPoint_ConstrainTo(self_: *mut c_void, rect: *mut c_void);
     pub fn BPoint_PrintToStream(self_: *const c_void);
     pub fn BPoint_Set(self_: *mut c_void, x: c_float, y: c_float);
 

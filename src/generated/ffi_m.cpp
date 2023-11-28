@@ -99,6 +99,9 @@ status_t BMessage_PopSpecifier(BMessage * self) {
 status_t BMessage_AddAlignment(BMessage * self, const char * name, const BAlignment * alignment) {
     return self->AddAlignment(name, *alignment);
 }
+status_t BMessage_AddRect(BMessage * self, const char * name, BRect* rect) {
+    return self->AddRect(name, *rect);
+}
 status_t BMessage_AddPoint(BMessage * self, const char * name, BPoint* point) {
     return self->AddPoint(name, *point);
 }
@@ -324,6 +327,12 @@ status_t BMessage_ReplaceAlignment(BMessage * self, const char * name, const BAl
 status_t BMessage_ReplaceAlignment1(BMessage * self, const char * name, int32 index, const BAlignment * alignment) {
     return self->ReplaceAlignment(name, index, *alignment);
 }
+status_t BMessage_ReplaceRect(BMessage * self, const char * name, BRect* rect) {
+    return self->ReplaceRect(name, *rect);
+}
+status_t BMessage_ReplaceRect1(BMessage * self, const char * name, int32 index, BRect* rect) {
+    return self->ReplaceRect(name, index, *rect);
+}
 status_t BMessage_ReplacePoint(BMessage * self, const char * name, BPoint* a_point) {
     return self->ReplacePoint(name, *a_point);
 }
@@ -519,6 +528,9 @@ bool BMessage_HasFlat(const BMessage * self, const char * name, const BFlattenab
 bool BMessage_HasFlat1(const BMessage * self, const char * name, int32 n, const BFlattenable * object) {
     return self->HasFlat(name, n, object);
 }
+BRect *BMessage_FindRect2(const BMessage * self, const char * name, int32 n) {
+    return new BRect(self->FindRect(name, n));
+}
 BPoint *BMessage_FindPoint2(const BMessage * self, const char * name, int32 n) {
     return new BPoint(self->FindPoint(name, n));
 }
@@ -620,6 +632,12 @@ const char *BMessage_GetString(const BMessage * self, const char * name, const c
 }
 const char *BMessage_GetString1(const BMessage * self, const char * name, int32 index, const char * default_value) {
     return self->GetString(name, index, default_value);
+}
+BRect *BMessage_GetRect(const BMessage * self, const char * name, int32 index, const BRect * default_value) {
+    return new BRect(self->GetRect(name, index, *default_value));
+}
+BRect *BMessage_GetRect1(const BMessage * self, const char * name, const BRect * default_value) {
+    return new BRect(self->GetRect(name, *default_value));
 }
 BPoint *BMessage_GetPoint(const BMessage * self, const char * name, int32 index, const BPoint * default_value) {
     return new BPoint(self->GetPoint(name, index, *default_value));

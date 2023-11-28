@@ -46,7 +46,7 @@ extern "C" {
     pub fn BMessage_HasSpecifiers(self_: *const c_void) -> bool;
     pub fn BMessage_PopSpecifier(self_: *mut c_void) -> status_t;
     pub fn BMessage_AddAlignment(self_: *mut c_void, name: *const c_char, alignment: *const c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_AddRect(self_: *mut c_void, name: *const c_char, rect: BRect) -> status_t;
+    pub fn BMessage_AddRect(self_: *mut c_void, name: *const c_char, rect: *mut c_void) -> status_t;
     pub fn BMessage_AddPoint(self_: *mut c_void, name: *const c_char, point: *mut c_void) -> status_t;
     pub fn BMessage_AddSize(self_: *mut c_void, name: *const c_char, size: *mut c_void) -> status_t;
     pub fn BMessage_AddString(self_: *mut c_void, name: *const c_char, string: *const c_char) -> status_t;
@@ -129,8 +129,8 @@ extern "C" {
     // NOT_SUPPORTED: pub fn BMessage_FindData1(self_: *const c_void, name: *const c_char, type_: type_code, index: i32, data: *const c_void, num_bytes: *mut c_void) -> status_t;
     pub fn BMessage_ReplaceAlignment(self_: *mut c_void, name: *const c_char, alignment: *const c_void) -> status_t;
     pub fn BMessage_ReplaceAlignment1(self_: *mut c_void, name: *const c_char, index: i32, alignment: *const c_void) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceRect(self_: *mut c_void, name: *const c_char, rect: BRect) -> status_t;
-    // NOT_SUPPORTED: pub fn BMessage_ReplaceRect1(self_: *mut c_void, name: *const c_char, index: i32, rect: BRect) -> status_t;
+    pub fn BMessage_ReplaceRect(self_: *mut c_void, name: *const c_char, rect: *mut c_void) -> status_t;
+    pub fn BMessage_ReplaceRect1(self_: *mut c_void, name: *const c_char, index: i32, rect: *mut c_void) -> status_t;
     pub fn BMessage_ReplacePoint(self_: *mut c_void, name: *const c_char, a_point: *mut c_void) -> status_t;
     pub fn BMessage_ReplacePoint1(self_: *mut c_void, name: *const c_char, index: i32, a_point: *mut c_void) -> status_t;
     pub fn BMessage_ReplaceSize(self_: *mut c_void, name: *const c_char, a_size: *mut c_void) -> status_t;
@@ -203,7 +203,7 @@ extern "C" {
     pub fn BMessage_HasFlat(self_: *const c_void, name: *const c_char, object: *const c_void) -> bool;
     pub fn BMessage_HasFlat1(self_: *const c_void, name: *const c_char, n: i32, object: *const c_void) -> bool;
     // NOT_SUPPORTED: pub fn BMessage_HasData(self_: *const c_void, name: *const c_char, None: type_code, n: i32) -> bool;
-    // NOT_SUPPORTED: pub fn BMessage_FindRect2(self_: *const c_void, name: *const c_char, n: i32) -> BRect;
+    pub fn BMessage_FindRect2(self_: *const c_void, name: *const c_char, n: i32) -> *mut c_void;
     pub fn BMessage_FindPoint2(self_: *const c_void, name: *const c_char, n: i32) -> *mut c_void;
     pub fn BMessage_FindString4(self_: *const c_void, name: *const c_char, n: i32) -> *const c_char;
     pub fn BMessage_FindInt82(self_: *const c_void, name: *const c_char, n: i32) -> i8;
@@ -243,8 +243,8 @@ extern "C" {
     pub fn BMessage_GetString1(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_char) -> *const c_char;
     // NOT_SUPPORTED: pub fn BMessage_GetAlignment(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> BAlignment;
     // NOT_SUPPORTED: pub fn BMessage_GetAlignment1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> BAlignment;
-    // NOT_SUPPORTED: pub fn BMessage_GetRect(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> BRect;
-    // NOT_SUPPORTED: pub fn BMessage_GetRect1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> BRect;
+    pub fn BMessage_GetRect(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> *mut c_void;
+    pub fn BMessage_GetRect1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> *mut c_void;
     pub fn BMessage_GetPoint(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> *mut c_void;
     pub fn BMessage_GetPoint1(self_: *const c_void, name: *const c_char, default_value: *const c_void) -> *mut c_void;
     pub fn BMessage_GetSize(self_: *const c_void, name: *const c_char, index: i32, default_value: *const c_void) -> *mut c_void;

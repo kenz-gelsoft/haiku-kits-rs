@@ -5,6 +5,7 @@ wxml_files = [
     'bxml/classBLooper.xml',
     'bxml/classBMessage.xml',
     'bxml/classBPoint.xml',
+    'bxml/classBRect.xml',
     'bxml/classBSize.xml',
     'bxml/classBWindow.xml',
 ]
@@ -41,6 +42,15 @@ blocklist = [
     'operator==',
 ]
 
+[types.BRect]
+blocklist = [
+    'operator=',
+    'operator==',
+    'operator!=',
+    'operator&',
+    'operator|',
+]
+
 [types.BSize]
 blocklist = [
     'operator==',
@@ -51,5 +61,7 @@ blocklist = [
 [types.BWindow]
 blocklist = [
     'ConvertFromScreen1',
+    'ConvertFromScreen3',
     'ConvertToScreen1',
+    'ConvertToScreen3',
 ]

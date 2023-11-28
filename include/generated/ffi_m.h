@@ -37,6 +37,7 @@ status_t BMessage_GetCurrentSpecifier(const BMessage * self, int32 * index, BMes
 bool BMessage_HasSpecifiers(const BMessage * self);
 status_t BMessage_PopSpecifier(BMessage * self);
 status_t BMessage_AddAlignment(BMessage * self, const char * name, const BAlignment * alignment);
+status_t BMessage_AddRect(BMessage * self, const char * name, BRect* rect);
 status_t BMessage_AddPoint(BMessage * self, const char * name, BPoint* point);
 status_t BMessage_AddSize(BMessage * self, const char * name, BSize* size);
 status_t BMessage_AddString(BMessage * self, const char * name, const char * string);
@@ -112,6 +113,8 @@ status_t BMessage_FindFlat(const BMessage * self, const char * name, BFlattenabl
 status_t BMessage_FindFlat1(const BMessage * self, const char * name, int32 index, BFlattenable * object);
 status_t BMessage_ReplaceAlignment(BMessage * self, const char * name, const BAlignment * alignment);
 status_t BMessage_ReplaceAlignment1(BMessage * self, const char * name, int32 index, const BAlignment * alignment);
+status_t BMessage_ReplaceRect(BMessage * self, const char * name, BRect* rect);
+status_t BMessage_ReplaceRect1(BMessage * self, const char * name, int32 index, BRect* rect);
 status_t BMessage_ReplacePoint(BMessage * self, const char * name, BPoint* a_point);
 status_t BMessage_ReplacePoint1(BMessage * self, const char * name, int32 index, BPoint* a_point);
 status_t BMessage_ReplaceSize(BMessage * self, const char * name, BSize* a_size);
@@ -177,6 +180,7 @@ bool BMessage_HasNodeRef(const BMessage * self, const char * name, int32 n);
 bool BMessage_HasMessage(const BMessage * self, const char * name, int32 n);
 bool BMessage_HasFlat(const BMessage * self, const char * name, const BFlattenable * object);
 bool BMessage_HasFlat1(const BMessage * self, const char * name, int32 n, const BFlattenable * object);
+BRect *BMessage_FindRect2(const BMessage * self, const char * name, int32 n);
 BPoint *BMessage_FindPoint2(const BMessage * self, const char * name, int32 n);
 const char *BMessage_FindString4(const BMessage * self, const char * name, int32 n);
 int8 BMessage_FindInt82(const BMessage * self, const char * name, int32 n);
@@ -211,6 +215,8 @@ const void * BMessage_GetPointer(const BMessage * self, const char * name, int32
 const void * BMessage_GetPointer1(const BMessage * self, const char * name, const void * default_value);
 const char *BMessage_GetString(const BMessage * self, const char * name, const char * default_value);
 const char *BMessage_GetString1(const BMessage * self, const char * name, int32 index, const char * default_value);
+BRect *BMessage_GetRect(const BMessage * self, const char * name, int32 index, const BRect * default_value);
+BRect *BMessage_GetRect1(const BMessage * self, const char * name, const BRect * default_value);
 BPoint *BMessage_GetPoint(const BMessage * self, const char * name, int32 index, const BPoint * default_value);
 BPoint *BMessage_GetPoint1(const BMessage * self, const char * name, const BPoint * default_value);
 BSize *BMessage_GetSize(const BMessage * self, const char * name, int32 index, const BSize * default_value);

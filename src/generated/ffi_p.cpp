@@ -15,6 +15,9 @@ BPoint *BPoint_new1(const BPoint * p) {
 BPoint *BPoint_new2(float x, float y) {
     return new BPoint(x, y);
 }
+void BPoint_ConstrainTo(BPoint * self, BRect* rect) {
+    return self->ConstrainTo(*rect);
+}
 void BPoint_PrintToStream(const BPoint * self) {
     return self->PrintToStream();
 }

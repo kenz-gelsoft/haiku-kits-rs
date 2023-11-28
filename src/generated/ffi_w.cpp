@@ -33,6 +33,9 @@ status_t BWindow_AddToSubset(BWindow * self, BWindow * window) {
 void BWindow_BeginViewTransaction(BWindow * self) {
     return self->BeginViewTransaction();
 }
+BRect *BWindow_Bounds(const BWindow * self) {
+    return new BRect(self->Bounds());
+}
 void BWindow_CenterIn(BWindow * self, const BRect * rect) {
     return self->CenterIn(*rect);
 }
@@ -63,6 +66,9 @@ int32 BWindow_CountChildren(const BWindow * self) {
 BView * BWindow_CurrentFocus(const BWindow * self) {
     return self->CurrentFocus();
 }
+BRect *BWindow_DecoratorFrame(const BWindow * self) {
+    return new BRect(self->DecoratorFrame());
+}
 BButton * BWindow_DefaultButton(const BWindow * self) {
     return self->DefaultButton();
 }
@@ -86,6 +92,9 @@ uint32 BWindow_Flags(const BWindow * self) {
 }
 void BWindow_Flush(const BWindow * self) {
     return self->Flush();
+}
+BRect *BWindow_Frame(const BWindow * self) {
+    return new BRect(self->Frame());
 }
 void BWindow_FrameMoved(BWindow * self, BPoint* new_position) {
     return self->FrameMoved(*new_position);

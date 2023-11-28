@@ -14,7 +14,12 @@ pub trait PointMethods: RustBindingMethods {
     // BLOCKED: fn operator-=()
     // BLOCKED: fn operator!=()
     // BLOCKED: fn operator==()
-    // NOT_SUPPORTED: fn ConstrainTo()
+    /// Moves the BPoint so that it is contained within rect.
+    ///
+    /// See [C++ `BPoint::ConstrainTo()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a81254fef5bb205f952e252cf5f07ab59).
+    fn constrain_to(&self, rect: *mut c_void) {
+        unsafe { ffi::BPoint_ConstrainTo(self.as_ptr(), rect) }
+    }
     /// Print the x and y coordinates to standard output.
     ///
     /// See [C++ `BPoint::PrintToStream()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a18a683442d46d96f940caf72989c139e).

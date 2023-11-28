@@ -299,7 +299,16 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_AddAlignment(self.as_ptr(), name, alignment)
         }
     }
-    // NOT_SUPPORTED: fn AddRect()
+    /// Convenience method to add a BRect to the label name.
+    ///
+    /// See [C++ `BMessage::AddRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a42d9e94fb88d457699d193eb5094a24c).
+    fn add_rect(&self, name: &str, rect: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_AddRect(self.as_ptr(), name, rect)
+        }
+    }
     /// Convenience method to add a BPoint to the label name.
     ///
     /// See [C++ `BMessage::AddPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afde5dc7d76c57e5d062de58954fb2548).
@@ -578,20 +587,28 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a rectangle at the label name.
     ///
     /// See [C++ `BMessage::FindRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a84e6020b903936f61538e33988792956).
-    fn find_rect_rect(&self, name: &str, rect: *mut c_void) -> status_t {
+    fn find_rect_rect<R: RectMethods>(&self, name: &str, rect: Option<&R>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let rect = match rect {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindRect(self.as_ptr(), name, rect)
         }
     }
     /// Find a rectangle at the label name at an index.
     ///
     /// See [C++ `BMessage::FindRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#abc4398bca7420cc74c4d5cc76ccba018).
-    fn find_rect_int32(&self, name: &str, index: i32, rect: *mut c_void) -> status_t {
+    fn find_rect_int32_rect<R: RectMethods>(&self, name: &str, index: i32, rect: Option<&R>) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let rect = match rect {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BMessage_FindRect1(self.as_ptr(), name, index, rect)
         }
     }
@@ -1086,8 +1103,26 @@ pub trait MessageMethods: RustBindingMethods {
             ffi::BMessage_ReplaceAlignment1(self.as_ptr(), name, index, alignment)
         }
     }
-    // NOT_SUPPORTED: fn ReplaceRect()
-    // NOT_SUPPORTED: fn ReplaceRect1()
+    /// Replace a rectangle at the label name.
+    ///
+    /// See [C++ `BMessage::ReplaceRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aa24fb4e8fbc39011d1b7fb55c7f752c1).
+    fn replace_rect_rect(&self, name: &str, rect: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceRect(self.as_ptr(), name, rect)
+        }
+    }
+    /// Replace a rectangle at the label name at a specified index.
+    ///
+    /// See [C++ `BMessage::ReplaceRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2e38c3d43259b9157cc5c8647030dac0).
+    fn replace_rect_int32(&self, name: &str, index: i32, rect: *mut c_void) -> status_t {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            ffi::BMessage_ReplaceRect1(self.as_ptr(), name, index, rect)
+        }
+    }
     /// Replace a point at the label name.
     ///
     /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac1b948f0c5867720173ef96450201859).
@@ -1756,7 +1791,16 @@ pub trait MessageMethods: RustBindingMethods {
         }
     }
     // NOT_SUPPORTED: fn HasData()
-    // NOT_SUPPORTED: fn FindRect2()
+    /// Deprecated.
+    ///
+    /// See [C++ `BMessage::FindRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9713057fc44d53b1771ff071341482ac).
+    fn find_rect_int32(&self, name: &str, n: i32) -> Rect {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            Rect::from_ptr(ffi::BMessage_FindRect2(self.as_ptr(), name, n))
+        }
+    }
     /// Deprecated.
     ///
     /// See [C++ `BMessage::FindPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a813615a6d10f5ec02573a45f14c1241c).
@@ -2106,8 +2150,28 @@ pub trait MessageMethods: RustBindingMethods {
     }
     // NOT_SUPPORTED: fn GetAlignment()
     // NOT_SUPPORTED: fn GetAlignment1()
-    // NOT_SUPPORTED: fn GetRect()
-    // NOT_SUPPORTED: fn GetRect1()
+    /// Return the BRect object from message with name and index, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac830b029ae38dce1f6a2f823f289f222).
+    fn get_rect_int32<R: RectMethods>(&self, name: &str, index: i32, default_value: &R) -> Rect {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Rect::from_ptr(ffi::BMessage_GetRect(self.as_ptr(), name, index, default_value))
+        }
+    }
+    /// Return the BRect object from message with name, or defaultValue if not found.
+    ///
+    /// See [C++ `BMessage::GetRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ab813849c1d23d484fff039204198e6f6).
+    fn get_rect_rect<R: RectMethods>(&self, name: &str, default_value: &R) -> Rect {
+        unsafe {
+            let name = CString::from_vec_unchecked(name.into());
+            let name = name.as_ptr();
+            let default_value = default_value.as_ptr();
+            Rect::from_ptr(ffi::BMessage_GetRect1(self.as_ptr(), name, default_value))
+        }
+    }
     /// Return the BPoint object from message with name and index, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a46167045bba07334db6acaa3c37e0498).
@@ -2319,10 +2383,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Set the data with at the label name to value.
     ///
     /// See [C++ `BMessage::SetRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a1f6691ff69fe9d9027179d8f2a3c8165).
-    fn set_rect(&self, name: &str, value: *const c_void) -> status_t {
+    fn set_rect<R: RectMethods>(&self, name: &str, value: &R) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let value = value.as_ptr();
             ffi::BMessage_SetRect(self.as_ptr(), name, value)
         }
     }

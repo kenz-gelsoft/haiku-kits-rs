@@ -23,5 +23,6 @@ pub use super::methods_h::*;
 pub use super::methods_l::*;
 pub use super::methods_m::*;
 pub use super::methods_p::*;
+pub use super::methods_r::*;
 pub use super::methods_s::*;
 pub use super::methods_w::*;

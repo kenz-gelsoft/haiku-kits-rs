@@ -83,11 +83,11 @@
         - 1: `BAlignment*`: FindAlignment (alignment)
         - 1: `int32`: None 
             - 1: `BAlignment*`: FindAlignment1 (int32)
-- 2: BMessage.FindRect: None 
-    - 2: `const char*`: None 
+- 3: BMessage.FindRect: None 
+    - 3: `const char*`: None 
         - 1: `BRect*`: FindRect (rect)
-        - 1: `int32`: None 
-            - 1: `BRect*`: FindRect1 (int32)
+        - 2: `int32`: FindRect2 (int32)
+            - 1: `BRect*`: FindRect1 (int32, rect)
 - 3: BMessage.FindPoint: None 
     - 3: `const char*`: None 
         - 1: `BPoint*`: FindPoint (point)
@@ -195,6 +195,11 @@
         - 1: `const BAlignment&`: ReplaceAlignment (alignment)
         - 1: `int32`: None 
             - 1: `const BAlignment&`: ReplaceAlignment1 (int32)
+- 2: BMessage.ReplaceRect: None 
+    - 2: `const char*`: None 
+        - 1: `BRect`: ReplaceRect (rect)
+        - 1: `int32`: None 
+            - 1: `BRect`: ReplaceRect1 (int32)
 - 2: BMessage.ReplacePoint: None 
     - 2: `const char*`: None 
         - 1: `BPoint`: ReplacePoint (point)
@@ -360,6 +365,11 @@
         - 1: `const char*`: GetString (str)
         - 1: `int32`: None 
             - 1: `const char*`: GetString1 (int32)
+- 2: BMessage.GetRect: None 
+    - 2: `const char*`: None 
+        - 1: `int32`: None 
+            - 1: `const BRect&`: GetRect (int32)
+        - 1: `const BRect&`: GetRect1 (rect)
 - 2: BMessage.GetPoint: None 
     - 2: `const char*`: None 
         - 1: `int32`: None 
@@ -381,6 +391,54 @@
     - 1: `const BPoint&`: BPoint1 (point)
     - 1: `float`: None 
         - 1: `float`: BPoint2 (float)
+- 2: BRect.InsetBy: None 
+    - 1: `BPoint`: InsetBy (point)
+    - 1: `float`: None 
+        - 1: `float`: InsetBy1 (float)
+- 2: BRect.InsetBySelf: None 
+    - 1: `BPoint`: InsetBySelf (point)
+    - 1: `float`: None 
+        - 1: `float`: InsetBySelf1 (float)
+- 2: BRect.InsetByCopy: None 
+    - 1: `BPoint`: InsetByCopy (point)
+    - 1: `float`: None 
+        - 1: `float`: InsetByCopy1 (float)
+- 2: BRect.OffsetBy: None 
+    - 1: `BPoint`: OffsetBy (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetBy1 (float)
+- 2: BRect.OffsetTo: None 
+    - 1: `BPoint`: OffsetTo (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetTo1 (float)
+- 2: BRect.OffsetBySelf: None 
+    - 1: `BPoint`: OffsetBySelf (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetBySelf1 (float)
+- 2: BRect.OffsetByCopy: None 
+    - 1: `BPoint`: OffsetByCopy (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetByCopy1 (float)
+- 2: BRect.OffsetToSelf: None 
+    - 1: `BPoint`: OffsetToSelf (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetToSelf1 (float)
+- 2: BRect.OffsetToCopy: None 
+    - 1: `BPoint`: OffsetToCopy (point)
+    - 1: `float`: None 
+        - 1: `float`: OffsetToCopy1 (float)
+- 6: BRect.BRect: BRect ()
+    - 2: `BPoint`: None 
+        - 1: `BPoint`: BRect1 (point, point)
+        - 1: `BSize`: BRect2 (point, size)
+    - 1: `const BRect&`: BRect3 (rect)
+    - 2: `float`: BRect5 (float)
+        - 1: `float`: None 
+            - 1: `float`: None 
+                - 1: `float`: BRect4 (float, float)
+- 2: BRect.Contains: None 
+    - 1: `BPoint`: Contains (point)
+    - 1: `BRect`: Contains1 (rect)
 - 3: BSize.BSize: BSize ()
     - 1: `const BSize&`: BSize1 (size)
     - 1: `float`: None 

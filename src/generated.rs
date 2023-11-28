@@ -12,6 +12,7 @@ mod ffi_h;
 mod ffi_l;
 mod ffi_m;
 mod ffi_p;
+mod ffi_r;
 mod ffi_s;
 mod ffi_w;
 
@@ -21,6 +22,7 @@ mod methods_h;
 mod methods_l;
 mod methods_m;
 mod methods_p;
+mod methods_r;
 mod methods_s;
 mod methods_w;
 
@@ -30,5 +32,6 @@ mod class_h;
 mod class_l;
 mod class_m;
 mod class_p;
+mod class_r;
 mod class_s;
 mod class_w;
