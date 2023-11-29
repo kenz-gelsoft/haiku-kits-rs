@@ -536,7 +536,8 @@ class CxxType:
                 return 'Option<&%s>' % (t[1:])
         if t in CXX2RUST:
             t = CXX2RUST[t]
-        if self.__indirection or self.is_binding_value():
+        if (self.__indirection or
+            self.is_binding_value()):
             if self._is_const_ptr_to_string():
                 return '*const c_char'
             mut = 'mut' if self.__is_mut else 'const'

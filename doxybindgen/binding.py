@@ -721,7 +721,8 @@ class CxxMethodBinding:
         return ', '.join(self._deref_if_needed(p) for p in self.__model.params)
     
     def _deref_if_needed(self, param):
-        if param.type.is_ref() or param.type.is_binding_value():
+        if (param.type.is_ref() or
+            param.type.is_binding_value()):
             return '*%s' % (param.name,)
         return param.name
 
