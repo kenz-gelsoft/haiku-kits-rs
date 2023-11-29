@@ -17,8 +17,11 @@ pub trait PointMethods: RustBindingMethods {
     /// Moves the BPoint so that it is contained within rect.
     ///
     /// See [C++ `BPoint::ConstrainTo()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a81254fef5bb205f952e252cf5f07ab59).
-    fn constrain_to(&self, rect: *mut c_void) {
-        unsafe { ffi::BPoint_ConstrainTo(self.as_ptr(), rect) }
+    fn constrain_to<R: RectMethods>(&self, rect: &R) {
+        unsafe {
+            let rect = rect.as_ptr();
+            ffi::BPoint_ConstrainTo(self.as_ptr(), rect)
+        }
     }
     /// Print the x and y coordinates to standard output.
     ///

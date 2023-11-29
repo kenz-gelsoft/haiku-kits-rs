@@ -22,14 +22,22 @@ impl<const FROM_CPP: bool> RectFromCpp<FROM_CPP> {
     /// Creates a new BRect object with its dimensions defined by the leftTop and rightBottom points.
     ///
     /// See [C++ `BRect::BRect()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a2351732f3198e9465eac7a69e60d04f2).
-    pub fn new_with_point_point(left_top: *mut c_void, right_bottom: *mut c_void) -> RectFromCpp<FROM_CPP> {
-        unsafe { RectFromCpp(ffi::BRect_new1(left_top, right_bottom)) }
+    pub fn new_with_point_point<P: PointMethods, P2: PointMethods>(left_top: &P, right_bottom: &P2) -> RectFromCpp<FROM_CPP> {
+        unsafe {
+            let left_top = left_top.as_ptr();
+            let right_bottom = right_bottom.as_ptr();
+            RectFromCpp(ffi::BRect_new1(left_top, right_bottom))
+        }
     }
     /// Creates a new BRect object with its dimensions defined by the leftTop point and size.
     ///
     /// See [C++ `BRect::BRect()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a45d54a02a30734acf967f28d0c267508).
-    pub fn new_with_point_size(left_top: *mut c_void, size: *mut c_void) -> RectFromCpp<FROM_CPP> {
-        unsafe { RectFromCpp(ffi::BRect_new2(left_top, size)) }
+    pub fn new_with_point_size<P: PointMethods, S: SizeMethods>(left_top: &P, size: &S) -> RectFromCpp<FROM_CPP> {
+        unsafe {
+            let left_top = left_top.as_ptr();
+            let size = size.as_ptr();
+            RectFromCpp(ffi::BRect_new2(left_top, size))
+        }
     }
     /// Creates a new BRect object as a copy of other.
     ///

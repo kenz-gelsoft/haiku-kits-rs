@@ -506,8 +506,9 @@ class CxxType:
                 name,
             )
         if (self.is_ref_to_binding() or
+            self._is_const_ptr_to_string() or
+            self.is_binding_value()):
             # So, taking pointer must be another expression for its lifetime.
-            self._is_const_ptr_to_string()):
             yield 'let %s = %s;' % (
                 name,
                 param.rust_ffi_ref(),
@@ -528,7 +529,8 @@ class CxxType:
         if not for_ffi:
             if self._is_const_ptr_to_string():
                 return '&str'
-            if self.is_const_ref_to_binding():
+            if (self.is_const_ref_to_binding() or
+                self.is_binding_value()):
                 return '&%s' % (t[1:])
             if self.is_ptr_to_binding():
                 return 'Option<&%s>' % (t[1:])

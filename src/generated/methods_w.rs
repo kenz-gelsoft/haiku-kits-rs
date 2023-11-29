@@ -215,8 +215,11 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the attached view located at the specified point.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a4c252d9c733a703ca25dcc4d3eae6209).
-    fn find_view_point(&self, point: *mut c_void) -> *mut c_void {
-        unsafe { ffi::BWindow_FindView(self.as_ptr(), point) }
+    fn find_view_point<P: PointMethods>(&self, point: &P) -> *mut c_void {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BWindow_FindView(self.as_ptr(), point)
+        }
     }
     /// Returns the attached view with the specified viewName.
     ///
@@ -249,8 +252,11 @@ pub trait WindowMethods: LooperMethods {
     /// Hook method that gets called when the window is moved.
     ///
     /// See [C++ `BWindow::FrameMoved()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a95f6fb2941250e7ed54fce6671f782c6).
-    fn frame_moved(&self, new_position: *mut c_void) {
-        unsafe { ffi::BWindow_FrameMoved(self.as_ptr(), new_position) }
+    fn frame_moved<P: PointMethods>(&self, new_position: &P) {
+        unsafe {
+            let new_position = new_position.as_ptr();
+            ffi::BWindow_FrameMoved(self.as_ptr(), new_position)
+        }
     }
     /// Hook method that gets called when the window is resized.
     ///
@@ -400,8 +406,11 @@ pub trait WindowMethods: LooperMethods {
     /// Move the window to point.
     ///
     /// See [C++ `BWindow::MoveTo()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ae81b509d6ee2eb29b9a703c75ef07ee5).
-    fn move_to_point(&self, point: *mut c_void) {
-        unsafe { ffi::BWindow_MoveTo(self.as_ptr(), point) }
+    fn move_to_point<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BWindow_MoveTo(self.as_ptr(), point)
+        }
     }
     /// Move the window to the specified x and y coordinates.
     ///
@@ -611,7 +620,10 @@ pub trait WindowMethods: LooperMethods {
     /// Move window to origin, then resize to width and height.
     ///
     /// See [C++ `BWindow::Zoom()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ae7bea03df00c760d7f489acd3e312290).
-    fn zoom_point(&self, origin: *mut c_void, width: c_float, height: c_float) {
-        unsafe { ffi::BWindow_Zoom1(self.as_ptr(), origin, width, height) }
+    fn zoom_point<P: PointMethods>(&self, origin: &P, width: c_float, height: c_float) {
+        unsafe {
+            let origin = origin.as_ptr();
+            ffi::BWindow_Zoom1(self.as_ptr(), origin, width, height)
+        }
     }
 }

@@ -14,8 +14,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Inset the BRect by the x and y coordinates of point.
     ///
     /// See [C++ `BRect::InsetBy()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ad3b069e34687b65d0e6b4b083c47b59c).
-    fn inset_by_point(&self, inset: *mut c_void) {
-        unsafe { ffi::BRect_InsetBy(self.as_ptr(), inset) }
+    fn inset_by_point<P: PointMethods>(&self, inset: &P) {
+        unsafe {
+            let inset = inset.as_ptr();
+            ffi::BRect_InsetBy(self.as_ptr(), inset)
+        }
     }
     /// Inset the BRect by dx units in the horizontal direction and dy units in the vertical direction.
     ///
@@ -26,8 +29,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::InsetBy() but returns the transformed BRect.
     ///
     /// See [C++ `BRect::InsetBySelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a83c551c7c3ea2682103bdacf950045bd).
-    fn inset_by_self_point(&self, inset: *mut c_void) -> &Self {
-        unsafe { ffi::BRect_InsetBySelf(self.as_ptr(), inset); &self }
+    fn inset_by_self_point<P: PointMethods>(&self, inset: &P) -> &Self {
+        unsafe {
+            let inset = inset.as_ptr();
+            ffi::BRect_InsetBySelf(self.as_ptr(), inset); &self
+        }
     }
     /// Like BRect::InsetBy() but returns the transformed BRect.
     ///
@@ -38,8 +44,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::InsetBy() but returns a copy of the transformed BRect leaving the original unmodified.
     ///
     /// See [C++ `BRect::InsetByCopy()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a41ff92a5d0b62a5ba4543ce841b83f22).
-    fn inset_by_copy_point(&self, inset: *mut c_void) -> Rect {
-        unsafe { Rect::from_ptr(ffi::BRect_InsetByCopy(self.as_ptr(), inset)) }
+    fn inset_by_copy_point<P: PointMethods>(&self, inset: &P) -> Rect {
+        unsafe {
+            let inset = inset.as_ptr();
+            Rect::from_ptr(ffi::BRect_InsetByCopy(self.as_ptr(), inset))
+        }
     }
     /// Like BRect::InsetBy() but returns a copy of the transformed BRect leaving the original unmodified.
     ///
@@ -50,8 +59,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Moves the BRect horizontally by the x value of point and vertically by y value of point without changing the size of the rectangle.
     ///
     /// See [C++ `BRect::OffsetBy()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a9a8b7148025f839c387085535048fae2).
-    fn offset_by_point(&self, delta: *mut c_void) {
-        unsafe { ffi::BRect_OffsetBy(self.as_ptr(), delta) }
+    fn offset_by_point<P: PointMethods>(&self, delta: &P) {
+        unsafe {
+            let delta = delta.as_ptr();
+            ffi::BRect_OffsetBy(self.as_ptr(), delta)
+        }
     }
     /// Moves the BRect horizontally by dx units and vertically by dy units point without changing the size of the rectangle.
     ///
@@ -62,8 +74,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Move the BRect to the location specified by point.
     ///
     /// See [C++ `BRect::OffsetTo()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a1ca9ed8ce028d98c8a124295ecea41fe).
-    fn offset_to_point(&self, offset: *mut c_void) {
-        unsafe { ffi::BRect_OffsetTo(self.as_ptr(), offset) }
+    fn offset_to_point<P: PointMethods>(&self, offset: &P) {
+        unsafe {
+            let offset = offset.as_ptr();
+            ffi::BRect_OffsetTo(self.as_ptr(), offset)
+        }
     }
     /// Move the BRect to the point specified by the given x and y coordinates.
     ///
@@ -74,8 +89,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::OffsetBy() but returns the translated BRect.
     ///
     /// See [C++ `BRect::OffsetBySelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a7fa352a96bb16046f0d5b0801ed91ba1).
-    fn offset_by_self_point(&self, offset: *mut c_void) -> &Self {
-        unsafe { ffi::BRect_OffsetBySelf(self.as_ptr(), offset); &self }
+    fn offset_by_self_point<P: PointMethods>(&self, offset: &P) -> &Self {
+        unsafe {
+            let offset = offset.as_ptr();
+            ffi::BRect_OffsetBySelf(self.as_ptr(), offset); &self
+        }
     }
     /// Like BRect::OffsetBy() but returns the translated BRect.
     ///
@@ -86,8 +104,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::OffsetBy() but returns a copy of the translated BRect leaving the original unmodified.
     ///
     /// See [C++ `BRect::OffsetByCopy()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#aa3c2f35396060f90675701f16ffc7c45).
-    fn offset_by_copy_point(&self, offset: *mut c_void) -> Rect {
-        unsafe { Rect::from_ptr(ffi::BRect_OffsetByCopy(self.as_ptr(), offset)) }
+    fn offset_by_copy_point<P: PointMethods>(&self, offset: &P) -> Rect {
+        unsafe {
+            let offset = offset.as_ptr();
+            Rect::from_ptr(ffi::BRect_OffsetByCopy(self.as_ptr(), offset))
+        }
     }
     /// Like BRect::OffsetBy() but returns a copy of the translated BRect leaving the original unmodified.
     ///
@@ -98,8 +119,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::OffsetTo() but returns the translated BRect.
     ///
     /// See [C++ `BRect::OffsetToSelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a2b8fa1ec48096e16de1c0a94efc6816e).
-    fn offset_to_self_point(&self, offset: *mut c_void) -> &Self {
-        unsafe { ffi::BRect_OffsetToSelf(self.as_ptr(), offset); &self }
+    fn offset_to_self_point<P: PointMethods>(&self, offset: &P) -> &Self {
+        unsafe {
+            let offset = offset.as_ptr();
+            ffi::BRect_OffsetToSelf(self.as_ptr(), offset); &self
+        }
     }
     /// Like BRect::OffsetTo() but returns the translated BRect.
     ///
@@ -110,8 +134,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Like BRect::OffsetTo() but returns a copy of the translated BRect leaving the original unmodified.
     ///
     /// See [C++ `BRect::OffsetToCopy()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ac1b3a5eab5aac9a852df175a406927c8).
-    fn offset_to_copy_point(&self, offset: *mut c_void) -> Rect {
-        unsafe { Rect::from_ptr(ffi::BRect_OffsetToCopy(self.as_ptr(), offset)) }
+    fn offset_to_copy_point<P: PointMethods>(&self, offset: &P) -> Rect {
+        unsafe {
+            let offset = offset.as_ptr();
+            Rect::from_ptr(ffi::BRect_OffsetToCopy(self.as_ptr(), offset))
+        }
     }
     /// Like BRect::OffsetTo() but returns a copy of the translated BRect leaving the original unmodified.
     ///
@@ -122,14 +149,20 @@ pub trait RectMethods: RustBindingMethods {
     /// Returns whether or not the BRect contains point.
     ///
     /// See [C++ `BRect::Contains()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a6f5c37ccc41d49131df112d5a74d5200).
-    fn contains_point(&self, point: *mut c_void) -> bool {
-        unsafe { ffi::BRect_Contains(self.as_ptr(), point) }
+    fn contains_point<P: PointMethods>(&self, point: &P) -> bool {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BRect_Contains(self.as_ptr(), point)
+        }
     }
     /// Returns whether or not the BRect wholly contains rect.
     ///
     /// See [C++ `BRect::Contains()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a7e5268e764cdcd03ef7177780338c658).
-    fn contains_rect(&self, rect: *mut c_void) -> bool {
-        unsafe { ffi::BRect_Contains1(self.as_ptr(), rect) }
+    fn contains_rect<R: RectMethods>(&self, rect: &R) -> bool {
+        unsafe {
+            let rect = rect.as_ptr();
+            ffi::BRect_Contains1(self.as_ptr(), rect)
+        }
     }
     /// Returns the height of the rectangle.
     ///
@@ -152,8 +185,11 @@ pub trait RectMethods: RustBindingMethods {
     /// Returns whether or not the BRect and rect intersect.
     ///
     /// See [C++ `BRect::Intersects()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a5f0bd9533e3a9b3aa73674e2f74cb7e3).
-    fn intersects(&self, rect: *mut c_void) -> bool {
-        unsafe { ffi::BRect_Intersects(self.as_ptr(), rect) }
+    fn intersects<R: RectMethods>(&self, rect: &R) -> bool {
+        unsafe {
+            let rect = rect.as_ptr();
+            ffi::BRect_Intersects(self.as_ptr(), rect)
+        }
     }
     /// Returns whether or not the BRect is valid.
     ///
@@ -200,26 +236,38 @@ pub trait RectMethods: RustBindingMethods {
     /// Sets the left bottom point of the BRect.
     ///
     /// See [C++ `BRect::SetLeftBottom()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a8c2558f788131c37db92a0be041a46ec).
-    fn set_left_bottom(&self, point: *const c_void) {
-        unsafe { ffi::BRect_SetLeftBottom(self.as_ptr(), point) }
+    fn set_left_bottom<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BRect_SetLeftBottom(self.as_ptr(), point)
+        }
     }
     /// Sets the left top point of the BRect.
     ///
     /// See [C++ `BRect::SetLeftTop()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a304bd292bba6a3fa54c0aa7b54220290).
-    fn set_left_top(&self, point: *const c_void) {
-        unsafe { ffi::BRect_SetLeftTop(self.as_ptr(), point) }
+    fn set_left_top<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BRect_SetLeftTop(self.as_ptr(), point)
+        }
     }
     /// Sets the right bottom point of the BRect.
     ///
     /// See [C++ `BRect::SetRightBottom()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ae5c5c2389dab41f899217e9b81af7aad).
-    fn set_right_bottom(&self, point: *const c_void) {
-        unsafe { ffi::BRect_SetRightBottom(self.as_ptr(), point) }
+    fn set_right_bottom<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BRect_SetRightBottom(self.as_ptr(), point)
+        }
     }
     /// Sets the right top point of the BRect.
     ///
     /// See [C++ `BRect::SetRightTop()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a4f1f445beee1e7048fe0dd7a4fd40d7c).
-    fn set_right_top(&self, point: *const c_void) {
-        unsafe { ffi::BRect_SetRightTop(self.as_ptr(), point) }
+    fn set_right_top<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BRect_SetRightTop(self.as_ptr(), point)
+        }
     }
     /// Returns the dimensions of the BRect.
     ///

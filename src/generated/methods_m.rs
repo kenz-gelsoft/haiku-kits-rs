@@ -302,30 +302,33 @@ pub trait MessageMethods: RustBindingMethods {
     /// Convenience method to add a BRect to the label name.
     ///
     /// See [C++ `BMessage::AddRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a42d9e94fb88d457699d193eb5094a24c).
-    fn add_rect(&self, name: &str, rect: *mut c_void) -> status_t {
+    fn add_rect<R: RectMethods>(&self, name: &str, rect: &R) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let rect = rect.as_ptr();
             ffi::BMessage_AddRect(self.as_ptr(), name, rect)
         }
     }
     /// Convenience method to add a BPoint to the label name.
     ///
     /// See [C++ `BMessage::AddPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afde5dc7d76c57e5d062de58954fb2548).
-    fn add_point(&self, name: &str, point: *mut c_void) -> status_t {
+    fn add_point<P: PointMethods>(&self, name: &str, point: &P) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let point = point.as_ptr();
             ffi::BMessage_AddPoint(self.as_ptr(), name, point)
         }
     }
     /// Convenience method to add a BSize to the label name.
     ///
     /// See [C++ `BMessage::AddSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a37d4771d6d726a439e0c0f36943d9e52).
-    fn add_size(&self, name: &str, size: *mut c_void) -> status_t {
+    fn add_size<S: SizeMethods>(&self, name: &str, size: &S) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let size = size.as_ptr();
             ffi::BMessage_AddSize(self.as_ptr(), name, size)
         }
     }
@@ -1106,60 +1109,66 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace a rectangle at the label name.
     ///
     /// See [C++ `BMessage::ReplaceRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aa24fb4e8fbc39011d1b7fb55c7f752c1).
-    fn replace_rect_rect(&self, name: &str, rect: *mut c_void) -> status_t {
+    fn replace_rect_rect<R: RectMethods>(&self, name: &str, rect: &R) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let rect = rect.as_ptr();
             ffi::BMessage_ReplaceRect(self.as_ptr(), name, rect)
         }
     }
     /// Replace a rectangle at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplaceRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a2e38c3d43259b9157cc5c8647030dac0).
-    fn replace_rect_int32(&self, name: &str, index: i32, rect: *mut c_void) -> status_t {
+    fn replace_rect_int32<R: RectMethods>(&self, name: &str, index: i32, rect: &R) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let rect = rect.as_ptr();
             ffi::BMessage_ReplaceRect1(self.as_ptr(), name, index, rect)
         }
     }
     /// Replace a point at the label name.
     ///
     /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ac1b948f0c5867720173ef96450201859).
-    fn replace_point_point(&self, name: &str, a_point: *mut c_void) -> status_t {
+    fn replace_point_point<P: PointMethods>(&self, name: &str, a_point: &P) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let a_point = a_point.as_ptr();
             ffi::BMessage_ReplacePoint(self.as_ptr(), name, a_point)
         }
     }
     /// Replace a point at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a4897600b32e200802cf7c5d397f7e8cf).
-    fn replace_point_int32(&self, name: &str, index: i32, a_point: *mut c_void) -> status_t {
+    fn replace_point_int32<P: PointMethods>(&self, name: &str, index: i32, a_point: &P) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let a_point = a_point.as_ptr();
             ffi::BMessage_ReplacePoint1(self.as_ptr(), name, index, a_point)
         }
     }
     /// Replace a size at the label name.
     ///
     /// See [C++ `BMessage::ReplaceSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a440d37083df7c8845d3337cc8c9d695a).
-    fn replace_size_size(&self, name: &str, a_size: *mut c_void) -> status_t {
+    fn replace_size_size<S: SizeMethods>(&self, name: &str, a_size: &S) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let a_size = a_size.as_ptr();
             ffi::BMessage_ReplaceSize(self.as_ptr(), name, a_size)
         }
     }
     /// Replace a size at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplaceSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9ff6d6940725e22e2fab190bf42a1659).
-    fn replace_size_int32(&self, name: &str, index: i32, a_size: *mut c_void) -> status_t {
+    fn replace_size_int32<S: SizeMethods>(&self, name: &str, index: i32, a_size: &S) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
+            let a_size = a_size.as_ptr();
             ffi::BMessage_ReplaceSize1(self.as_ptr(), name, index, a_size)
         }
     }
