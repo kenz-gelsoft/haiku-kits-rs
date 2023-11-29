@@ -536,9 +536,6 @@ class RustMethodBinding:
             return wrapped.call(call)
         return call
 
-    def _uses_ptr_type(self):
-        return any(p.type.is_ptr() for p in self.__model.params)
-    
     def is_non_virtual_override(self, cls):
         return self.__model.is_non_virtual_override(cls)
 
@@ -553,7 +550,8 @@ class GenericParams:
         for param in params:
             is_ptr_to_binding = param.type.is_ptr_to_binding()
             if (is_ptr_to_binding or
-                param.type.is_ref_to_binding()):
+                param.type.is_ref_to_binding() or
+                param.type.is_binding_value()):
                 name = self._new_name_for(param.type)
                 self.names.append(param.type.make_generic(
                     name,
@@ -711,8 +709,11 @@ class CxxMethodBinding:
         return ', '.join(self._cxx_param(p) for p in params)
 
     def _cxx_param(self, param):
+        ptype = param.type.in_cxx()
+        if param.type.is_binding_value():
+            ptype = '%s*' % ptype
         return '%s %s' % (
-            param.type.in_cxx(),
+            ptype,
             param.name,
         )
 
@@ -720,7 +721,8 @@ class CxxMethodBinding:
         return ', '.join(self._deref_if_needed(p) for p in self.__model.params)
     
     def _deref_if_needed(self, param):
-        if param.type.is_ref():
+        if (param.type.is_ref() or
+            param.type.is_binding_value()):
             return '*%s' % (param.name,)
         return param.name
 

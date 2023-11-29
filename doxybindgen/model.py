@@ -226,7 +226,7 @@ class Method:
             return False
         if self.returns.is_str():
             return False
-        if self.returns.needs_new():
+        if self.returns.is_binding_value():
             return True
         return False
     
@@ -360,7 +360,7 @@ class RustType:
     def not_supported(self):
         return False
 
-    def needs_new(self):
+    def is_binding_value(self):
         return False
     
     def is_self_ref(self, cls_name):
@@ -506,8 +506,9 @@ class CxxType:
                 name,
             )
         if (self.is_ref_to_binding() or
+            self._is_const_ptr_to_string() or
+            self.is_binding_value()):
             # So, taking pointer must be another expression for its lifetime.
-            self._is_const_ptr_to_string()):
             yield 'let %s = %s;' % (
                 name,
                 param.rust_ffi_ref(),
@@ -528,13 +529,15 @@ class CxxType:
         if not for_ffi:
             if self._is_const_ptr_to_string():
                 return '&str'
-            if self.is_const_ref_to_binding():
+            if (self.is_const_ref_to_binding() or
+                self.is_binding_value()):
                 return '&%s' % (t[1:])
             if self.is_ptr_to_binding():
                 return 'Option<&%s>' % (t[1:])
         if t in CXX2RUST:
             t = CXX2RUST[t]
-        if self.__indirection:
+        if (self.__indirection or
+            self.is_binding_value()):
             if self._is_const_ptr_to_string():
                 return '*const c_char'
             mut = 'mut' if self.__is_mut else 'const'
@@ -575,11 +578,11 @@ class CxxType:
             return False
         if self.__indirection:
             return False
-        if self.needs_new():
+        if self.is_binding_value():
             return False
         return True
     
-    def needs_new(self):
+    def is_binding_value(self):
         return self._is_binding_type() and not self.__indirection
     
     def _is_binding_type(self):

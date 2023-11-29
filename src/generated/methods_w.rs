@@ -83,12 +83,20 @@ pub trait WindowMethods: LooperMethods {
     fn begin_view_transaction(&self) {
         unsafe { ffi::BWindow_BeginViewTransaction(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Bounds()
+    /// Returns the bounding rectangle of the window.
+    ///
+    /// See [C++ `BWindow::Bounds()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ab1084c04b99938ec93d2865962ec6bc2).
+    fn bounds(&self) -> Rect {
+        unsafe { Rect::from_ptr(ffi::BWindow_Bounds(self.as_ptr())) }
+    }
     /// Center the window in rect.
     ///
     /// See [C++ `BWindow::CenterIn()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a4ea700aa901a1ac76b23605d82c79de8).
-    fn center_in(&self, rect: *const c_void) {
-        unsafe { ffi::BWindow_CenterIn(self.as_ptr(), rect) }
+    fn center_in<R: RectMethods>(&self, rect: &R) {
+        unsafe {
+            let rect = rect.as_ptr();
+            ffi::BWindow_CenterIn(self.as_ptr(), rect)
+        }
     }
     /// Centers the window on the screen the window is currently on.
     ///
@@ -112,31 +120,55 @@ pub trait WindowMethods: LooperMethods {
     /// Convert point from the screen's coordinate system to the window's coordinate system in place.
     ///
     /// See [C++ `BWindow::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aaa76e90a0578a4081eb4765467d594ea).
-    fn convert_from_screen_point(&self, point: *mut c_void) {
-        unsafe { ffi::BWindow_ConvertFromScreen(self.as_ptr(), point) }
+    fn convert_from_screen_point<P: PointMethods>(&self, point: Option<&P>) {
+        unsafe {
+            let point = match point {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_ConvertFromScreen(self.as_ptr(), point)
+        }
     }
-    // NOT_SUPPORTED: fn ConvertFromScreen1()
+    // BLOCKED: fn ConvertFromScreen1()
     /// Convert rect from the screen's coordinate system to the window's coordinate system in place.
     ///
     /// See [C++ `BWindow::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a7b3b4a579b4e14cd6acf1a95aee75687).
-    fn convert_from_screen_rect(&self, rect: *mut c_void) {
-        unsafe { ffi::BWindow_ConvertFromScreen2(self.as_ptr(), rect) }
+    fn convert_from_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
+        unsafe {
+            let rect = match rect {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_ConvertFromScreen2(self.as_ptr(), rect)
+        }
     }
-    // NOT_SUPPORTED: fn ConvertFromScreen3()
+    // BLOCKED: fn ConvertFromScreen3()
     /// Convert point to the screen's coordinate system in place.
     ///
     /// See [C++ `BWindow::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a218bb4c66ca3f58fbc203a36996fd119).
-    fn convert_to_screen_point(&self, point: *mut c_void) {
-        unsafe { ffi::BWindow_ConvertToScreen(self.as_ptr(), point) }
+    fn convert_to_screen_point<P: PointMethods>(&self, point: Option<&P>) {
+        unsafe {
+            let point = match point {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_ConvertToScreen(self.as_ptr(), point)
+        }
     }
-    // NOT_SUPPORTED: fn ConvertToScreen1()
+    // BLOCKED: fn ConvertToScreen1()
     /// Convert rect to the screen's coordinate system in place.
     ///
     /// See [C++ `BWindow::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a83c3d8f1fb020740f7b4c3658e5222b5).
-    fn convert_to_screen_rect(&self, rect: *mut c_void) {
-        unsafe { ffi::BWindow_ConvertToScreen2(self.as_ptr(), rect) }
+    fn convert_to_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
+        unsafe {
+            let rect = match rect {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_ConvertToScreen2(self.as_ptr(), rect)
+        }
     }
-    // NOT_SUPPORTED: fn ConvertToScreen3()
+    // BLOCKED: fn ConvertToScreen3()
     /// Returns the number of child views that the window has.
     ///
     /// See [C++ `BWindow::CountChildren()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a742200112899822a889c2e69bf86db5d).
@@ -149,7 +181,12 @@ pub trait WindowMethods: LooperMethods {
     fn current_focus(&self) -> *mut c_void {
         unsafe { ffi::BWindow_CurrentFocus(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn DecoratorFrame()
+    /// Returns the frame rectangle of the window decorator.
+    ///
+    /// See [C++ `BWindow::DecoratorFrame()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a8a990fd437ac8f94f7be26f35145048d).
+    fn decorator_frame(&self) -> Rect {
+        unsafe { Rect::from_ptr(ffi::BWindow_DecoratorFrame(self.as_ptr())) }
+    }
     /// Returns a pointer to the default button set on the window.
     ///
     /// See [C++ `BWindow::DefaultButton()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a6995f1dcc605c006e4118cc4b687e766).
@@ -175,11 +212,19 @@ pub trait WindowMethods: LooperMethods {
         unsafe { ffi::BWindow_EndViewTransaction(self.as_ptr()) }
     }
     // NOT_SUPPORTED: fn Feel()
-    // NOT_SUPPORTED: fn FindView()
+    /// Returns a pointer to the attached view located at the specified point.
+    ///
+    /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a4c252d9c733a703ca25dcc4d3eae6209).
+    fn find_view_point<P: PointMethods>(&self, point: &P) -> *mut c_void {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BWindow_FindView(self.as_ptr(), point)
+        }
+    }
     /// Returns the attached view with the specified viewName.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac295d2dff72e4c5254cf597d4b31f9c6).
-    fn find_view(&self, view_name: &str) -> *mut c_void {
+    fn find_view_str(&self, view_name: &str) -> *mut c_void {
         unsafe {
             let view_name = CString::from_vec_unchecked(view_name.into());
             let view_name = view_name.as_ptr();
@@ -198,8 +243,21 @@ pub trait WindowMethods: LooperMethods {
     fn flush(&self) {
         unsafe { ffi::BWindow_Flush(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Frame()
-    // NOT_SUPPORTED: fn FrameMoved()
+    /// Returns the frame rectangle of the window.
+    ///
+    /// See [C++ `BWindow::Frame()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ab6c744272c04751fa0b44e605b063a5d).
+    fn frame(&self) -> Rect {
+        unsafe { Rect::from_ptr(ffi::BWindow_Frame(self.as_ptr())) }
+    }
+    /// Hook method that gets called when the window is moved.
+    ///
+    /// See [C++ `BWindow::FrameMoved()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a95f6fb2941250e7ed54fce6671f782c6).
+    fn frame_moved<P: PointMethods>(&self, new_position: &P) {
+        unsafe {
+            let new_position = new_position.as_ptr();
+            ffi::BWindow_FrameMoved(self.as_ptr(), new_position)
+        }
+    }
     /// Hook method that gets called when the window is resized.
     ///
     /// See [C++ `BWindow::FrameResized()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a280fab2b2900abc61dd4bcb7a2a4793f).
@@ -345,11 +403,19 @@ pub trait WindowMethods: LooperMethods {
     fn move_on_screen(&self, flags: u32) {
         unsafe { ffi::BWindow_MoveOnScreen(self.as_ptr(), flags) }
     }
-    // NOT_SUPPORTED: fn MoveTo()
+    /// Move the window to point.
+    ///
+    /// See [C++ `BWindow::MoveTo()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ae81b509d6ee2eb29b9a703c75ef07ee5).
+    fn move_to_point<P: PointMethods>(&self, point: &P) {
+        unsafe {
+            let point = point.as_ptr();
+            ffi::BWindow_MoveTo(self.as_ptr(), point)
+        }
+    }
     /// Move the window to the specified x and y coordinates.
     ///
     /// See [C++ `BWindow::MoveTo()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af419313a1b9b73a2c1cdb2365ff16189).
-    fn move_to(&self, x: c_float, y: c_float) {
+    fn move_to_float(&self, x: c_float, y: c_float) {
         unsafe { ffi::BWindow_MoveTo1(self.as_ptr(), x, y) }
     }
     /// Returns whether or not any of the attached views need to be updated.
@@ -490,7 +556,12 @@ pub trait WindowMethods: LooperMethods {
     fn show(&self) {
         unsafe { ffi::BWindow_Show(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Size()
+    /// Returns the size of the window.
+    ///
+    /// See [C++ `BWindow::Size()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#afc61a0c6129f233e56fa373107bd8790).
+    fn size(&self) -> Size {
+        unsafe { Size::from_ptr(ffi::BWindow_Size(self.as_ptr())) }
+    }
     /// Synchronizes the attached window's connection to App Server causing any pending messages to be processed and then waits for the App Server to respond.
     ///
     /// See [C++ `BWindow::Sync()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a332bea9ef16fedc16134bf587b52fa09).
@@ -546,5 +617,13 @@ pub trait WindowMethods: LooperMethods {
     fn zoom(&self) {
         unsafe { ffi::BWindow_Zoom(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Zoom1()
+    /// Move window to origin, then resize to width and height.
+    ///
+    /// See [C++ `BWindow::Zoom()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ae7bea03df00c760d7f489acd3e312290).
+    fn zoom_point<P: PointMethods>(&self, origin: &P, width: c_float, height: c_float) {
+        unsafe {
+            let origin = origin.as_ptr();
+            ffi::BWindow_Zoom1(self.as_ptr(), origin, width, height)
+        }
+    }
 }

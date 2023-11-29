@@ -33,6 +33,9 @@ status_t BWindow_AddToSubset(BWindow * self, BWindow * window) {
 void BWindow_BeginViewTransaction(BWindow * self) {
     return self->BeginViewTransaction();
 }
+BRect *BWindow_Bounds(const BWindow * self) {
+    return new BRect(self->Bounds());
+}
 void BWindow_CenterIn(BWindow * self, const BRect * rect) {
     return self->CenterIn(*rect);
 }
@@ -63,6 +66,9 @@ int32 BWindow_CountChildren(const BWindow * self) {
 BView * BWindow_CurrentFocus(const BWindow * self) {
     return self->CurrentFocus();
 }
+BRect *BWindow_DecoratorFrame(const BWindow * self) {
+    return new BRect(self->DecoratorFrame());
+}
 BButton * BWindow_DefaultButton(const BWindow * self) {
     return self->DefaultButton();
 }
@@ -75,6 +81,9 @@ void BWindow_EnableUpdates(BWindow * self) {
 void BWindow_EndViewTransaction(BWindow * self) {
     return self->EndViewTransaction();
 }
+BView * BWindow_FindView(const BWindow * self, BPoint* point) {
+    return self->FindView(*point);
+}
 BView * BWindow_FindView1(const BWindow * self, const char * view_name) {
     return self->FindView(view_name);
 }
@@ -83,6 +92,12 @@ uint32 BWindow_Flags(const BWindow * self) {
 }
 void BWindow_Flush(const BWindow * self) {
     return self->Flush();
+}
+BRect *BWindow_Frame(const BWindow * self) {
+    return new BRect(self->Frame());
+}
+void BWindow_FrameMoved(BWindow * self, BPoint* new_position) {
+    return self->FrameMoved(*new_position);
 }
 void BWindow_FrameResized(BWindow * self, float new_width, float new_height) {
     return self->FrameResized(new_width, new_height);
@@ -153,6 +168,9 @@ void BWindow_MoveBy(BWindow * self, float dx, float dy) {
 void BWindow_MoveOnScreen(BWindow * self, uint32 flags) {
     return self->MoveOnScreen(flags);
 }
+void BWindow_MoveTo(BWindow * self, BPoint* point) {
+    return self->MoveTo(*point);
+}
 void BWindow_MoveTo1(BWindow * self, float x, float y) {
     return self->MoveTo(x, y);
 }
@@ -213,6 +231,9 @@ void BWindow_SetZoomLimits(BWindow * self, float max_width, float max_height) {
 void BWindow_Show(BWindow * self) {
     return self->Show();
 }
+BSize *BWindow_Size(const BWindow * self) {
+    return new BSize(self->Size());
+}
 void BWindow_Sync(const BWindow * self) {
     return self->Sync();
 }
@@ -239,6 +260,9 @@ void BWindow_WorkspacesChanged(BWindow * self, uint32 old_workspaces, uint32 new
 }
 void BWindow_Zoom(BWindow * self) {
     return self->Zoom();
+}
+void BWindow_Zoom1(BWindow * self, BPoint* origin, float width, float height) {
+    return self->Zoom(*origin, width, height);
 }
 BArchivable * BWindow_Instantiate(BMessage * archive) {
     return BWindow::Instantiate(archive);
