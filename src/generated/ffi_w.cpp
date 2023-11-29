@@ -18,6 +18,12 @@ void BWindow_RemoveShortcut(BWindow * self, uint32 key, uint32 modifiers) {
 BWindow *BWindow_new(BMessage * archive) {
     return new BWindow(archive);
 }
+BWindow *BWindow_new1(BRect* frame, const char * title, window_look look, window_feel feel, uint32 flags, uint32 workspace) {
+    return new BWindow(*frame, title, look, feel, flags, workspace);
+}
+BWindow *BWindow_new2(BRect* frame, const char * title, window_type type_, uint32 flags, uint32 workspace) {
+    return new BWindow(*frame, title, type_, flags, workspace);
+}
 void BWindow_Activate(BWindow * self, bool active) {
     return self->Activate(active);
 }
@@ -41,6 +47,9 @@ void BWindow_CenterIn(BWindow * self, const BRect * rect) {
 }
 void BWindow_CenterOnScreen(BWindow * self) {
     return self->CenterOnScreen();
+}
+void BWindow_CenterOnScreen1(BWindow * self, screen_id id) {
+    return self->CenterOnScreen(id);
 }
 BView * BWindow_ChildAt(const BWindow * self, int32 index) {
     return self->ChildAt(index);
@@ -80,6 +89,9 @@ void BWindow_EnableUpdates(BWindow * self) {
 }
 void BWindow_EndViewTransaction(BWindow * self) {
     return self->EndViewTransaction();
+}
+window_feel BWindow_Feel(const BWindow * self) {
+    return self->Feel();
 }
 BView * BWindow_FindView(const BWindow * self, BPoint* point) {
     return self->FindView(*point);
@@ -153,6 +165,9 @@ BView * BWindow_LastMouseMovedView(const BWindow * self) {
 void BWindow_Layout(BWindow * self, bool force) {
     return self->Layout(force);
 }
+window_look BWindow_Look(const BWindow * self) {
+    return self->Look();
+}
 void BWindow_MenusBeginning(BWindow * self) {
     return self->MenusBeginning();
 }
@@ -204,6 +219,9 @@ status_t BWindow_SetDecoratorSettings(BWindow * self, const BMessage * settings)
 void BWindow_SetDefaultButton(BWindow * self, BButton * button) {
     return self->SetDefaultButton(button);
 }
+status_t BWindow_SetFeel(BWindow * self, window_feel feel) {
+    return self->SetFeel(feel);
+}
 status_t BWindow_SetFlags(BWindow * self, uint32 flags) {
     return self->SetFlags(flags);
 }
@@ -213,6 +231,9 @@ void BWindow_SetKeyMenuBar(BWindow * self, BMenuBar * bar) {
 void BWindow_SetLayout(BWindow * self, BLayout * layout) {
     return self->SetLayout(layout);
 }
+status_t BWindow_SetLook(BWindow * self, window_look look) {
+    return self->SetLook(look);
+}
 void BWindow_SetPulseRate(BWindow * self, bigtime_t rate) {
     return self->SetPulseRate(rate);
 }
@@ -221,6 +242,12 @@ void BWindow_SetSizeLimits(BWindow * self, float min_width, float max_width, flo
 }
 void BWindow_SetTitle(BWindow * self, const char * title) {
     return self->SetTitle(title);
+}
+status_t BWindow_SetType(BWindow * self, window_type type_) {
+    return self->SetType(type_);
+}
+status_t BWindow_SetWindowAlignment(BWindow * self, window_alignment mode, int32 h, int32 h_offset, int32 width, int32 width_offset, int32 v, int32 v_offset, int32 height, int32 height_offset) {
+    return self->SetWindowAlignment(mode, h, h_offset, width, width_offset, v, v_offset, height, height_offset);
 }
 void BWindow_SetWorkspaces(BWindow * self, uint32 workspaces) {
     return self->SetWorkspaces(workspaces);
@@ -239,6 +266,9 @@ void BWindow_Sync(const BWindow * self) {
 }
 const char *BWindow_Title(const BWindow * self) {
     return self->Title();
+}
+window_type BWindow_Type(const BWindow * self) {
+    return self->Type();
 }
 void BWindow_UpdateIfNeeded(BWindow * self) {
     return self->UpdateIfNeeded();

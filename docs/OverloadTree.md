@@ -448,10 +448,23 @@
         - 2: `uint32`: None 
             - 2: `BMessage*`: AddShortcut ()
                 - 1: `BHandler*`: AddShortcut1 (handler)
+- 3: BWindow.BWindow: None 
+    - 1: `BMessage*`: BWindow (message)
+    - 2: `BRect`: None 
+        - 2: `const char*`: None 
+            - 1: `window_look`: None 
+                - 1: `window_feel`: None 
+                    - 1: `uint32`: None 
+                        - 1: `uint32`: BWindow1 (rect, window_look)
+            - 1: `window_type`: None 
+                - 1: `uint32`: None 
+                    - 1: `uint32`: BWindow2 (rect, window_type)
 - 2: BWindow.AddChild: None 
     - 1: `BLayoutItem*`: AddChild (layoutitem)
     - 1: `BView*`: None 
         - 1: `BView*`: AddChild1 (view)
+- 2: BWindow.CenterOnScreen: CenterOnScreen ()
+    - 1: `screen_id`: CenterOnScreen1 (screen_id)
 - 2: BWindow.ConvertFromScreen: None 
     - 1: `BPoint*`: ConvertFromScreen (point)
     - 1: `BRect*`: ConvertFromScreen2 (rect)

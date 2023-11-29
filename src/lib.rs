@@ -30,12 +30,22 @@ type ArgChar = u8;
 pub use typedefs::*;
 #[allow(non_camel_case_types)]
 mod typedefs {
+    use std::os::raw::c_int;
+
     pub type bigtime_t = i64;
     pub type perform_code = u32;
+    pub type screen_id = i32;
     pub type sem_id = i32;
     pub type status_t = i32;
     pub type team_id = i32;
     pub type thread_id = i32;
+    
+    // enum types
+    // BWindow
+    pub type window_alignment = c_int;
+    pub type window_feel = c_int;
+    pub type window_look = c_int;
+    pub type window_type = c_int;
 }
 
 mod ffi {

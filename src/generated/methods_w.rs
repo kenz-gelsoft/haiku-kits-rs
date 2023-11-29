@@ -104,7 +104,12 @@ pub trait WindowMethods: LooperMethods {
     fn center_on_screen(&self) {
         unsafe { ffi::BWindow_CenterOnScreen(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn CenterOnScreen1()
+    /// Centers the window on the screen with the passed in id.
+    ///
+    /// See [C++ `BWindow::CenterOnScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aa9890ed5cb76c2c2a8fb82d7cd664586).
+    fn center_on_screen_screen_id(&self, id: screen_id) {
+        unsafe { ffi::BWindow_CenterOnScreen1(self.as_ptr(), id) }
+    }
     /// Returns a pointer to the child view found at index.
     ///
     /// See [C++ `BWindow::ChildAt()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aeaeec9bcb12b7b03132e61dba501b19b).
@@ -211,7 +216,12 @@ pub trait WindowMethods: LooperMethods {
     fn end_view_transaction(&self) {
         unsafe { ffi::BWindow_EndViewTransaction(self.as_ptr()) }
     }
-    // NOT_SUPPORTED: fn Feel()
+    /// Returns the current window feel flag.
+    ///
+    /// See [C++ `BWindow::Feel()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ab3cf63c90d209ec6cb1aaeadb7f61fb1).
+    fn feel(&self) -> window_feel {
+        unsafe { ffi::BWindow_Feel(self.as_ptr()) }
+    }
     /// Returns a pointer to the attached view located at the specified point.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a4c252d9c733a703ca25dcc4d3eae6209).
@@ -372,7 +382,12 @@ pub trait WindowMethods: LooperMethods {
     fn layout(&self, force: bool) {
         unsafe { ffi::BWindow_Layout(self.as_ptr(), force) }
     }
-    // NOT_SUPPORTED: fn Look()
+    /// Returns the current window look flag.
+    ///
+    /// See [C++ `BWindow::Look()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a056fe3233f883b1c4518619e59d825cd).
+    fn look(&self) -> window_look {
+        unsafe { ffi::BWindow_Look(self.as_ptr()) }
+    }
     /// Hook method that gets called just before a menu owned by the window is shown.
     ///
     /// See [C++ `BWindow::MenusBeginning()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a981d5c2993f4514fbcd1bdaf297a2a2d).
@@ -494,7 +509,12 @@ pub trait WindowMethods: LooperMethods {
     fn set_default_button(&self, button: *mut c_void) {
         unsafe { ffi::BWindow_SetDefaultButton(self.as_ptr(), button) }
     }
-    // NOT_SUPPORTED: fn SetFeel()
+    /// Changes the window feel set in the constructor to feel.
+    ///
+    /// See [C++ `BWindow::SetFeel()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a2317402cb859f5a438bc69e186ee2f04).
+    fn set_feel(&self, feel: window_feel) -> status_t {
+        unsafe { ffi::BWindow_SetFeel(self.as_ptr(), feel) }
+    }
     /// Changes the window flags set in the constructor to flags.
     ///
     /// See [C++ `BWindow::SetFlags()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a8f0caf4693a1952ac9bbe9a52bfdd778).
@@ -513,7 +533,12 @@ pub trait WindowMethods: LooperMethods {
     fn set_layout(&self, layout: *mut c_void) {
         unsafe { ffi::BWindow_SetLayout(self.as_ptr(), layout) }
     }
-    // NOT_SUPPORTED: fn SetLook()
+    /// Changes the window look set in the constructor to look.
+    ///
+    /// See [C++ `BWindow::SetLook()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac9ca5f4b8a78f95403dbc35ad9728e0c).
+    fn set_look(&self, look: window_look) -> status_t {
+        unsafe { ffi::BWindow_SetLook(self.as_ptr(), look) }
+    }
     /// Sets how often B_PULSE messages are posted to the window.
     ///
     /// See [C++ `BWindow::SetPulseRate()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ad69001922aad8daf7b65f82eb4b439f0).
@@ -536,8 +561,18 @@ pub trait WindowMethods: LooperMethods {
             ffi::BWindow_SetTitle(self.as_ptr(), title)
         }
     }
-    // NOT_SUPPORTED: fn SetType()
-    // NOT_SUPPORTED: fn SetWindowAlignment()
+    /// Changes the window type set in the constructor to type.
+    ///
+    /// See [C++ `BWindow::SetType()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a0f8f96c37d83e8df9e97c25a69c68295).
+    fn set_type(&self, type_: window_type) -> status_t {
+        unsafe { ffi::BWindow_SetType(self.as_ptr(), type_) }
+    }
+    /// Sets the alignment of the content of the window on the screen.
+    ///
+    /// See [C++ `BWindow::SetWindowAlignment()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a91d42de7f54efe1399c3838d35162d20).
+    fn set_window_alignment(&self, mode: window_alignment, h: i32, h_offset: i32, width: i32, width_offset: i32, v: i32, v_offset: i32, height: i32, height_offset: i32) -> status_t {
+        unsafe { ffi::BWindow_SetWindowAlignment(self.as_ptr(), mode, h, h_offset, width, width_offset, v, v_offset, height, height_offset) }
+    }
     /// Sets the set of workspaces where the window can be displayed.
     ///
     /// See [C++ `BWindow::SetWorkspaces()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a3549fdb63a64637fa8e2054e8c21272d).
@@ -574,7 +609,12 @@ pub trait WindowMethods: LooperMethods {
     fn title(&self) -> &CStr {
         unsafe { CStr::from_ptr(ffi::BWindow_Title(self.as_ptr())) }
     }
-    // NOT_SUPPORTED: fn Type()
+    /// Returns the current window type flag.
+    ///
+    /// See [C++ `BWindow::Type()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a103e6f93287afd65ed72ff760403fdf6).
+    fn type_(&self) -> window_type {
+        unsafe { ffi::BWindow_Type(self.as_ptr()) }
+    }
     /// Invokes Draw() immediately on each child view that needs updating.
     ///
     /// See [C++ `BWindow::UpdateIfNeeded()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a49b0c49eeef751b17bdc08d2e4d58cb9).

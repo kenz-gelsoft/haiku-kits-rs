@@ -29,10 +29,17 @@ CXX_PRIMITIVES = [
     # Rust typedefs
     'bigtime_t',
     'perform_code',
+    'screen_id',
     'sem_id',
     'status_t',
     'team_id',
     'thread_id',
+    
+    # enum types
+    'window_alignment',
+    'window_feel',
+    'window_look',
+    'window_type',
 ]
 RUST_PRIMITIVES = [
     'bool',
@@ -54,8 +61,15 @@ RUST_PRIMITIVES = [
 
     # Rust typedefs
     'bigtime_t',
+    'screen_id',
     'perform_code',
     'thread_id',
+    
+    # enum types
+    'window_alignment',
+    'window_feel',
+    'window_look',
+    'window_type',
 ]
 OS_UNSUPPORTED_TYPES = [
 ]
