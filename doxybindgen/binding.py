@@ -709,7 +709,7 @@ class CxxMethodBinding:
 
     def _cxx_param(self, param):
         ptype = param.type.in_cxx()
-        if param.type.needs_new():
+        if param.type.is_binding_value():
             ptype = '%s*' % ptype
         return '%s %s' % (
             ptype,
@@ -720,7 +720,7 @@ class CxxMethodBinding:
         return ', '.join(self._deref_if_needed(p) for p in self.__model.params)
     
     def _deref_if_needed(self, param):
-        if param.type.is_ref() or param.type.needs_new():
+        if param.type.is_ref() or param.type.is_binding_value():
             return '*%s' % (param.name,)
         return param.name
 
