@@ -74,13 +74,6 @@ impl<const FROM_CPP: bool> From<WindowFromCpp<FROM_CPP>> for ArchivableFromCpp<F
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
-impl<const FROM_CPP: bool> Drop for WindowFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BArchivable_delete(self.0) }
-        }
-    }
-}
 impl<const FROM_CPP: bool> ArchivableMethods for WindowFromCpp<FROM_CPP> {
     /// Creates a new BWindow object from the data message.
     ///

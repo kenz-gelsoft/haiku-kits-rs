@@ -155,7 +155,7 @@ class RustClassBinding:
             yield '}'
 
     def _impl_drop_if_needed(self):
-        if (self.is_a('wxEvtHandler') or
+        if (self.is_a('BWindow') or
             self.is_a('wxSizer')):
             return
         deleter_class = self.__model.name
