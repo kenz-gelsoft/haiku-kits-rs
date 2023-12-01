@@ -12,11 +12,23 @@ pub trait PointMethods: RustBindingMethods {
     fn x(&self) -> c_float {
         unsafe { ffi::BPoint_x(self.as_ptr()) }
     }
+    /// The horizontal coordinate.
+    ///
+    /// See [C++ `BPoint::set_x()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#ae8e68c02284caf91f82efb3410fd6708).
+    fn set_x(&self, x: c_float) {
+        unsafe { ffi::BPoint_set_x(self.as_ptr(), x) }
+    }
     /// The vertical coordinate.
     ///
     /// See [C++ `BPoint::y()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a5ffb358a63973977830a85489829c737).
     fn y(&self) -> c_float {
         unsafe { ffi::BPoint_y(self.as_ptr()) }
+    }
+    /// The vertical coordinate.
+    ///
+    /// See [C++ `BPoint::set_y()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a5ffb358a63973977830a85489829c737).
+    fn set_y(&self, y: c_float) {
+        unsafe { ffi::BPoint_set_y(self.as_ptr(), y) }
     }
     // BLOCKED: fn operator=()
     // BLOCKED: fn operator-()

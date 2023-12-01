@@ -5,9 +5,13 @@ extern "C" {
     // BRect
     pub fn BRect_delete(self_: *mut c_void);
     pub fn BRect_bottom(self_: *mut c_void) -> c_float;
+    pub fn BRect_set_bottom(self_: *mut c_void, bottom: c_float);
     pub fn BRect_left(self_: *mut c_void) -> c_float;
+    pub fn BRect_set_left(self_: *mut c_void, left: c_float);
     pub fn BRect_right(self_: *mut c_void) -> c_float;
+    pub fn BRect_set_right(self_: *mut c_void, right: c_float);
     pub fn BRect_top(self_: *mut c_void) -> c_float;
+    pub fn BRect_set_top(self_: *mut c_void, top: c_float);
     // BLOCKED: pub fn BRect_operator=(self_: *mut c_void, other: *const c_void) -> *mut c_void;
     // BLOCKED: pub fn BRect_operator==(self_: *const c_void, other: *mut c_void) -> bool;
     // BLOCKED: pub fn BRect_operator!=(self_: *const c_void, other: *mut c_void) -> bool;

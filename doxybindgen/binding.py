@@ -690,7 +690,16 @@ class CxxMethodBinding:
                 self_or_class,
                 self.__model.name(without_index=True),
             )
-            if self.__model.is_getter:
+            if self.__model.is_setter:
+                yield '    %s%s = %s;' % (
+                    self_or_class,
+                    # removes 'set_'
+                    self.__model.name(without_index=True)[4:],
+                    new_params_or_expr,
+                )
+                yield '}'
+                return
+            elif self.__model.is_getter:
                 new_params_or_expr = name
             else:
                 new_params_or_expr = '%s(%s)' % (

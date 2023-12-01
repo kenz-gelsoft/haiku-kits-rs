@@ -12,11 +12,23 @@ pub trait SizeMethods: RustBindingMethods {
     fn height(&self) -> c_float {
         unsafe { ffi::BSize_height(self.as_ptr()) }
     }
+    /// The vertical dimension.
+    ///
+    /// See [C++ `BSize::set_height()`'s documentation](https://www.haiku-os.org/docs/api/classBSize.html#a518f29c07d95774fdc18c7cc88c1b562).
+    fn set_height(&self, height: c_float) {
+        unsafe { ffi::BSize_set_height(self.as_ptr(), height) }
+    }
     /// The horizontal dimension.
     ///
     /// See [C++ `BSize::width()`'s documentation](https://www.haiku-os.org/docs/api/classBSize.html#a4c78fadd3cc44c3460e88842cb90bd67).
     fn width(&self) -> c_float {
         unsafe { ffi::BSize_width(self.as_ptr()) }
+    }
+    /// The horizontal dimension.
+    ///
+    /// See [C++ `BSize::set_width()`'s documentation](https://www.haiku-os.org/docs/api/classBSize.html#a4c78fadd3cc44c3460e88842cb90bd67).
+    fn set_width(&self, width: c_float) {
+        unsafe { ffi::BSize_set_width(self.as_ptr(), width) }
     }
     // BLOCKED: fn operator==()
     // BLOCKED: fn operator!=()
@@ -52,17 +64,7 @@ pub trait SizeMethods: RustBindingMethods {
     fn set(&self, width: c_float, height: c_float) {
         unsafe { ffi::BSize_Set(self.as_ptr(), width, height) }
     }
-    /// Sets the height value of a BSize object.
-    ///
-    /// See [C++ `BSize::SetHeight()`'s documentation](https://www.haiku-os.org/docs/api/classBSize.html#a33da506f5759c9651a61af61a766221c).
-    fn set_height(&self, height: c_float) {
-        unsafe { ffi::BSize_SetHeight(self.as_ptr(), height) }
-    }
-    /// Sets the width value of a BSize object.
-    ///
-    /// See [C++ `BSize::SetWidth()`'s documentation](https://www.haiku-os.org/docs/api/classBSize.html#a7272b3bdb3e42642bf437f6c7621fc3b).
-    fn set_width(&self, width: c_float) {
-        unsafe { ffi::BSize_SetWidth(self.as_ptr(), width) }
-    }
+    // BLOCKED: fn SetHeight()
+    // BLOCKED: fn SetWidth()
     // BLOCKED: fn Width()
 }

@@ -12,6 +12,12 @@ pub trait MessageMethods: RustBindingMethods {
     fn what(&self) -> u32 {
         unsafe { ffi::BMessage_what(self.as_ptr()) }
     }
+    /// A 4-byte constant that determines the type of message.
+    ///
+    /// See [C++ `BMessage::set_what()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad074faab0857f51fba778f0d8558df1e).
+    fn set_what(&self, what: u32) {
+        unsafe { ffi::BMessage_set_what(self.as_ptr(), what) }
+    }
     // BLOCKED: fn operator=()
     // BLOCKED: fn operator new()
     // BLOCKED: fn operator new1()

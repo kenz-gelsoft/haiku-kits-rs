@@ -7,9 +7,13 @@ extern "C" {
 // CLASS: BRect
 void BRect_delete(BRect *self);
 float BRect_bottom(BRect * self);
+void BRect_set_bottom(BRect * self, float bottom);
 float BRect_left(BRect * self);
+void BRect_set_left(BRect * self, float left);
 float BRect_right(BRect * self);
+void BRect_set_right(BRect * self, float right);
 float BRect_top(BRect * self);
+void BRect_set_top(BRect * self, float top);
 void BRect_InsetBy(BRect * self, BPoint* inset);
 void BRect_InsetBy1(BRect * self, float dx, float dy);
 BRect * BRect_InsetBySelf(BRect * self, BPoint* inset);

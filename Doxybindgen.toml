@@ -57,6 +57,8 @@ blocklist = [
     'operator!=',
     'operator=',
     'Height',
+    'SetHeight',
+    'SetWidth',
     'Width',
 ]
 
