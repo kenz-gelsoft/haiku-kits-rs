@@ -1,4 +1,3 @@
-use haiku_kits as B;
 use B::methods::*;
 
 fn main() {
