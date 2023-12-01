@@ -99,6 +99,9 @@ void BView_DragMessage(BView * self, BMessage * message, BRect* drag_rect, BHand
 void BView_DragMessage1(BView * self, BMessage * message, BBitmap * bitmap, BPoint* offset, BHandler * reply_to) {
     return self->DragMessage(message, bitmap, *offset, reply_to);
 }
+void BView_DragMessage2(BView * self, BMessage * message, BBitmap * bitmap, drawing_mode drag_mode, BPoint* offset, BHandler * reply_to) {
+    return self->DragMessage(message, bitmap, drag_mode, *offset, reply_to);
+}
 status_t BView_SetEventMask(BView * self, uint32 mask, uint32 options) {
     return self->SetEventMask(mask, options);
 }
@@ -173,6 +176,12 @@ void BView_ClipToShape(BView * self, BShape * shape) {
 }
 void BView_ClipToInverseShape(BView * self, BShape * shape) {
     return self->ClipToInverseShape(shape);
+}
+void BView_SetDrawingMode(BView * self, drawing_mode mode) {
+    return self->SetDrawingMode(mode);
+}
+drawing_mode BView_DrawingMode(const BView * self) {
+    return self->DrawingMode();
 }
 void BView_GetBlendingMode(const BView * self, source_alpha * src_alpha, alpha_function * alpha_func) {
     return self->GetBlendingMode(src_alpha, alpha_func);

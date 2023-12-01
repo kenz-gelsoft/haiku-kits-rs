@@ -42,6 +42,7 @@ mod typedefs {
     
     // enum types
     // BWindow
+    pub type drawing_mode = c_int;
     pub type window_alignment = c_int;
     pub type window_feel = c_int;
     pub type window_look = c_int;

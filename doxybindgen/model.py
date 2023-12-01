@@ -37,6 +37,7 @@ CXX_PRIMITIVES = [
     'thread_id',
     
     # enum types
+    'drawing_mode',
     'window_alignment',
     'window_feel',
     'window_look',
@@ -68,6 +69,7 @@ RUST_PRIMITIVES = [
     'thread_id',
     
     # enum types
+    'drawing_mode',
     'window_alignment',
     'window_feel',
     'window_look',

@@ -447,13 +447,16 @@
     - 1: `BView*`: None 
         - 1: `BView*`: AddChild (view)
     - 1: `BLayoutItem*`: AddChild1 (layoutitem)
-- 2: BView.DragMessage: None 
-    - 2: `BMessage*`: None 
+- 3: BView.DragMessage: None 
+    - 3: `BMessage*`: None 
         - 1: `BRect`: None 
             - 1: `BHandler*`: DragMessage (rect)
-        - 1: `BBitmap*`: None 
+        - 2: `BBitmap*`: None 
             - 1: `BPoint`: None 
-                - 1: `BHandler*`: DragMessage1 (bitmap)
+                - 1: `BHandler*`: DragMessage1 (bitmap, point)
+            - 1: `drawing_mode`: None 
+                - 1: `BPoint`: None 
+                    - 1: `BHandler*`: DragMessage2 (bitmap, drawing_mode)
 - 2: BView.ScrollTo: None 
     - 1: `float`: None 
         - 1: `float`: ScrollTo (float)

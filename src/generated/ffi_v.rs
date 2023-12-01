@@ -56,7 +56,14 @@ extern "C" {
         offset: *mut c_void,
         reply_to: *mut c_void,
     );
-    // NOT_SUPPORTED: pub fn BView_DragMessage2(self_: *mut c_void, message: *mut c_void, bitmap: *mut c_void, drag_mode: drawing_mode, offset: *mut c_void, reply_to: *mut c_void);
+    pub fn BView_DragMessage2(
+        self_: *mut c_void,
+        message: *mut c_void,
+        bitmap: *mut c_void,
+        drag_mode: drawing_mode,
+        offset: *mut c_void,
+        reply_to: *mut c_void,
+    );
     pub fn BView_SetEventMask(self_: *mut c_void, mask: u32, options: u32) -> status_t;
     pub fn BView_EventMask(self_: *mut c_void) -> u32;
     pub fn BView_SetMouseEventMask(self_: *mut c_void, mask: u32, options: u32) -> status_t;
@@ -101,8 +108,8 @@ extern "C" {
     pub fn BView_ClipToInverseRect(self_: *mut c_void, rect: *mut c_void);
     pub fn BView_ClipToShape(self_: *mut c_void, shape: *mut c_void);
     pub fn BView_ClipToInverseShape(self_: *mut c_void, shape: *mut c_void);
-    // NOT_SUPPORTED: pub fn BView_SetDrawingMode(self_: *mut c_void, mode: drawing_mode);
-    // NOT_SUPPORTED: pub fn BView_DrawingMode(self_: *const c_void) -> drawing_mode;
+    pub fn BView_SetDrawingMode(self_: *mut c_void, mode: drawing_mode);
+    pub fn BView_DrawingMode(self_: *const c_void) -> drawing_mode;
     // NOT_SUPPORTED: pub fn BView_SetBlendingMode(self_: *mut c_void, src_alpha: source_alpha, alpha_func: alpha_function);
     pub fn BView_GetBlendingMode(
         self_: *const c_void,

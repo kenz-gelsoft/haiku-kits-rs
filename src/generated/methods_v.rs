@@ -277,7 +277,7 @@ pub trait ViewMethods: HandlerMethods {
     /// Initiates a drag-and-drop session of an image.
     ///
     /// See [C++ `BView::DragMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a466287a3d939759cc09e4a6d1c9982cd).
-    fn drag_message_bitmap<M: MessageMethods, P: PointMethods, H: HandlerMethods>(
+    fn drag_message_bitmap_point<M: MessageMethods, P: PointMethods, H: HandlerMethods>(
         &self,
         message: Option<&M>,
         bitmap: *mut c_void,
@@ -297,7 +297,30 @@ pub trait ViewMethods: HandlerMethods {
             ffi::BView_DragMessage1(self.as_ptr(), message, bitmap, offset, reply_to)
         }
     }
-    // NOT_SUPPORTED: fn DragMessage2()
+    /// Initiates a drag-and-drop session of an image with drawing_mode set by dragMode.
+    ///
+    /// See [C++ `BView::DragMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ae1caa1d0bef9452db00c2adc8e3280b4).
+    fn drag_message_bitmap_drawing_mode<M: MessageMethods, P: PointMethods, H: HandlerMethods>(
+        &self,
+        message: Option<&M>,
+        bitmap: *mut c_void,
+        drag_mode: drawing_mode,
+        offset: &P,
+        reply_to: Option<&H>,
+    ) {
+        unsafe {
+            let message = match message {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let offset = offset.as_ptr();
+            let reply_to = match reply_to {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BView_DragMessage2(self.as_ptr(), message, bitmap, drag_mode, offset, reply_to)
+        }
+    }
     /// Sets whether or not the view can accept mouse and keyboard events when not in focus.
     ///
     /// See [C++ `BView::SetEventMask()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a5d8d6b469a8a11a577d1d138cfc31162).
@@ -525,8 +548,18 @@ pub trait ViewMethods: HandlerMethods {
     fn clip_to_inverse_shape(&self, shape: *mut c_void) {
         unsafe { ffi::BView_ClipToInverseShape(self.as_ptr(), shape) }
     }
-    // NOT_SUPPORTED: fn SetDrawingMode()
-    // NOT_SUPPORTED: fn DrawingMode()
+    /// Sets the drawing mode of the view.
+    ///
+    /// See [C++ `BView::SetDrawingMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a0c392ed0e36213e1007322a9cbca71c0).
+    fn set_drawing_mode(&self, mode: drawing_mode) {
+        unsafe { ffi::BView_SetDrawingMode(self.as_ptr(), mode) }
+    }
+    /// Return the current drawing_mode.
+    ///
+    /// See [C++ `BView::DrawingMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ae7953a2e451fb6e5a439df9e9dc8451a).
+    fn drawing_mode(&self) -> drawing_mode {
+        unsafe { ffi::BView_DrawingMode(self.as_ptr()) }
+    }
     // NOT_SUPPORTED: fn SetBlendingMode()
     /// Fill out srcAlpha and alphaFunc with the alpha mode and alpha function of the view.
     ///
