@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BHandler
-    /// This trait represents [C++ `BHandler` class](https://www.haiku-os.org/docs/api/classBHandler.html)'s methods and inheritance.
-    ///
-    /// See [`HandlerFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BHandler` class](https://www.haiku-os.org/docs/api/classBHandler.html)'s methods and inheritance.
+///
+/// See [`HandlerFromCpp`] documentation for the class usage.
 pub trait HandlerMethods: ArchivableMethods {
     /// Handle message that has been received by the associated looper.
     ///
@@ -103,7 +102,14 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Determine the proper handler for a scripting message.
     ///
     /// See [C++ `BHandler::ResolveSpecifier()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a76439ffaf84e65232698d2a4a3317d22).
-    fn resolve_specifier<M: MessageMethods, M2: MessageMethods>(&self, message: Option<&M>, index: i32, specifier: Option<&M2>, what: i32, property: &str) -> Option<HandlerFromCpp<true>> {
+    fn resolve_specifier<M: MessageMethods, M2: MessageMethods>(
+        &self,
+        message: Option<&M>,
+        index: i32,
+        specifier: Option<&M2>,
+        what: i32,
+        property: &str,
+    ) -> Option<HandlerFromCpp<true>> {
         unsafe {
             let message = match message {
                 Some(r) => r.as_ptr(),
@@ -115,7 +121,14 @@ pub trait HandlerMethods: ArchivableMethods {
             };
             let property = CString::from_vec_unchecked(property.into());
             let property = property.as_ptr();
-            Handler::option_from(ffi::BHandler_ResolveSpecifier(self.as_ptr(), message, index, specifier, what, property))
+            Handler::option_from(ffi::BHandler_ResolveSpecifier(
+                self.as_ptr(),
+                message,
+                index,
+                specifier,
+                what,
+                property,
+            ))
         }
     }
     /// Reports the suites of messages and specifiers that derived classes understand.

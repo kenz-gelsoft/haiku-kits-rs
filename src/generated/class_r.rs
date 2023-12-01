@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BRect
 binding! {
     /// Defines a rectangular area aligned along pixel dimensions.
@@ -22,7 +21,10 @@ impl<const FROM_CPP: bool> RectFromCpp<FROM_CPP> {
     /// Creates a new BRect object with its dimensions defined by the leftTop and rightBottom points.
     ///
     /// See [C++ `BRect::BRect()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a2351732f3198e9465eac7a69e60d04f2).
-    pub fn new_with_point_point<P: PointMethods, P2: PointMethods>(left_top: &P, right_bottom: &P2) -> RectFromCpp<FROM_CPP> {
+    pub fn new_with_point_point<P: PointMethods, P2: PointMethods>(
+        left_top: &P,
+        right_bottom: &P2,
+    ) -> RectFromCpp<FROM_CPP> {
         unsafe {
             let left_top = left_top.as_ptr();
             let right_bottom = right_bottom.as_ptr();
@@ -32,7 +34,10 @@ impl<const FROM_CPP: bool> RectFromCpp<FROM_CPP> {
     /// Creates a new BRect object with its dimensions defined by the leftTop point and size.
     ///
     /// See [C++ `BRect::BRect()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a45d54a02a30734acf967f28d0c267508).
-    pub fn new_with_point_size<P: PointMethods, S: SizeMethods>(left_top: &P, size: &S) -> RectFromCpp<FROM_CPP> {
+    pub fn new_with_point_size<P: PointMethods, S: SizeMethods>(
+        left_top: &P,
+        size: &S,
+    ) -> RectFromCpp<FROM_CPP> {
         unsafe {
             let left_top = left_top.as_ptr();
             let size = size.as_ptr();
@@ -51,7 +56,12 @@ impl<const FROM_CPP: bool> RectFromCpp<FROM_CPP> {
     /// Creates a new BRect object with the given dimensions.
     ///
     /// See [C++ `BRect::BRect()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a2049dc161cc78c7955a6302304faae66).
-    pub fn new_with_float_float(left: c_float, top: c_float, right: c_float, bottom: c_float) -> RectFromCpp<FROM_CPP> {
+    pub fn new_with_float_float(
+        left: c_float,
+        top: c_float,
+        right: c_float,
+        bottom: c_float,
+    ) -> RectFromCpp<FROM_CPP> {
         unsafe { RectFromCpp(ffi::BRect_new4(left, top, right, bottom)) }
     }
     /// Creates a new BRect object setting the left and top dimensions to 0 and setting the right and bottom dimensions to side - 1.

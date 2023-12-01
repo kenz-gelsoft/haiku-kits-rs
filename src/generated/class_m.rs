@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BMessage
 binding! {
     /// A container that can be send and received using the Haiku messaging subsystem.

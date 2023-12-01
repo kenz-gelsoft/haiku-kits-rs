@@ -59,10 +59,10 @@ def generate_library(classes, config, overload_tree_md):
                     rust_bindings_i if is_rust else cxx_bindings_i
                 ):
                     print(chunk, file=f)
-            # if is_rust:
-            #     error = subprocess.check_output(['rustfmt', path])
-            #     if error:
-            #         print(error)
+            if is_rust:
+                error = subprocess.check_output(['rustfmt', path])
+                if error:
+                    print(error)
     to_be_generated = {
         'src/generated/class.rs': class_rs,
         'src/generated/ffi.rs': ffi_rs,

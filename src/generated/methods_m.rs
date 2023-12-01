@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BMessage
-    /// This trait represents [C++ `BMessage` class](https://www.haiku-os.org/docs/api/classBMessage.html)'s methods and inheritance.
-    ///
-    /// See [`MessageFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BMessage` class](https://www.haiku-os.org/docs/api/classBMessage.html)'s methods and inheritance.
+///
+/// See [`MessageFromCpp`] documentation for the class usage.
 pub trait MessageMethods: RustBindingMethods {
     /// A 4-byte constant that determines the type of message.
     ///
@@ -27,7 +26,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Retrieve the type and the number of data items in this message that are associated with a name.
     ///
     /// See [C++ `BMessage::GetInfo()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a525991f82f8574bd6eb68796568eb340).
-    fn get_info_int32(&self, name: &str, type_found: *mut c_void, count_found: *mut c_void) -> status_t {
+    fn get_info_int32(
+        &self,
+        name: &str,
+        type_found: *mut c_void,
+        count_found: *mut c_void,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -37,7 +41,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Retrieve the type and whether or not the size of the data is fixed associated with a name.
     ///
     /// See [C++ `BMessage::GetInfo()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6c8080ba2bdff134fd20e923145e4200).
-    fn get_info_bool(&self, name: &str, type_found: *mut c_void, fixed_size: *mut c_void) -> status_t {
+    fn get_info_bool(
+        &self,
+        name: &str,
+        type_found: *mut c_void,
+        fixed_size: *mut c_void,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -47,7 +56,13 @@ pub trait MessageMethods: RustBindingMethods {
     /// Retrieve the type and whether or not the size of the data is fixed associated with a name.
     ///
     /// See [C++ `BMessage::GetInfo()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a055eb9be666ebf7adad3880083606bb3).
-    fn get_info_int32_bool(&self, name: &str, type_found: *mut c_void, count_found: *mut c_void, fixed_size: *mut c_void) -> status_t {
+    fn get_info_int32_bool(
+        &self,
+        name: &str,
+        type_found: *mut c_void,
+        count_found: *mut c_void,
+        fixed_size: *mut c_void,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -137,7 +152,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Asynchronously send a reply to this message.
     ///
     /// See [C++ `BMessage::SendReply()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aad1eb085346e2c91133e372e7924637c).
-    fn send_reply_uint32_handler<H: HandlerMethods>(&self, command: u32, reply_to: Option<&H>) -> status_t {
+    fn send_reply_uint32_handler<H: HandlerMethods>(
+        &self,
+        command: u32,
+        reply_to: Option<&H>,
+    ) -> status_t {
         unsafe {
             let reply_to = match reply_to {
                 Some(r) => r.as_ptr(),
@@ -149,7 +168,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Asynchronously send a reply to this message.
     ///
     /// See [C++ `BMessage::SendReply()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a08a2f161642de20dc483afb0ac4db167).
-    fn send_reply_message_handler<M: MessageMethods, H: HandlerMethods>(&self, reply: Option<&M>, reply_to: Option<&H>, timeout: bigtime_t) -> status_t {
+    fn send_reply_message_handler<M: MessageMethods, H: HandlerMethods>(
+        &self,
+        reply: Option<&M>,
+        reply_to: Option<&H>,
+        timeout: bigtime_t,
+    ) -> status_t {
         unsafe {
             let reply = match reply {
                 Some(r) => r.as_ptr(),
@@ -166,7 +190,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Synchronously send a reply to this message, and wait for a reply back.
     ///
     /// See [C++ `BMessage::SendReply()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a039a8ff8563bbc58c54a50ca417ac75e).
-    fn send_reply_uint32_message<M: MessageMethods>(&self, command: u32, reply_to_reply: Option<&M>) -> status_t {
+    fn send_reply_uint32_message<M: MessageMethods>(
+        &self,
+        command: u32,
+        reply_to_reply: Option<&M>,
+    ) -> status_t {
         unsafe {
             let reply_to_reply = match reply_to_reply {
                 Some(r) => r.as_ptr(),
@@ -178,7 +206,13 @@ pub trait MessageMethods: RustBindingMethods {
     /// Synchronously send a reply to this message, and wait for a reply back.
     ///
     /// See [C++ `BMessage::SendReply()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a5461fc22f8bf044d21fd5429b7977213).
-    fn send_reply_message_message<M: MessageMethods, M2: MessageMethods>(&self, reply: Option<&M>, reply_to_reply: Option<&M2>, send_timeout: bigtime_t, reply_timeout: bigtime_t) -> status_t {
+    fn send_reply_message_message<M: MessageMethods, M2: MessageMethods>(
+        &self,
+        reply: Option<&M>,
+        reply_to_reply: Option<&M2>,
+        send_timeout: bigtime_t,
+        reply_timeout: bigtime_t,
+    ) -> status_t {
         unsafe {
             let reply = match reply {
                 Some(r) => r.as_ptr(),
@@ -188,7 +222,13 @@ pub trait MessageMethods: RustBindingMethods {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            ffi::BMessage_SendReply4(self.as_ptr(), reply, reply_to_reply, send_timeout, reply_timeout)
+            ffi::BMessage_SendReply4(
+                self.as_ptr(),
+                reply,
+                reply_to_reply,
+                send_timeout,
+                reply_timeout,
+            )
         }
     }
     // NOT_SUPPORTED: fn FlattenedSize()
@@ -278,7 +318,13 @@ pub trait MessageMethods: RustBindingMethods {
     /// Undocumented.
     ///
     /// See [C++ `BMessage::GetCurrentSpecifier()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a641086c9321e56195843a3224bb0f11d).
-    fn get_current_specifier<M: MessageMethods>(&self, index: *mut c_void, specifier: Option<&M>, what: *mut c_void, property: &str) -> status_t {
+    fn get_current_specifier<M: MessageMethods>(
+        &self,
+        index: *mut c_void,
+        specifier: Option<&M>,
+        what: *mut c_void,
+        property: &str,
+    ) -> status_t {
         unsafe {
             let specifier = match specifier {
                 Some(r) => r.as_ptr(),
@@ -616,7 +662,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a rectangle at the label name at an index.
     ///
     /// See [C++ `BMessage::FindRect()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#abc4398bca7420cc74c4d5cc76ccba018).
-    fn find_rect_int32_rect<R: RectMethods>(&self, name: &str, index: i32, rect: Option<&R>) -> status_t {
+    fn find_rect_int32_rect<R: RectMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        rect: Option<&R>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -644,7 +695,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a point at the label name at an index.
     ///
     /// See [C++ `BMessage::FindPoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a9a53e98aa4593529103051dbcd0186d4).
-    fn find_point_int32_point<P: PointMethods>(&self, name: &str, index: i32, point: Option<&P>) -> status_t {
+    fn find_point_int32_point<P: PointMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        point: Option<&P>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -672,7 +728,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a size at the label name at an index.
     ///
     /// See [C++ `BMessage::FindSize()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a769dcfc011f91c8372512f7396e6e59e).
-    fn find_size_int32<S: SizeMethods>(&self, name: &str, index: i32, size: Option<&S>) -> status_t {
+    fn find_size_int32<S: SizeMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        size: Option<&S>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1065,7 +1126,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Find a message at the label name at an index.
     ///
     /// See [C++ `BMessage::FindMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#aecdfe05be151ea5a978225152486d44a).
-    fn find_message_int32<M: MessageMethods>(&self, name: &str, index: i32, message: Option<&M>) -> status_t {
+    fn find_message_int32<M: MessageMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        message: Option<&M>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1111,7 +1177,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace an alignment at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplaceAlignment()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ae6f32ad46aa14db07c9d324656daf871).
-    fn replace_alignment_int32(&self, name: &str, index: i32, alignment: *const c_void) -> status_t {
+    fn replace_alignment_int32(
+        &self,
+        name: &str,
+        index: i32,
+        alignment: *const c_void,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1154,7 +1225,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace a point at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplacePoint()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a4897600b32e200802cf7c5d397f7e8cf).
-    fn replace_point_int32<P: PointMethods>(&self, name: &str, index: i32, a_point: &P) -> status_t {
+    fn replace_point_int32<P: PointMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        a_point: &P,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1221,7 +1297,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace a string at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplaceString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a59a40f04a1fc5b0fe523a6e025d9860e).
-    fn replace_string_int32_string(&self, name: &str, index: i32, string: *const c_void) -> status_t {
+    fn replace_string_int32_string(
+        &self,
+        name: &str,
+        index: i32,
+        string: *const c_void,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1515,7 +1596,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace a message at the label name.
     ///
     /// See [C++ `BMessage::ReplaceMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a7c9f522c31ffee206e1df06aa8246f30).
-    fn replace_message_message<M: MessageMethods>(&self, name: &str, message: Option<&M>) -> status_t {
+    fn replace_message_message<M: MessageMethods>(
+        &self,
+        name: &str,
+        message: Option<&M>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1529,7 +1614,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Replace a message at the label name at a specified index.
     ///
     /// See [C++ `BMessage::ReplaceMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#afc72518025d6c772e82acafad8669bc3).
-    fn replace_message_int32<M: MessageMethods>(&self, name: &str, index: i32, message: Option<&M>) -> status_t {
+    fn replace_message_int32<M: MessageMethods>(
+        &self,
+        name: &str,
+        index: i32,
+        message: Option<&M>,
+    ) -> status_t {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -1565,7 +1655,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Experimental method to compare two messages.
     ///
     /// See [C++ `BMessage::HasSameData()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6cfbd78a1801c5b199fd2b9c20f1edc0).
-    fn has_same_data<M: MessageMethods>(&self, other: &M, ignore_field_order: bool, deep: bool) -> bool {
+    fn has_same_data<M: MessageMethods>(
+        &self,
+        other: &M,
+        ignore_field_order: bool,
+        deep: bool,
+    ) -> bool {
         unsafe {
             let other = other.as_ptr();
             ffi::BMessage_HasSameData(self.as_ptr(), other, ignore_field_order, deep)
@@ -2128,7 +2223,12 @@ pub trait MessageMethods: RustBindingMethods {
     /// Return the pointer type from message with name and index, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetPointer()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a817c8b7db104a1525ad15616bd06e284).
-    fn get_pointer_int32(&self, name: &str, index: i32, default_value: *const c_void) -> *const c_void {
+    fn get_pointer_int32(
+        &self,
+        name: &str,
+        index: i32,
+        default_value: *const c_void,
+    ) -> *const c_void {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
@@ -2166,7 +2266,12 @@ pub trait MessageMethods: RustBindingMethods {
             let name = name.as_ptr();
             let default_value = CString::from_vec_unchecked(default_value.into());
             let default_value = default_value.as_ptr();
-            CStr::from_ptr(ffi::BMessage_GetString1(self.as_ptr(), name, index, default_value))
+            CStr::from_ptr(ffi::BMessage_GetString1(
+                self.as_ptr(),
+                name,
+                index,
+                default_value,
+            ))
         }
     }
     // NOT_SUPPORTED: fn GetAlignment()
@@ -2179,7 +2284,12 @@ pub trait MessageMethods: RustBindingMethods {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
             let default_value = default_value.as_ptr();
-            Rect::from_ptr(ffi::BMessage_GetRect(self.as_ptr(), name, index, default_value))
+            Rect::from_ptr(ffi::BMessage_GetRect(
+                self.as_ptr(),
+                name,
+                index,
+                default_value,
+            ))
         }
     }
     /// Return the BRect object from message with name, or defaultValue if not found.
@@ -2201,7 +2311,12 @@ pub trait MessageMethods: RustBindingMethods {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
             let default_value = default_value.as_ptr();
-            Point::from_ptr(ffi::BMessage_GetPoint(self.as_ptr(), name, index, default_value))
+            Point::from_ptr(ffi::BMessage_GetPoint(
+                self.as_ptr(),
+                name,
+                index,
+                default_value,
+            ))
         }
     }
     /// Return the BPoint object from message with name, or defaultValue if not found.
@@ -2223,7 +2338,12 @@ pub trait MessageMethods: RustBindingMethods {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
             let default_value = default_value.as_ptr();
-            Size::from_ptr(ffi::BMessage_GetSize(self.as_ptr(), name, index, default_value))
+            Size::from_ptr(ffi::BMessage_GetSize(
+                self.as_ptr(),
+                name,
+                index,
+                default_value,
+            ))
         }
     }
     /// Return the BSize object from message with name, or defaultValue if not found.

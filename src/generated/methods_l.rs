@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BLooper
-    /// This trait represents [C++ `BLooper` class](https://www.haiku-os.org/docs/api/classBLooper.html)'s methods and inheritance.
-    ///
-    /// See [`LooperFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BLooper` class](https://www.haiku-os.org/docs/api/classBLooper.html)'s methods and inheritance.
+///
+/// See [`LooperFromCpp`] documentation for the class usage.
 pub trait LooperMethods: HandlerMethods {
     /// Post a message with the command as what identifier to this looper.
     ///
@@ -27,7 +26,12 @@ pub trait LooperMethods: HandlerMethods {
     /// Sends a message with command what identifier to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a2dc16ecf211eb7e32eaa4b08863e856d).
-    fn post_message_uint32_handler<H: HandlerMethods, H2: HandlerMethods>(&self, command: u32, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
+    fn post_message_uint32_handler<H: HandlerMethods, H2: HandlerMethods>(
+        &self,
+        command: u32,
+        handler: Option<&H>,
+        reply_to: Option<&H2>,
+    ) -> status_t {
         unsafe {
             let handler = match handler {
                 Some(r) => r.as_ptr(),
@@ -43,7 +47,12 @@ pub trait LooperMethods: HandlerMethods {
     /// Send a message to the handler associated with this looper. A response may be sent to the replyTo handler asynchronously.
     ///
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ac75eed80e72b236650f19b4015de6e99).
-    fn post_message_message_handler<M: MessageMethods, H: HandlerMethods, H2: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>, reply_to: Option<&H2>) -> status_t {
+    fn post_message_message_handler<M: MessageMethods, H: HandlerMethods, H2: HandlerMethods>(
+        &self,
+        message: Option<&M>,
+        handler: Option<&H>,
+        reply_to: Option<&H2>,
+    ) -> status_t {
         unsafe {
             let message = match message {
                 Some(r) => r.as_ptr(),
@@ -63,7 +72,11 @@ pub trait LooperMethods: HandlerMethods {
     /// Dispatch a message to a handler. Override if there are messages that you want to catch before they are sent to the handlers.
     ///
     /// See [C++ `BLooper::DispatchMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#add21ca8765c67b0dbf95b8f0361afa73).
-    fn dispatch_message<M: MessageMethods, H: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>) {
+    fn dispatch_message<M: MessageMethods, H: HandlerMethods>(
+        &self,
+        message: Option<&M>,
+        handler: Option<&H>,
+    ) {
         unsafe {
             let message = match message {
                 Some(r) => r.as_ptr(),
@@ -91,7 +104,12 @@ pub trait LooperMethods: HandlerMethods {
     /// Internal method to support single-threaded GUI toolkits.
     ///
     /// See [C++ `BLooper::DispatchExternalMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a3a2d3773466de19a6c117f3a04861b11).
-    fn dispatch_external_message<M: MessageMethods, H: HandlerMethods>(&self, message: Option<&M>, handler: Option<&H>, _detached: *mut c_void) {
+    fn dispatch_external_message<M: MessageMethods, H: HandlerMethods>(
+        &self,
+        message: Option<&M>,
+        handler: Option<&H>,
+        _detached: *mut c_void,
+    ) {
         unsafe {
             let message = match message {
                 Some(r) => r.as_ptr(),

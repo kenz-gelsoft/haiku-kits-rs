@@ -17,15 +17,27 @@ extern "C" {
     pub fn BHandler_LockLooper(self_: *mut c_void) -> bool;
     pub fn BHandler_LockLooperWithTimeout(self_: *mut c_void, timeout: bigtime_t) -> status_t;
     pub fn BHandler_UnlockLooper(self_: *mut c_void);
-    pub fn BHandler_ResolveSpecifier(self_: *mut c_void, message: *mut c_void, index: i32, specifier: *mut c_void, what: i32, property: *const c_char) -> *mut c_void;
+    pub fn BHandler_ResolveSpecifier(
+        self_: *mut c_void,
+        message: *mut c_void,
+        index: i32,
+        specifier: *mut c_void,
+        what: i32,
+        property: *const c_char,
+    ) -> *mut c_void;
     pub fn BHandler_GetSupportedSuites(self_: *mut c_void, data: *mut c_void) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StartWatching(self_: *mut c_void, target: BMessenger, what: u32) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StartWatchingAll(self_: *mut c_void, target: BMessenger) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StopWatching(self_: *mut c_void, target: BMessenger, what: u32) -> status_t;
     // NOT_SUPPORTED: pub fn BHandler_StopWatchingAll(self_: *mut c_void, target: BMessenger) -> status_t;
-    pub fn BHandler_StartWatching1(self_: *mut c_void, observer: *mut c_void, what: u32) -> status_t;
+    pub fn BHandler_StartWatching1(
+        self_: *mut c_void,
+        observer: *mut c_void,
+        what: u32,
+    ) -> status_t;
     pub fn BHandler_StartWatchingAll1(self_: *mut c_void, observer: *mut c_void) -> status_t;
-    pub fn BHandler_StopWatching1(self_: *mut c_void, observer: *mut c_void, what: u32) -> status_t;
+    pub fn BHandler_StopWatching1(self_: *mut c_void, observer: *mut c_void, what: u32)
+        -> status_t;
     pub fn BHandler_StopWatchingAll1(self_: *mut c_void, observer: *mut c_void) -> status_t;
     pub fn BHandler_SendNotices(self_: *mut c_void, what: u32, notice: *const c_void);
     pub fn BHandler_IsWatched(self_: *const c_void) -> bool;

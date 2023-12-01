@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BHandler
 binding! {
     /// Handles messages that are passed on by a BLooper.

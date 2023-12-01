@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BWindow
-    /// This trait represents [C++ `BWindow` class](https://www.haiku-os.org/docs/api/classBWindow.html)'s methods and inheritance.
-    ///
-    /// See [`WindowFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BWindow` class](https://www.haiku-os.org/docs/api/classBWindow.html)'s methods and inheritance.
+///
+/// See [`WindowFromCpp`] documentation for the class usage.
 pub trait WindowMethods: LooperMethods {
     /// Creates a keyboard shortcut that sends a message to the window.
     ///
@@ -21,7 +20,13 @@ pub trait WindowMethods: LooperMethods {
     /// Creates a keyboard shortcut that sends a message to the specified target.
     ///
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a169c891ff22f6a76f10c15bd16cde3c5).
-    fn add_shortcut_handler<M: MessageMethods, H: HandlerMethods>(&self, key: u32, modifiers: u32, message: Option<&M>, target: Option<&H>) {
+    fn add_shortcut_handler<M: MessageMethods, H: HandlerMethods>(
+        &self,
+        key: u32,
+        modifiers: u32,
+        message: Option<&M>,
+        target: Option<&H>,
+    ) {
         unsafe {
             let message = match message {
                 Some(r) => r.as_ptr(),
@@ -295,14 +300,46 @@ pub trait WindowMethods: LooperMethods {
     /// Fills out the size limits set on the window.
     ///
     /// See [C++ `BWindow::GetSizeLimits()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aebce716c628bac67367875d1129db8c5).
-    fn get_size_limits(&self, min_width: *mut c_void, max_width: *mut c_void, min_height: *mut c_void, max_height: *mut c_void) {
-        unsafe { ffi::BWindow_GetSizeLimits(self.as_ptr(), min_width, max_width, min_height, max_height) }
+    fn get_size_limits(
+        &self,
+        min_width: *mut c_void,
+        max_width: *mut c_void,
+        min_height: *mut c_void,
+        max_height: *mut c_void,
+    ) {
+        unsafe {
+            ffi::BWindow_GetSizeLimits(self.as_ptr(), min_width, max_width, min_height, max_height)
+        }
     }
     /// Fills out the pointers with the alignment of the content of the window on the screen.
     ///
     /// See [C++ `BWindow::GetWindowAlignment()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a62a354bee61a0b5cd5ac499b5f728b7f).
-    fn get_window_alignment(&self, mode: *mut c_void, h: *mut c_void, h_offset: *mut c_void, width: *mut c_void, width_offset: *mut c_void, v: *mut c_void, v_offset: *mut c_void, height: *mut c_void, height_offset: *mut c_void) -> status_t {
-        unsafe { ffi::BWindow_GetWindowAlignment(self.as_ptr(), mode, h, h_offset, width, width_offset, v, v_offset, height, height_offset) }
+    fn get_window_alignment(
+        &self,
+        mode: *mut c_void,
+        h: *mut c_void,
+        h_offset: *mut c_void,
+        width: *mut c_void,
+        width_offset: *mut c_void,
+        v: *mut c_void,
+        v_offset: *mut c_void,
+        height: *mut c_void,
+        height_offset: *mut c_void,
+    ) -> status_t {
+        unsafe {
+            ffi::BWindow_GetWindowAlignment(
+                self.as_ptr(),
+                mode,
+                h,
+                h_offset,
+                width,
+                width_offset,
+                v,
+                v_offset,
+                height,
+                height_offset,
+            )
+        }
     }
     /// Removes the window from the screen, removes it from Deskbar's window list, and passes active status to another window.
     ///
@@ -548,8 +585,16 @@ pub trait WindowMethods: LooperMethods {
     /// Set size limits on the window.
     ///
     /// See [C++ `BWindow::SetSizeLimits()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a8668ecf18ad145391f66704c3339eb3d).
-    fn set_size_limits(&self, min_width: c_float, max_width: c_float, min_height: c_float, max_height: c_float) {
-        unsafe { ffi::BWindow_SetSizeLimits(self.as_ptr(), min_width, max_width, min_height, max_height) }
+    fn set_size_limits(
+        &self,
+        min_width: c_float,
+        max_width: c_float,
+        min_height: c_float,
+        max_height: c_float,
+    ) {
+        unsafe {
+            ffi::BWindow_SetSizeLimits(self.as_ptr(), min_width, max_width, min_height, max_height)
+        }
     }
     /// Sets the window title to title.
     ///
@@ -570,8 +615,32 @@ pub trait WindowMethods: LooperMethods {
     /// Sets the alignment of the content of the window on the screen.
     ///
     /// See [C++ `BWindow::SetWindowAlignment()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a91d42de7f54efe1399c3838d35162d20).
-    fn set_window_alignment(&self, mode: window_alignment, h: i32, h_offset: i32, width: i32, width_offset: i32, v: i32, v_offset: i32, height: i32, height_offset: i32) -> status_t {
-        unsafe { ffi::BWindow_SetWindowAlignment(self.as_ptr(), mode, h, h_offset, width, width_offset, v, v_offset, height, height_offset) }
+    fn set_window_alignment(
+        &self,
+        mode: window_alignment,
+        h: i32,
+        h_offset: i32,
+        width: i32,
+        width_offset: i32,
+        v: i32,
+        v_offset: i32,
+        height: i32,
+        height_offset: i32,
+    ) -> status_t {
+        unsafe {
+            ffi::BWindow_SetWindowAlignment(
+                self.as_ptr(),
+                mode,
+                h,
+                h_offset,
+                width,
+                width_offset,
+                v,
+                v_offset,
+                height,
+                height_offset,
+            )
+        }
     }
     /// Sets the set of workspaces where the window can be displayed.
     ///

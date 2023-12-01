@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BSize
 binding! {
     /// A two-dimensional size.

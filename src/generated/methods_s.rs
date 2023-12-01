@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BSize
-    /// This trait represents [C++ `BSize` class](https://www.haiku-os.org/docs/api/classBSize.html)'s methods and inheritance.
-    ///
-    /// See [`SizeFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BSize` class](https://www.haiku-os.org/docs/api/classBSize.html)'s methods and inheritance.
+///
+/// See [`SizeFromCpp`] documentation for the class usage.
 pub trait SizeMethods: RustBindingMethods {
     /// The vertical dimension.
     ///

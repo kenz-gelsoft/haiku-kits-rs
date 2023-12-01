@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BApplication
 binding! {
     /// A container object for an application.
@@ -41,7 +40,10 @@ impl<const FROM_CPP: bool> ApplicationFromCpp<FROM_CPP> {
     /// Initialize a BApplication with the passed in signature and a pointer to an error message.
     ///
     /// See [C++ `BApplication::BApplication()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a998f767f4ddcbb5588455c8b63e08f74).
-    pub fn new_with_str_status_t(signature: &str, error: *mut c_void) -> ApplicationFromCpp<FROM_CPP> {
+    pub fn new_with_str_status_t(
+        signature: &str,
+        error: *mut c_void,
+    ) -> ApplicationFromCpp<FROM_CPP> {
         unsafe {
             let signature = CString::from_vec_unchecked(signature.into());
             let signature = signature.as_ptr();

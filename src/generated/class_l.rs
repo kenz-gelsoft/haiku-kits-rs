@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BLooper
 binding! {
     /// Receive and process messages in a separate thread.

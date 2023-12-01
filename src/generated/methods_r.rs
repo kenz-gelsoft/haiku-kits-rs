@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BRect
-    /// This trait represents [C++ `BRect` class](https://www.haiku-os.org/docs/api/classBRect.html)'s methods and inheritance.
-    ///
-    /// See [`RectFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BRect` class](https://www.haiku-os.org/docs/api/classBRect.html)'s methods and inheritance.
+///
+/// See [`RectFromCpp`] documentation for the class usage.
 pub trait RectMethods: RustBindingMethods {
     /// The value of the rectangle's bottom edge.
     ///
@@ -80,14 +79,18 @@ pub trait RectMethods: RustBindingMethods {
     fn inset_by_self_point<P: PointMethods>(&self, inset: &P) -> &Self {
         unsafe {
             let inset = inset.as_ptr();
-            ffi::BRect_InsetBySelf(self.as_ptr(), inset); &self
+            ffi::BRect_InsetBySelf(self.as_ptr(), inset);
+            &self
         }
     }
     /// Like BRect::InsetBy() but returns the transformed BRect.
     ///
     /// See [C++ `BRect::InsetBySelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a6377eafe20d2d0e872082dac30eafbe4).
     fn inset_by_self_float(&self, dx: c_float, dy: c_float) -> &Self {
-        unsafe { ffi::BRect_InsetBySelf1(self.as_ptr(), dx, dy); &self }
+        unsafe {
+            ffi::BRect_InsetBySelf1(self.as_ptr(), dx, dy);
+            &self
+        }
     }
     /// Like BRect::InsetBy() but returns a copy of the transformed BRect leaving the original unmodified.
     ///
@@ -140,14 +143,18 @@ pub trait RectMethods: RustBindingMethods {
     fn offset_by_self_point<P: PointMethods>(&self, offset: &P) -> &Self {
         unsafe {
             let offset = offset.as_ptr();
-            ffi::BRect_OffsetBySelf(self.as_ptr(), offset); &self
+            ffi::BRect_OffsetBySelf(self.as_ptr(), offset);
+            &self
         }
     }
     /// Like BRect::OffsetBy() but returns the translated BRect.
     ///
     /// See [C++ `BRect::OffsetBySelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a77f057d3ab457b177ef70ff726bda59d).
     fn offset_by_self_float(&self, dx: c_float, dy: c_float) -> &Self {
-        unsafe { ffi::BRect_OffsetBySelf1(self.as_ptr(), dx, dy); &self }
+        unsafe {
+            ffi::BRect_OffsetBySelf1(self.as_ptr(), dx, dy);
+            &self
+        }
     }
     /// Like BRect::OffsetBy() but returns a copy of the translated BRect leaving the original unmodified.
     ///
@@ -170,14 +177,18 @@ pub trait RectMethods: RustBindingMethods {
     fn offset_to_self_point<P: PointMethods>(&self, offset: &P) -> &Self {
         unsafe {
             let offset = offset.as_ptr();
-            ffi::BRect_OffsetToSelf(self.as_ptr(), offset); &self
+            ffi::BRect_OffsetToSelf(self.as_ptr(), offset);
+            &self
         }
     }
     /// Like BRect::OffsetTo() but returns the translated BRect.
     ///
     /// See [C++ `BRect::OffsetToSelf()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ace358552bc769a21db704b00b11f9400).
     fn offset_to_self_float(&self, x: c_float, y: c_float) -> &Self {
-        unsafe { ffi::BRect_OffsetToSelf1(self.as_ptr(), x, y); &self }
+        unsafe {
+            ffi::BRect_OffsetToSelf1(self.as_ptr(), x, y);
+            &self
+        }
     }
     /// Like BRect::OffsetTo() but returns a copy of the translated BRect leaving the original unmodified.
     ///

@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BPoint
-    /// This trait represents [C++ `BPoint` class](https://www.haiku-os.org/docs/api/classBPoint.html)'s methods and inheritance.
-    ///
-    /// See [`PointFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BPoint` class](https://www.haiku-os.org/docs/api/classBPoint.html)'s methods and inheritance.
+///
+/// See [`PointFromCpp`] documentation for the class usage.
 pub trait PointMethods: RustBindingMethods {
     /// The horizontal coordinate.
     ///

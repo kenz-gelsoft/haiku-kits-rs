@@ -7,12 +7,27 @@ extern "C" {
     pub fn BLooper_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BLooper_PostMessage(self_: *mut c_void, command: u32) -> status_t;
     pub fn BLooper_PostMessage1(self_: *mut c_void, message: *mut c_void) -> status_t;
-    pub fn BLooper_PostMessage2(self_: *mut c_void, command: u32, handler: *mut c_void, reply_to: *mut c_void) -> status_t;
-    pub fn BLooper_PostMessage3(self_: *mut c_void, message: *mut c_void, handler: *mut c_void, reply_to: *mut c_void) -> status_t;
+    pub fn BLooper_PostMessage2(
+        self_: *mut c_void,
+        command: u32,
+        handler: *mut c_void,
+        reply_to: *mut c_void,
+    ) -> status_t;
+    pub fn BLooper_PostMessage3(
+        self_: *mut c_void,
+        message: *mut c_void,
+        handler: *mut c_void,
+        reply_to: *mut c_void,
+    ) -> status_t;
     pub fn BLooper_DispatchMessage(self_: *mut c_void, message: *mut c_void, handler: *mut c_void);
     pub fn BLooper_CurrentMessage(self_: *const c_void) -> *mut c_void;
     pub fn BLooper_DetachCurrentMessage(self_: *mut c_void) -> *mut c_void;
-    pub fn BLooper_DispatchExternalMessage(self_: *mut c_void, message: *mut c_void, handler: *mut c_void, _detached: *mut c_void);
+    pub fn BLooper_DispatchExternalMessage(
+        self_: *mut c_void,
+        message: *mut c_void,
+        handler: *mut c_void,
+        _detached: *mut c_void,
+    );
     pub fn BLooper_MessageQueue(self_: *const c_void) -> *mut c_void;
     pub fn BLooper_IsMessageWaiting(self_: *const c_void) -> bool;
     pub fn BLooper_AddHandler(self_: *mut c_void, handler: *mut c_void);

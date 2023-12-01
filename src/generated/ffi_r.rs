@@ -53,7 +53,13 @@ extern "C" {
     pub fn BRect_PrintToStream(self_: *const c_void);
     pub fn BRect_RightBottom(self_: *const c_void) -> *mut c_void;
     pub fn BRect_RightTop(self_: *const c_void) -> *mut c_void;
-    pub fn BRect_Set(self_: *mut c_void, left: c_float, top: c_float, right: c_float, bottom: c_float);
+    pub fn BRect_Set(
+        self_: *mut c_void,
+        left: c_float,
+        top: c_float,
+        right: c_float,
+        bottom: c_float,
+    );
     pub fn BRect_SetLeftBottom(self_: *mut c_void, point: *const c_void);
     pub fn BRect_SetLeftTop(self_: *mut c_void, point: *const c_void);
     pub fn BRect_SetRightBottom(self_: *mut c_void, point: *const c_void);

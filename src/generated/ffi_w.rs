@@ -4,12 +4,31 @@ extern "C" {
 
     // BWindow
     pub fn BWindow_AddShortcut(self_: *mut c_void, key: u32, modifiers: u32, message: *mut c_void);
-    pub fn BWindow_AddShortcut1(self_: *mut c_void, key: u32, modifiers: u32, message: *mut c_void, target: *mut c_void);
+    pub fn BWindow_AddShortcut1(
+        self_: *mut c_void,
+        key: u32,
+        modifiers: u32,
+        message: *mut c_void,
+        target: *mut c_void,
+    );
     pub fn BWindow_HasShortcut(self_: *mut c_void, key: u32, modifiers: u32) -> bool;
     pub fn BWindow_RemoveShortcut(self_: *mut c_void, key: u32, modifiers: u32);
     pub fn BWindow_new(archive: *mut c_void) -> *mut c_void;
-    pub fn BWindow_new1(frame: *mut c_void, title: *const c_char, look: window_look, feel: window_feel, flags: u32, workspace: u32) -> *mut c_void;
-    pub fn BWindow_new2(frame: *mut c_void, title: *const c_char, type_: window_type, flags: u32, workspace: u32) -> *mut c_void;
+    pub fn BWindow_new1(
+        frame: *mut c_void,
+        title: *const c_char,
+        look: window_look,
+        feel: window_feel,
+        flags: u32,
+        workspace: u32,
+    ) -> *mut c_void;
+    pub fn BWindow_new2(
+        frame: *mut c_void,
+        title: *const c_char,
+        type_: window_type,
+        flags: u32,
+        workspace: u32,
+    ) -> *mut c_void;
     // DTOR: pub fn BWindow_~BWindow(self_: *mut c_void);
     pub fn BWindow_Activate(self_: *mut c_void, active: bool);
     pub fn BWindow_AddChild(self_: *mut c_void, child: *mut c_void);
@@ -47,8 +66,25 @@ extern "C" {
     pub fn BWindow_FrameResized(self_: *mut c_void, new_width: c_float, new_height: c_float);
     pub fn BWindow_GetDecoratorSettings(self_: *const c_void, settings: *mut c_void) -> status_t;
     pub fn BWindow_GetLayout(self_: *const c_void) -> *mut c_void;
-    pub fn BWindow_GetSizeLimits(self_: *mut c_void, min_width: *mut c_void, max_width: *mut c_void, min_height: *mut c_void, max_height: *mut c_void);
-    pub fn BWindow_GetWindowAlignment(self_: *const c_void, mode: *mut c_void, h: *mut c_void, h_offset: *mut c_void, width: *mut c_void, width_offset: *mut c_void, v: *mut c_void, v_offset: *mut c_void, height: *mut c_void, height_offset: *mut c_void) -> status_t;
+    pub fn BWindow_GetSizeLimits(
+        self_: *mut c_void,
+        min_width: *mut c_void,
+        max_width: *mut c_void,
+        min_height: *mut c_void,
+        max_height: *mut c_void,
+    );
+    pub fn BWindow_GetWindowAlignment(
+        self_: *const c_void,
+        mode: *mut c_void,
+        h: *mut c_void,
+        h_offset: *mut c_void,
+        width: *mut c_void,
+        width_offset: *mut c_void,
+        v: *mut c_void,
+        v_offset: *mut c_void,
+        height: *mut c_void,
+        height_offset: *mut c_void,
+    ) -> status_t;
     pub fn BWindow_Hide(self_: *mut c_void);
     pub fn BWindow_InvalidateLayout(self_: *mut c_void, descendants: bool);
     pub fn BWindow_InViewTransaction(self_: *const c_void) -> bool;
@@ -87,10 +123,27 @@ extern "C" {
     pub fn BWindow_SetLayout(self_: *mut c_void, layout: *mut c_void);
     pub fn BWindow_SetLook(self_: *mut c_void, look: window_look) -> status_t;
     pub fn BWindow_SetPulseRate(self_: *mut c_void, rate: bigtime_t);
-    pub fn BWindow_SetSizeLimits(self_: *mut c_void, min_width: c_float, max_width: c_float, min_height: c_float, max_height: c_float);
+    pub fn BWindow_SetSizeLimits(
+        self_: *mut c_void,
+        min_width: c_float,
+        max_width: c_float,
+        min_height: c_float,
+        max_height: c_float,
+    );
     pub fn BWindow_SetTitle(self_: *mut c_void, title: *const c_char);
     pub fn BWindow_SetType(self_: *mut c_void, type_: window_type) -> status_t;
-    pub fn BWindow_SetWindowAlignment(self_: *mut c_void, mode: window_alignment, h: i32, h_offset: i32, width: i32, width_offset: i32, v: i32, v_offset: i32, height: i32, height_offset: i32) -> status_t;
+    pub fn BWindow_SetWindowAlignment(
+        self_: *mut c_void,
+        mode: window_alignment,
+        h: i32,
+        h_offset: i32,
+        width: i32,
+        width_offset: i32,
+        v: i32,
+        v_offset: i32,
+        height: i32,
+        height_offset: i32,
+    ) -> status_t;
     pub fn BWindow_SetWorkspaces(self_: *mut c_void, workspaces: u32);
     pub fn BWindow_SetZoomLimits(self_: *mut c_void, max_width: c_float, max_height: c_float);
     pub fn BWindow_Show(self_: *mut c_void);

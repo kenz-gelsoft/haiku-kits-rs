@@ -1,10 +1,9 @@
 use super::*;
 
-
 // BApplication
-    /// This trait represents [C++ `BApplication` class](https://www.haiku-os.org/docs/api/classBApplication.html)'s methods and inheritance.
-    ///
-    /// See [`ApplicationFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BApplication` class](https://www.haiku-os.org/docs/api/classBApplication.html)'s methods and inheritance.
+///
+/// See [`ApplicationFromCpp`] documentation for the class usage.
 pub trait ApplicationMethods: LooperMethods {
     /// Hook method that's invoked when the BApplication receives a B_READY_TO_RUN message.
     ///
@@ -172,9 +171,9 @@ pub trait ApplicationMethods: LooperMethods {
 }
 
 // BArchivable
-    /// This trait represents [C++ `BArchivable` class](https://www.haiku-os.org/docs/api/classBArchivable.html)'s methods and inheritance.
-    ///
-    /// See [`ArchivableFromCpp`] documentation for the class usage.
+/// This trait represents [C++ `BArchivable` class](https://www.haiku-os.org/docs/api/classBArchivable.html)'s methods and inheritance.
+///
+/// See [`ArchivableFromCpp`] documentation for the class usage.
 pub trait ArchivableMethods: RustBindingMethods {
     // DTOR: fn ~BArchivable()
     /// Method relating to the use of BArchiver.

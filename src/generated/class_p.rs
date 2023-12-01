@@ -1,6 +1,5 @@
 use super::*;
 
-
 // BPoint
 binding! {
     /// A point on a two-dimensional Cartesian coordinate system.
