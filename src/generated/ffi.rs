@@ -7,4 +7,5 @@ pub use super::ffi_m::*;
 pub use super::ffi_p::*;
 pub use super::ffi_r::*;
 pub use super::ffi_s::*;
+pub use super::ffi_v::*;
 pub use super::ffi_w::*;

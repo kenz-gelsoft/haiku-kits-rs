@@ -4,6 +4,7 @@ import re
 
 
 CXX2RUST = {
+    'char': 'c_char',
     'double': 'c_double',
     'float': 'c_float',
     'int': 'c_int',
@@ -43,6 +44,7 @@ CXX_PRIMITIVES = [
 ]
 RUST_PRIMITIVES = [
     'bool',
+    'c_char',
     'c_double',
     'c_float',
     'c_int',
@@ -87,6 +89,7 @@ RUST_KEYWORDS = [
     'ref',
     'type',
     'use',
+    'where',
 ]
 
 

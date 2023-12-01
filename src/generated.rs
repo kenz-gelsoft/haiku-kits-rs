@@ -14,6 +14,7 @@ mod ffi_m;
 mod ffi_p;
 mod ffi_r;
 mod ffi_s;
+mod ffi_v;
 mod ffi_w;
 
 pub mod methods;
@@ -24,6 +25,7 @@ mod methods_m;
 mod methods_p;
 mod methods_r;
 mod methods_s;
+mod methods_v;
 mod methods_w;
 
 pub mod class;
@@ -34,4 +36,5 @@ mod class_m;
 mod class_p;
 mod class_r;
 mod class_s;
+mod class_v;
 mod class_w;

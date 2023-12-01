@@ -7,6 +7,7 @@ wxml_files = [
     'bxml/classBPoint.xml',
     'bxml/classBRect.xml',
     'bxml/classBSize.xml',
+    'bxml/classBView.xml',
     'bxml/classBWindow.xml',
 ]
 
@@ -60,6 +61,21 @@ blocklist = [
     'SetHeight',
     'SetWidth',
     'Width',
+]
+
+[types.BView]
+blocklist = [
+    # Conflict in overload renaming
+    'ConvertFromParent1',
+    'ConvertFromParent3',
+    'ConvertFromScreen1',
+    'ConvertFromScreen3',
+    'ConvertToParent1',
+    'ConvertToParent3',
+    'ConvertToScreen1',
+    'ConvertToScreen3',
+    'DrawString1',
+    'DrawString3',
 ]
 
 [types.BWindow]

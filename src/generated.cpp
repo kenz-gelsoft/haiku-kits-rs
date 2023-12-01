@@ -8,4 +8,5 @@
 #include "generated/ffi_p.cpp"
 #include "generated/ffi_r.cpp"
 #include "generated/ffi_s.cpp"
+#include "generated/ffi_v.cpp"
 #include "generated/ffi_w.cpp"
