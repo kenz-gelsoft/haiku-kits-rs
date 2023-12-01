@@ -113,6 +113,11 @@ class Class:
         for enum in e.findall(".//memberdef[@kind='enum']"):
             enum = Enum(enum)
             self.enums.append(enum)
+        for method in e.findall(".//memberdef[@kind='variable']"):
+            m = Method(self, method, getter=True)
+            if not m.is_public:
+                continue
+            self.methods.append(m)
         for method in e.findall(".//memberdef[@kind='function']"):
             m = Method(self, method)
             if not m.is_public:
@@ -151,7 +156,8 @@ class Class:
     
 
 class Method:
-    def __init__(self, cls, e):
+    def __init__(self, cls, e, getter=False):
+        self.is_getter = getter
         self.is_public = e.get('prot') == 'public'
         self.is_static = e.get('static') == 'yes'
         is_array = False # TODO: handle returning array in future

@@ -4,6 +4,8 @@ extern "C" {
 
     // BPoint
     pub fn BPoint_delete(self_: *mut c_void);
+    pub fn BPoint_x(self_: *mut c_void) -> c_float;
+    pub fn BPoint_y(self_: *mut c_void) -> c_float;
     // BLOCKED: pub fn BPoint_operator=(self_: *mut c_void, other: *const c_void) -> *mut c_void;
     // BLOCKED: pub fn BPoint_operator-(self_: *const c_void) -> *mut c_void;
     // BLOCKED: pub fn BPoint_operator+(self_: *const c_void, other: *const c_void) -> *mut c_void;

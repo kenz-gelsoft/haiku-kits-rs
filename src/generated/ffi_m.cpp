@@ -6,6 +6,9 @@ extern "C" {
 void BMessage_delete(BMessage *self) {
     delete self;
 }
+uint32 BMessage_what(BMessage * self) {
+    return self->what;
+}
 status_t BMessage_GetInfo1(const BMessage * self, const char * name, type_code * type_found, int32 * count_found) {
     return self->GetInfo(name, type_found, count_found);
 }

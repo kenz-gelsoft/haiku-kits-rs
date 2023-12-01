@@ -686,11 +686,17 @@ class CxxMethodBinding:
             self_or_class = 'self->'
             if self.__model.is_static:
                 self_or_class = '%s::' % (self.__model.cls.name,)
-            new_params_or_expr = '%s%s(%s)' % (
+            name = '%s%s' % (
                 self_or_class,
                 self.__model.name(without_index=True),
-                new_params_or_expr,
             )
+            if self.__model.is_getter:
+                new_params_or_expr = name
+            else:
+                new_params_or_expr = '%s(%s)' % (
+                    name,
+                    new_params_or_expr,
+                )
         if ((wrapped or
               self.__model.returns.is_const_ref_to_binding()) and
             not self.__model.returns.is_str()):

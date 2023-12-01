@@ -6,6 +6,18 @@ extern "C" {
 void BRect_delete(BRect *self) {
     delete self;
 }
+float BRect_bottom(BRect * self) {
+    return self->bottom;
+}
+float BRect_left(BRect * self) {
+    return self->left;
+}
+float BRect_right(BRect * self) {
+    return self->right;
+}
+float BRect_top(BRect * self) {
+    return self->top;
+}
 void BRect_InsetBy(BRect * self, BPoint* inset) {
     return self->InsetBy(*inset);
 }

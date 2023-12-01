@@ -6,6 +6,12 @@ use super::*;
     ///
     /// See [`MessageFromCpp`] documentation for the class usage.
 pub trait MessageMethods: RustBindingMethods {
+    /// A 4-byte constant that determines the type of message.
+    ///
+    /// See [C++ `BMessage::what()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#ad074faab0857f51fba778f0d8558df1e).
+    fn what(&self) -> u32 {
+        unsafe { ffi::BMessage_what(self.as_ptr()) }
+    }
     // BLOCKED: fn operator=()
     // BLOCKED: fn operator new()
     // BLOCKED: fn operator new1()

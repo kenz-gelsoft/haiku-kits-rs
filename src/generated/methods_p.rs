@@ -6,6 +6,18 @@ use super::*;
     ///
     /// See [`PointFromCpp`] documentation for the class usage.
 pub trait PointMethods: RustBindingMethods {
+    /// The horizontal coordinate.
+    ///
+    /// See [C++ `BPoint::x()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#ae8e68c02284caf91f82efb3410fd6708).
+    fn x(&self) -> c_float {
+        unsafe { ffi::BPoint_x(self.as_ptr()) }
+    }
+    /// The vertical coordinate.
+    ///
+    /// See [C++ `BPoint::y()`'s documentation](https://www.haiku-os.org/docs/api/classBPoint.html#a5ffb358a63973977830a85489829c737).
+    fn y(&self) -> c_float {
+        unsafe { ffi::BPoint_y(self.as_ptr()) }
+    }
     // BLOCKED: fn operator=()
     // BLOCKED: fn operator-()
     // BLOCKED: fn operator+()
