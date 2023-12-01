@@ -6,6 +6,54 @@ use super::*;
     ///
     /// See [`RectFromCpp`] documentation for the class usage.
 pub trait RectMethods: RustBindingMethods {
+    /// The value of the rectangle's bottom edge.
+    ///
+    /// See [C++ `BRect::bottom()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a58dffee4bce99e849468e97fa926cfce).
+    fn bottom(&self) -> c_float {
+        unsafe { ffi::BRect_bottom(self.as_ptr()) }
+    }
+    /// The value of the rectangle's bottom edge.
+    ///
+    /// See [C++ `BRect::set_bottom()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a58dffee4bce99e849468e97fa926cfce).
+    fn set_bottom(&self, bottom: c_float) {
+        unsafe { ffi::BRect_set_bottom(self.as_ptr(), bottom) }
+    }
+    /// The value of the rectangle's left edge.
+    ///
+    /// See [C++ `BRect::left()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a177c8a67d9ebe9af16620a4eaa7915cf).
+    fn left(&self) -> c_float {
+        unsafe { ffi::BRect_left(self.as_ptr()) }
+    }
+    /// The value of the rectangle's left edge.
+    ///
+    /// See [C++ `BRect::set_left()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#a177c8a67d9ebe9af16620a4eaa7915cf).
+    fn set_left(&self, left: c_float) {
+        unsafe { ffi::BRect_set_left(self.as_ptr(), left) }
+    }
+    /// The value of the rectangle's right edge.
+    ///
+    /// See [C++ `BRect::right()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#aa9d294e406cc08595d4eb012b2ce5e5a).
+    fn right(&self) -> c_float {
+        unsafe { ffi::BRect_right(self.as_ptr()) }
+    }
+    /// The value of the rectangle's right edge.
+    ///
+    /// See [C++ `BRect::set_right()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#aa9d294e406cc08595d4eb012b2ce5e5a).
+    fn set_right(&self, right: c_float) {
+        unsafe { ffi::BRect_set_right(self.as_ptr(), right) }
+    }
+    /// The value of the rectangle's top edge.
+    ///
+    /// See [C++ `BRect::top()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ac5b5e678515645c6f4becf57448120ab).
+    fn top(&self) -> c_float {
+        unsafe { ffi::BRect_top(self.as_ptr()) }
+    }
+    /// The value of the rectangle's top edge.
+    ///
+    /// See [C++ `BRect::set_top()`'s documentation](https://www.haiku-os.org/docs/api/classBRect.html#ac5b5e678515645c6f4becf57448120ab).
+    fn set_top(&self, top: c_float) {
+        unsafe { ffi::BRect_set_top(self.as_ptr(), top) }
+    }
     // BLOCKED: fn operator=()
     // BLOCKED: fn operator==()
     // BLOCKED: fn operator!=()

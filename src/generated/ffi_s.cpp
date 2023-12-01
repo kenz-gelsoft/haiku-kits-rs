@@ -6,6 +6,18 @@ extern "C" {
 void BSize_delete(BSize *self) {
     delete self;
 }
+float BSize_height(BSize * self) {
+    return self->height;
+}
+void BSize_set_height(BSize * self, float height) {
+    self->height = height;
+}
+float BSize_width(BSize * self) {
+    return self->width;
+}
+void BSize_set_width(BSize * self, float width) {
+    self->width = width;
+}
 BSize *BSize_new() {
     return new BSize();
 }
@@ -14,9 +26,6 @@ BSize *BSize_new1(const BSize * other) {
 }
 BSize *BSize_new2(float width, float height) {
     return new BSize(width, height);
-}
-float BSize_Height(const BSize * self) {
-    return self->Height();
 }
 int32 BSize_IntegerHeight(const BSize * self) {
     return self->IntegerHeight();
@@ -32,15 +41,6 @@ bool BSize_IsWidthSet(const BSize * self) {
 }
 void BSize_Set(BSize * self, float width, float height) {
     return self->Set(width, height);
-}
-void BSize_SetHeight(BSize * self, float height) {
-    return self->SetHeight(height);
-}
-void BSize_SetWidth(BSize * self, float width) {
-    return self->SetWidth(width);
-}
-float BSize_Width(const BSize * self) {
-    return self->Width();
 }
 
 } // extern "C"

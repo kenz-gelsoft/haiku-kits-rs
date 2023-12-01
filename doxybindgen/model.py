@@ -113,6 +113,13 @@ class Class:
         for enum in e.findall(".//memberdef[@kind='enum']"):
             enum = Enum(enum)
             self.enums.append(enum)
+        for var in e.findall(".//memberdef[@kind='variable']"):
+            getter = Method(self, var, getter=True)
+            if getter.is_public:
+                self.methods.append(getter)
+            setter = Method(self, var, setter=True)
+            if setter.is_public:
+                self.methods.append(setter)
         for method in e.findall(".//memberdef[@kind='function']"):
             m = Method(self, method)
             if not m.is_public:
@@ -151,13 +158,17 @@ class Class:
     
 
 class Method:
-    def __init__(self, cls, e):
+    def __init__(self, cls, e, getter=False, setter=False):
+        self.is_getter = getter
+        self.is_setter = setter
         self.is_public = e.get('prot') == 'public'
         self.is_static = e.get('static') == 'yes'
         is_array = False # TODO: handle returning array in future
         self.returns = CxxType(cls.manager, e.find('type'), is_array)
         self.cls = cls
         self.__name = e.findtext('name')
+        if self.is_setter:
+            self.__name = 'set_' + self.__name
         self.overload_index = self._overload_index()
         self.is_ctor = self.__name == cls.name
         self.is_instance_method = not (self.is_ctor or self.is_static)
@@ -165,13 +176,17 @@ class Method:
         if self.is_ctor:
             self.returns = RustType(cls.name, self.const)
         self.params = []
-        for param in e.findall('param'):
-            is_array = param.find('array') is not None
-            ptype = CxxType(cls.manager, param.find('type'), is_array)
-            pname = param.findtext('declname')
-            if not pname:
-                pname = param.findtext('defname')
-            self.params.append(Param(ptype, pname))
+        if self.is_setter:
+            self.params.append(Param(self.returns, e.findtext('name')))
+            self.returns = CxxType(cls.manager, 'void', is_array)
+        else:
+            for param in e.findall('param'):
+                is_array = param.find('array') is not None
+                ptype = CxxType(cls.manager, param.find('type'), is_array)
+                pname = param.findtext('declname')
+                if not pname:
+                    pname = param.findtext('defname')
+                self.params.append(Param(ptype, pname))
         is_virtual = e.get('virt') == 'virtual'
         is_override = e.find('reimplements') is not None
         self.is_virtual_override = is_virtual and is_override
@@ -463,7 +478,10 @@ class ClassManager:
 class CxxType:
     def __init__(self, manager, e, is_array):
         self.__manager = manager
-        self.__srctype = ''.join(e.itertext())
+        if isinstance(e, str):
+            self.__srctype = e
+        else:
+            self.__srctype = ''.join(e.itertext())
         self.is_array = is_array
         # s = self.__srctype
         # if is_array:

@@ -56,6 +56,10 @@ blocklist = [
     'operator==',
     'operator!=',
     'operator=',
+    'Height',
+    'SetHeight',
+    'SetWidth',
+    'Width',
 ]
 
 [types.BWindow]

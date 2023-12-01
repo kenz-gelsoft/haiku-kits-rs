@@ -4,6 +4,8 @@ extern "C" {
 
     // BMessage
     pub fn BMessage_delete(self_: *mut c_void);
+    pub fn BMessage_what(self_: *mut c_void) -> u32;
+    pub fn BMessage_set_what(self_: *mut c_void, what: u32);
     // BLOCKED: pub fn BMessage_operator=(self_: *mut c_void, other: *const c_void) -> *mut c_void;
     // BLOCKED: pub fn BMessage_operator new(self_: *mut c_void, size: usize) -> *mut c_void;
     // BLOCKED: pub fn BMessage_operator new1(self_: *mut c_void, None: usize, pointer: *mut c_void) -> *mut c_void;

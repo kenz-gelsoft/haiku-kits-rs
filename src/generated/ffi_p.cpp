@@ -6,6 +6,18 @@ extern "C" {
 void BPoint_delete(BPoint *self) {
     delete self;
 }
+float BPoint_x(BPoint * self) {
+    return self->x;
+}
+void BPoint_set_x(BPoint * self, float x) {
+    self->x = x;
+}
+float BPoint_y(BPoint * self) {
+    return self->y;
+}
+void BPoint_set_y(BPoint * self, float y) {
+    self->y = y;
+}
 BPoint *BPoint_new() {
     return new BPoint();
 }

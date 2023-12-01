@@ -6,6 +6,8 @@ extern "C" {
 
 // CLASS: BMessage
 void BMessage_delete(BMessage *self);
+uint32 BMessage_what(BMessage * self);
+void BMessage_set_what(BMessage * self, uint32 what);
 status_t BMessage_GetInfo1(const BMessage * self, const char * name, type_code * type_found, int32 * count_found);
 status_t BMessage_GetInfo2(const BMessage * self, const char * name, type_code * type_found, bool * fixed_size);
 status_t BMessage_GetInfo3(const BMessage * self, const char * name, type_code * type_found, int32 * count_found, bool * fixed_size);
