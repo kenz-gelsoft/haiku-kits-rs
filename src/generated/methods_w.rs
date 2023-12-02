@@ -67,8 +67,22 @@ pub trait WindowMethods: LooperMethods {
     /// Adds child to the view hierarchy immediately before before.
     ///
     /// See [C++ `BWindow::AddChild()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac3b09ede3b0256df9cbcc7b2a3d6eda4).
-    fn add_child_view(&self, child: *mut c_void, before: *mut c_void) {
-        unsafe { ffi::BWindow_AddChild1(self.as_ptr(), child, before) }
+    fn add_child_view<V: ViewMethods, V2: ViewMethods>(
+        &self,
+        child: Option<&V>,
+        before: Option<&V2>,
+    ) {
+        unsafe {
+            let child = match child {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let before = match before {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_AddChild1(self.as_ptr(), child, before)
+        }
     }
     /// Adds window to be in the subset of the BWindow.
     ///
@@ -118,8 +132,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the child view found at index.
     ///
     /// See [C++ `BWindow::ChildAt()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aeaeec9bcb12b7b03132e61dba501b19b).
-    fn child_at(&self, index: i32) -> *mut c_void {
-        unsafe { ffi::BWindow_ChildAt(self.as_ptr(), index) }
+    fn child_at(&self, index: i32) -> Option<ViewFromCpp<true>> {
+        unsafe { View::option_from(ffi::BWindow_ChildAt(self.as_ptr(), index)) }
     }
     /// Deprecated alias for BWindow::Quit().
     ///
@@ -188,8 +202,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the current focus view of the window.
     ///
     /// See [C++ `BWindow::CurrentFocus()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a31d98b696b4e2a98ae83c841e342fe1b).
-    fn current_focus(&self) -> *mut c_void {
-        unsafe { ffi::BWindow_CurrentFocus(self.as_ptr()) }
+    fn current_focus(&self) -> Option<ViewFromCpp<true>> {
+        unsafe { View::option_from(ffi::BWindow_CurrentFocus(self.as_ptr())) }
     }
     /// Returns the frame rectangle of the window decorator.
     ///
@@ -230,20 +244,20 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the attached view located at the specified point.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a4c252d9c733a703ca25dcc4d3eae6209).
-    fn find_view_point<P: PointMethods>(&self, point: &P) -> *mut c_void {
+    fn find_view_point<P: PointMethods>(&self, point: &P) -> Option<ViewFromCpp<true>> {
         unsafe {
             let point = point.as_ptr();
-            ffi::BWindow_FindView(self.as_ptr(), point)
+            View::option_from(ffi::BWindow_FindView(self.as_ptr(), point))
         }
     }
     /// Returns the attached view with the specified viewName.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac295d2dff72e4c5254cf597d4b31f9c6).
-    fn find_view_str(&self, view_name: &str) -> *mut c_void {
+    fn find_view_str(&self, view_name: &str) -> Option<ViewFromCpp<true>> {
         unsafe {
             let view_name = CString::from_vec_unchecked(view_name.into());
             let view_name = view_name.as_ptr();
-            ffi::BWindow_FindView1(self.as_ptr(), view_name)
+            View::option_from(ffi::BWindow_FindView1(self.as_ptr(), view_name))
         }
     }
     /// Returns the current window flags.
@@ -410,8 +424,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the attached view that most recently received a B_MOUSE_MOVED message.
     ///
     /// See [C++ `BWindow::LastMouseMovedView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a59ef137725976cea5008e5efd683357e).
-    fn last_mouse_moved_view(&self) -> *mut c_void {
-        unsafe { ffi::BWindow_LastMouseMovedView(self.as_ptr()) }
+    fn last_mouse_moved_view(&self) -> Option<ViewFromCpp<true>> {
+        unsafe { View::option_from(ffi::BWindow_LastMouseMovedView(self.as_ptr())) }
     }
     /// Update the size limits and do the layout of the topmost view attached to the window.
     ///
@@ -485,8 +499,14 @@ pub trait WindowMethods: LooperMethods {
     /// Removes child from the view hierarchy.
     ///
     /// See [C++ `BWindow::RemoveChild()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac271fe9be15e5d6e0a5d59b7b2ed3e8d).
-    fn remove_child(&self, child: *mut c_void) -> bool {
-        unsafe { ffi::BWindow_RemoveChild(self.as_ptr(), child) }
+    fn remove_child<V: ViewMethods>(&self, child: Option<&V>) -> bool {
+        unsafe {
+            let child = match child {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_RemoveChild(self.as_ptr(), child)
+        }
     }
     /// Remove window from the subset of the BWindow.
     ///

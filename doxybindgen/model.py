@@ -4,6 +4,7 @@ import re
 
 
 CXX2RUST = {
+    'char': 'c_char',
     'double': 'c_double',
     'float': 'c_float',
     'int': 'c_int',
@@ -36,6 +37,12 @@ CXX_PRIMITIVES = [
     'thread_id',
     
     # enum types
+    # BView
+    'cap_mode',
+    'color_which',
+    'drawing_mode',
+    'join_mode',
+    # BWindow
     'window_alignment',
     'window_feel',
     'window_look',
@@ -43,6 +50,7 @@ CXX_PRIMITIVES = [
 ]
 RUST_PRIMITIVES = [
     'bool',
+    'c_char',
     'c_double',
     'c_float',
     'c_int',
@@ -66,6 +74,12 @@ RUST_PRIMITIVES = [
     'thread_id',
     
     # enum types
+    # BView
+    'cap_mode',
+    'color_which',
+    'drawing_mode',
+    'join_mode',
+    # BWindow
     'window_alignment',
     'window_feel',
     'window_look',
@@ -87,6 +101,7 @@ RUST_KEYWORDS = [
     'ref',
     'type',
     'use',
+    'where',
 ]
 
 

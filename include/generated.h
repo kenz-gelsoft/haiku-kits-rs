@@ -9,4 +9,5 @@
 #include "generated/ffi_p.h"
 #include "generated/ffi_r.h"
 #include "generated/ffi_s.h"
+#include "generated/ffi_v.h"
 #include "generated/ffi_w.h"
