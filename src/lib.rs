@@ -45,6 +45,7 @@ mod typedefs {
     pub type cap_mode = c_int;
     pub type color_which = c_int;
     pub type drawing_mode = c_int;
+    pub type join_mode = c_int;
     // BWindow
     pub type window_alignment = c_int;
     pub type window_feel = c_int;

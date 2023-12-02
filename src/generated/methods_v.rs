@@ -660,8 +660,18 @@ pub trait ViewMethods: HandlerMethods {
     fn low_ui_color(&self, tint: *mut c_void) -> color_which {
         unsafe { ffi::BView_LowUIColor(self.as_ptr(), tint) }
     }
-    // NOT_SUPPORTED: fn SetLineMode()
-    // NOT_SUPPORTED: fn LineJoinMode()
+    /// Set line mode to use PostScript-style line cap and join modes.
+    ///
+    /// See [C++ `BView::SetLineMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ae97bfe6c0c93fce98bc7bbd93761dbfb).
+    fn set_line_mode(&self, line_cap: cap_mode, line_join: join_mode, miter_limit: c_float) {
+        unsafe { ffi::BView_SetLineMode(self.as_ptr(), line_cap, line_join, miter_limit) }
+    }
+    /// Returns the current line join mode.
+    ///
+    /// See [C++ `BView::LineJoinMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a0aa47adb29d91b4cc6c4924b7f436012).
+    fn line_join_mode(&self) -> join_mode {
+        unsafe { ffi::BView_LineJoinMode(self.as_ptr()) }
+    }
     /// Returns the current line cap mode.
     ///
     /// See [C++ `BView::LineCapMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a551f5961188e4f26ef310eb5eea7c926).

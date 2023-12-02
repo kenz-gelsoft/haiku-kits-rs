@@ -41,6 +41,7 @@ CXX_PRIMITIVES = [
     'cap_mode',
     'color_which',
     'drawing_mode',
+    'join_mode',
     # BWindow
     'window_alignment',
     'window_feel',
@@ -77,6 +78,7 @@ RUST_PRIMITIVES = [
     'cap_mode',
     'color_which',
     'drawing_mode',
+    'join_mode',
     # BWindow
     'window_alignment',
     'window_feel',
