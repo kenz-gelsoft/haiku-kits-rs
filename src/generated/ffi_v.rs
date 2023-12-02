@@ -140,7 +140,7 @@ extern "C" {
     pub fn BView_LowUIColor(self_: *const c_void, tint: *mut c_void) -> color_which;
     // NOT_SUPPORTED: pub fn BView_SetLineMode(self_: *mut c_void, line_cap: cap_mode, line_join: join_mode, miter_limit: c_float);
     // NOT_SUPPORTED: pub fn BView_LineJoinMode(self_: *const c_void) -> join_mode;
-    // NOT_SUPPORTED: pub fn BView_LineCapMode(self_: *const c_void) -> cap_mode;
+    pub fn BView_LineCapMode(self_: *const c_void) -> cap_mode;
     pub fn BView_LineMiterLimit(self_: *const c_void) -> c_float;
     pub fn BView_SetFillRule(self_: *mut c_void, rule: i32);
     pub fn BView_FillRule(self_: *const c_void) -> i32;

@@ -79,6 +79,7 @@ void BView_SetHighUIColor(BView * self, color_which which, float tint);
 color_which BView_HighUIColor(const BView * self, float * tint);
 void BView_SetLowUIColor(BView * self, color_which which, float tint);
 color_which BView_LowUIColor(const BView * self, float * tint);
+cap_mode BView_LineCapMode(const BView * self);
 float BView_LineMiterLimit(const BView * self);
 void BView_SetFillRule(BView * self, int32 rule);
 int32 BView_FillRule(const BView * self);

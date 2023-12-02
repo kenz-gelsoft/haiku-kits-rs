@@ -662,7 +662,12 @@ pub trait ViewMethods: HandlerMethods {
     }
     // NOT_SUPPORTED: fn SetLineMode()
     // NOT_SUPPORTED: fn LineJoinMode()
-    // NOT_SUPPORTED: fn LineCapMode()
+    /// Returns the current line cap mode.
+    ///
+    /// See [C++ `BView::LineCapMode()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a551f5961188e4f26ef310eb5eea7c926).
+    fn line_cap_mode(&self) -> cap_mode {
+        unsafe { ffi::BView_LineCapMode(self.as_ptr()) }
+    }
     /// Returns the miter limit used for B_MITER_JOIN join mode.
     ///
     /// See [C++ `BView::LineMiterLimit()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ab1cd7cf77a4fa01755d186a05163cfbe).

@@ -42,6 +42,7 @@ mod typedefs {
     
     // enum types
     // BView
+    pub type cap_mode = c_int;
     pub type color_which = c_int;
     pub type drawing_mode = c_int;
     // BWindow

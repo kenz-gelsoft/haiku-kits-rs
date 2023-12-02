@@ -225,6 +225,9 @@ void BView_SetLowUIColor(BView * self, color_which which, float tint) {
 color_which BView_LowUIColor(const BView * self, float * tint) {
     return self->LowUIColor(tint);
 }
+cap_mode BView_LineCapMode(const BView * self) {
+    return self->LineCapMode();
+}
 float BView_LineMiterLimit(const BView * self) {
     return self->LineMiterLimit();
 }
