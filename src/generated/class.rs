@@ -1,6 +1,7 @@
 use super::*;
 
 pub use class_a::*;
+pub use class_b::*;
 pub use class_c::*;
 pub use class_h::*;
 pub use class_i::*;

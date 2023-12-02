@@ -19,6 +19,7 @@ pub trait RustBindingMethods {
 }
 
 pub use super::methods_a::*;
+pub use super::methods_b::*;
 pub use super::methods_c::*;
 pub use super::methods_h::*;
 pub use super::methods_i::*;

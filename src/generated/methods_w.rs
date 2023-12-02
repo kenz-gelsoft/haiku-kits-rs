@@ -214,8 +214,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns a pointer to the default button set on the window.
     ///
     /// See [C++ `BWindow::DefaultButton()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a6995f1dcc605c006e4118cc4b687e766).
-    fn default_button(&self) -> *mut c_void {
-        unsafe { ffi::BWindow_DefaultButton(self.as_ptr()) }
+    fn default_button(&self) -> Option<ButtonFromCpp<true>> {
+        unsafe { Button::option_from(ffi::BWindow_DefaultButton(self.as_ptr())) }
     }
     /// Suppresses drawing within the window.
     ///
@@ -563,8 +563,14 @@ pub trait WindowMethods: LooperMethods {
     /// Set the default button of the window to button.
     ///
     /// See [C++ `BWindow::SetDefaultButton()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ab6c969b403bd24dc8b1e9d846a4ae414).
-    fn set_default_button(&self, button: *mut c_void) {
-        unsafe { ffi::BWindow_SetDefaultButton(self.as_ptr(), button) }
+    fn set_default_button<B: ButtonMethods>(&self, button: Option<&B>) {
+        unsafe {
+            let button = match button {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            ffi::BWindow_SetDefaultButton(self.as_ptr(), button)
+        }
     }
     /// Changes the window feel set in the constructor to feel.
     ///

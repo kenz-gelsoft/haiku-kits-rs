@@ -1,6 +1,7 @@
 pub use crate::ffi::*;
 
 pub use super::ffi_a::*;
+pub use super::ffi_b::*;
 pub use super::ffi_c::*;
 pub use super::ffi_h::*;
 pub use super::ffi_i::*;

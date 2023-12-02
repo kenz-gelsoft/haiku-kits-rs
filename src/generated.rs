@@ -8,6 +8,7 @@ use methods::*;
 
 mod ffi;
 mod ffi_a;
+mod ffi_b;
 mod ffi_c;
 mod ffi_h;
 mod ffi_i;
@@ -21,6 +22,7 @@ mod ffi_w;
 
 pub mod methods;
 mod methods_a;
+mod methods_b;
 mod methods_c;
 mod methods_h;
 mod methods_i;
@@ -34,6 +36,7 @@ mod methods_w;
 
 pub mod class;
 mod class_a;
+mod class_b;
 mod class_c;
 mod class_h;
 mod class_i;

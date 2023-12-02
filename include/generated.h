@@ -3,6 +3,7 @@
 // TODO: include required headers
 
 #include "generated/ffi_a.h"
+#include "generated/ffi_b.h"
 #include "generated/ffi_c.h"
 #include "generated/ffi_h.h"
 #include "generated/ffi_i.h"
