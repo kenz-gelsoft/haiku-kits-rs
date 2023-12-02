@@ -34,5 +34,7 @@ extern "C" {
     pub fn BControl_SetLabel(self_: *mut c_void, string: *const c_char);
     pub fn BControl_SetValue(self_: *mut c_void, value: i32);
     pub fn BControl_Value(self_: *const c_void) -> i32;
+    // Mix-in(s) to BControl
+    pub fn BControl_AsInvoker(obj: *mut c_void) -> *mut c_void;
 
 }

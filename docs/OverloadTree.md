@@ -205,6 +205,183 @@
     - 1: `const char*`: BHandler1 (str)
 - 2: BHandler.BArchivable: BArchivable ()
     - 1: `BMessage*`: BArchivable1 (message)
+- 2: BInvoker.BInvoker: BInvoker ()
+    - 1: `BMessage*`: None 
+        - 1: `const BHandler*`: None 
+            - 1: `const BLooper*`: BInvoker2 (message)
+- 3: BInvoker.BControl: None 
+    - 1: `BMessage*`: BControl (message)
+    - 1: `BRect`: None 
+        - 1: `const char*`: None 
+            - 1: `const char*`: None 
+                - 1: `BMessage*`: None 
+                    - 1: `uint32`: None 
+                        - 1: `uint32`: BControl1 (rect)
+    - 1: `const char*`: None 
+        - 1: `const char*`: None 
+            - 1: `BMessage*`: None 
+                - 1: `uint32`: BControl2 (str)
+- 2: BInvoker.AddChild: None 
+    - 1: `BView*`: None 
+        - 1: `BView*`: AddChild (view)
+    - 1: `BLayoutItem*`: AddChild1 (layoutitem)
+- 3: BInvoker.DragMessage: None 
+    - 3: `BMessage*`: None 
+        - 1: `BRect`: None 
+            - 1: `BHandler*`: DragMessage (rect)
+        - 2: `BBitmap*`: None 
+            - 1: `BPoint`: None 
+                - 1: `BHandler*`: DragMessage1 (bitmap, point)
+            - 1: `drawing_mode`: None 
+                - 1: `BPoint`: None 
+                    - 1: `BHandler*`: DragMessage2 (bitmap, drawing_mode)
+- 2: BInvoker.ScrollTo: None 
+    - 1: `float`: None 
+        - 1: `float`: ScrollTo (float)
+    - 1: `BPoint`: ScrollTo1 (point)
+- 2: BInvoker.ConvertToScreen: None 
+    - 1: `BPoint*`: ConvertToScreen (point)
+    - 1: `BRect*`: ConvertToScreen2 (rect)
+- 2: BInvoker.ConvertFromScreen: None 
+    - 1: `BPoint*`: ConvertFromScreen (point)
+    - 1: `BRect*`: ConvertFromScreen2 (rect)
+- 2: BInvoker.ConvertToParent: None 
+    - 1: `BPoint*`: ConvertToParent (point)
+    - 1: `BRect*`: ConvertToParent2 (rect)
+- 2: BInvoker.ConvertFromParent: None 
+    - 1: `BPoint*`: ConvertFromParent (point)
+    - 1: `BRect*`: ConvertFromParent2 (rect)
+- 2: BInvoker.SetOrigin: None 
+    - 1: `BPoint`: SetOrigin (point)
+    - 1: `float`: None 
+        - 1: `float`: SetOrigin1 (float)
+- 2: BInvoker.MovePenTo: None 
+    - 1: `BPoint`: MovePenTo (point)
+    - 1: `float`: None 
+        - 1: `float`: MovePenTo1 (float)
+- 2: BInvoker.StringWidth: None 
+    - 2: `const char*`: StringWidth ()
+        - 1: `int32`: StringWidth1 (int32)
+- 2: BInvoker.SetViewBitmap: None 
+    - 2: `const BBitmap*`: None 
+        - 1: `BRect`: None 
+            - 1: `BRect`: None 
+                - 1: `uint32`: None 
+                    - 1: `uint32`: SetViewBitmap (rect)
+        - 1: `uint32`: None 
+            - 1: `uint32`: SetViewBitmap1 (uint32)
+- 2: BInvoker.SetViewOverlay: None 
+    - 2: `const BBitmap*`: None 
+        - 1: `BRect`: None 
+            - 1: `BRect`: None 
+                - 1: `rgb_color*`: None 
+                    - 1: `uint32`: None 
+                        - 1: `uint32`: SetViewOverlay (rect)
+        - 1: `rgb_color*`: None 
+            - 1: `uint32`: None 
+                - 1: `uint32`: SetViewOverlay1 (rgb_color)
+- 3: BInvoker.FillPolygon: None 
+    - 1: `const BPolygon*`: None 
+        - 1: `const BGradient&`: FillPolygon3 (polygon)
+    - 2: `const BPoint*`: None 
+        - 2: `int32`: None 
+            - 1: `const BGradient&`: FillPolygon4 (point, gradient)
+            - 1: `BRect`: None 
+                - 1: `const BGradient&`: FillPolygon5 (point, rect)
+- 2: BInvoker.FillTriangle: None 
+    - 2: `BPoint`: None 
+        - 2: `BPoint`: None 
+            - 2: `BPoint`: None 
+                - 1: `const BGradient&`: FillTriangle2 (gradient)
+                - 1: `BRect`: None 
+                    - 1: `const BGradient&`: FillTriangle3 (rect)
+- 2: BInvoker.FillEllipse: None 
+    - 1: `BPoint`: None 
+        - 1: `float`: None 
+            - 1: `float`: None 
+                - 1: `const BGradient&`: FillEllipse2 (point)
+    - 1: `BRect`: None 
+        - 1: `const BGradient&`: FillEllipse3 (rect)
+- 2: BInvoker.FillArc: None 
+    - 1: `BPoint`: None 
+        - 1: `float`: None 
+            - 1: `float`: None 
+                - 1: `float`: None 
+                    - 1: `float`: None 
+                        - 1: `const BGradient&`: FillArc2 (point)
+    - 1: `BRect`: None 
+        - 1: `float`: None 
+            - 1: `float`: None 
+                - 1: `const BGradient&`: FillArc3 (rect)
+- 5: BInvoker.DrawBitmapAsync: None 
+    - 5: `const BBitmap*`: DrawBitmapAsync4 ()
+        - 3: `BRect`: DrawBitmapAsync2 (rect)
+            - 2: `BRect`: DrawBitmapAsync1 (rect, rect)
+                - 1: `uint32`: DrawBitmapAsync (rect, rect, uint32)
+        - 1: `BPoint`: DrawBitmapAsync3 (point)
+- 5: BInvoker.DrawBitmap: None 
+    - 5: `const BBitmap*`: DrawBitmap4 ()
+        - 3: `BRect`: DrawBitmap2 (rect)
+            - 2: `BRect`: DrawBitmap1 (rect, rect)
+                - 1: `uint32`: DrawBitmap (rect, rect, uint32)
+        - 1: `BPoint`: DrawBitmap3 (point)
+- 2: BInvoker.DrawChar: None 
+    - 2: `char`: DrawChar ()
+        - 1: `BPoint`: DrawChar1 (point)
+- 4: BInvoker.DrawString: None 
+    - 4: `const char*`: None 
+        - 1: `escapement_delta*`: DrawString (escapement_delta)
+        - 2: `int32`: None 
+            - 1: `escapement_delta*`: DrawString2 (int32, escapement_delta)
+            - 1: `const BPoint*`: None 
+                - 1: `int32`: DrawString5 (int32, point)
+        - 1: `const BPoint*`: None 
+            - 1: `int32`: DrawString4 (point)
+- 3: BInvoker.Invalidate: Invalidate2 ()
+    - 1: `BRect`: Invalidate (rect)
+    - 1: `const BRegion*`: Invalidate1 (region)
+- 2: BInvoker.DelayedInvalidate: None 
+    - 2: `bigtime_t`: DelayedInvalidate ()
+        - 1: `BRect`: DelayedInvalidate1 (rect)
+- 3: BInvoker.DrawPicture: None 
+    - 2: `const BPicture*`: DrawPicture (picture)
+        - 1: `BPoint`: DrawPicture1 (picture, point)
+    - 1: `const char*`: None 
+        - 1: `long`: None 
+            - 1: `BPoint`: DrawPicture2 (str)
+- 3: BInvoker.DrawPictureAsync: None 
+    - 2: `const BPicture*`: DrawPictureAsync (picture)
+        - 1: `BPoint`: DrawPictureAsync1 (picture, point)
+    - 1: `const char*`: None 
+        - 1: `long`: None 
+            - 1: `BPoint`: DrawPictureAsync2 (str)
+- 2: BInvoker.MoveTo: None 
+    - 1: `BPoint`: MoveTo (point)
+    - 1: `float`: None 
+        - 1: `float`: MoveTo1 (float)
+- 2: BInvoker.ResizeTo: None 
+    - 1: `float`: None 
+        - 1: `float`: ResizeTo (float)
+    - 1: `BSize`: ResizeTo1 (size)
+- 2: BInvoker.SetToolTip: None 
+    - 1: `const char*`: SetToolTip (str)
+    - 1: `BToolTip*`: SetToolTip1 (tooltip)
+- 3: BInvoker.BView: None 
+    - 1: `BMessage*`: BView (message)
+    - 1: `BRect`: None 
+        - 1: `const char*`: None 
+            - 1: `uint32`: None 
+                - 1: `uint32`: BView1 (rect)
+    - 1: `const char*`: None 
+        - 1: `uint32`: None 
+            - 1: `BLayout*`: BView2 (str)
+- 2: BInvoker.IsHidden: IsHidden ()
+    - 1: `const BView*`: IsHidden1 (view)
+- 2: BInvoker.BHandler: None 
+    - 1: `BMessage*`: BHandler (message)
+    - 1: `const char*`: BHandler1 (str)
+- 2: BInvoker.BArchivable: BArchivable ()
+    - 1: `BMessage*`: BArchivable1 (message)
 - 2: BLooper.BLooper: None 
     - 1: `BMessage*`: BLooper (message)
     - 1: `const char*`: None 

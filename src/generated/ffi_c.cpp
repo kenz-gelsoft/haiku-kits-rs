@@ -42,6 +42,10 @@ void BControl_SetValue(BControl * self, int32 value) {
 int32 BControl_Value(const BControl * self) {
     return self->Value();
 }
+// Mix-in(s) to BControl
+BInvoker *BControl_AsInvoker(BControl* obj) {
+    return static_cast<BInvoker*>(obj);
+}
 
 } // extern "C"
 

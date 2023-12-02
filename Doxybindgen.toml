@@ -3,6 +3,7 @@ wxml_files = [
     'bxml/classBArchivable.xml',
     'bxml/classBControl.xml',
     'bxml/classBHandler.xml',
+    'bxml/classBInvoker.xml',
     'bxml/classBLooper.xml',
     'bxml/classBMessage.xml',
     'bxml/classBPoint.xml',

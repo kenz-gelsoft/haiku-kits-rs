@@ -18,6 +18,8 @@ status_t BControl_SetIconBitmap(BControl * self, const BBitmap * bitmap, uint32 
 void BControl_SetLabel(BControl * self, const char * string);
 void BControl_SetValue(BControl * self, int32 value);
 int32 BControl_Value(const BControl * self);
+// Mix-in(s) to BControl
+BInvoker *BControl_AsInvoker(BControl* obj);
 
 } // extern "C"
 

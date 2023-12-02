@@ -110,6 +110,12 @@ impl<const FROM_CPP: bool> Drop for ControlFromCpp<FROM_CPP> {
         }
     }
 }
+// Mix-in(s) to BControl
+impl<const FROM_CPP: bool> InvokerMethods for ControlFromCpp<FROM_CPP> {
+    fn as_invoker(&self) -> *mut c_void {
+        unsafe { ffi::BControl_AsInvoker(self.as_ptr()) }
+    }
+}
 impl<const FROM_CPP: bool> ArchivableMethods for ControlFromCpp<FROM_CPP> {
     /// Creates a new object from an data.
     ///

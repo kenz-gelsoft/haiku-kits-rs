@@ -5,6 +5,7 @@
 #include "generated/ffi_a.h"
 #include "generated/ffi_c.h"
 #include "generated/ffi_h.h"
+#include "generated/ffi_i.h"
 #include "generated/ffi_l.h"
 #include "generated/ffi_m.h"
 #include "generated/ffi_p.h"
