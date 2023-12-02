@@ -207,6 +207,24 @@ void BView_AdoptSystemColors(BView * self) {
 void BView_AdoptViewColors(BView * self, BView * view) {
     return self->AdoptViewColors(view);
 }
+void BView_SetViewUIColor(BView * self, color_which which, float tint) {
+    return self->SetViewUIColor(which, tint);
+}
+color_which BView_ViewUIColor(const BView * self, float * tint) {
+    return self->ViewUIColor(tint);
+}
+void BView_SetHighUIColor(BView * self, color_which which, float tint) {
+    return self->SetHighUIColor(which, tint);
+}
+color_which BView_HighUIColor(const BView * self, float * tint) {
+    return self->HighUIColor(tint);
+}
+void BView_SetLowUIColor(BView * self, color_which which, float tint) {
+    return self->SetLowUIColor(which, tint);
+}
+color_which BView_LowUIColor(const BView * self, float * tint) {
+    return self->LowUIColor(tint);
+}
 float BView_LineMiterLimit(const BView * self) {
     return self->LineMiterLimit();
 }

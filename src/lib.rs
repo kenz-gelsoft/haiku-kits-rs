@@ -41,8 +41,10 @@ mod typedefs {
     pub type thread_id = i32;
     
     // enum types
-    // BWindow
+    // BView
+    pub type color_which = c_int;
     pub type drawing_mode = c_int;
+    // BWindow
     pub type window_alignment = c_int;
     pub type window_feel = c_int;
     pub type window_look = c_int;

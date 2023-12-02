@@ -618,18 +618,48 @@ pub trait ViewMethods: HandlerMethods {
     // NOT_SUPPORTED: fn SetViewColor()
     // NOT_SUPPORTED: fn SetViewColor1()
     // NOT_SUPPORTED: fn ViewColor()
-    // NOT_SUPPORTED: fn SetViewUIColor()
-    // NOT_SUPPORTED: fn ViewUIColor()
+    /// Set the view color of the view to a system constant. The color will update live with user changes.
+    ///
+    /// See [C++ `BView::SetViewUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a34f020c4bb1008cef972cf1eec7dba0f).
+    fn set_view_ui_color(&self, which: color_which, tint: c_float) {
+        unsafe { ffi::BView_SetViewUIColor(self.as_ptr(), which, tint) }
+    }
+    /// Return the current view color constant being used.
+    ///
+    /// See [C++ `BView::ViewUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#aec6c89446eb4f5ded151adced9126df8).
+    fn view_ui_color(&self, tint: *mut c_void) -> color_which {
+        unsafe { ffi::BView_ViewUIColor(self.as_ptr(), tint) }
+    }
     // NOT_SUPPORTED: fn SetHighColor()
     // NOT_SUPPORTED: fn SetHighColor1()
     // NOT_SUPPORTED: fn HighColor()
-    // NOT_SUPPORTED: fn SetHighUIColor()
-    // NOT_SUPPORTED: fn HighUIColor()
+    /// Set the high color of the view to a system constant. The color will update live with user changes.
+    ///
+    /// See [C++ `BView::SetHighUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a54eefc28bf7a4bc30612cf83aff2963b).
+    fn set_high_ui_color(&self, which: color_which, tint: c_float) {
+        unsafe { ffi::BView_SetHighUIColor(self.as_ptr(), which, tint) }
+    }
+    /// Return the current high color constant being used.
+    ///
+    /// See [C++ `BView::HighUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#aa86f548fba2e82d022066198be6d5af6).
+    fn high_ui_color(&self, tint: *mut c_void) -> color_which {
+        unsafe { ffi::BView_HighUIColor(self.as_ptr(), tint) }
+    }
     // NOT_SUPPORTED: fn SetLowColor()
     // NOT_SUPPORTED: fn SetLowColor1()
     // NOT_SUPPORTED: fn LowColor()
-    // NOT_SUPPORTED: fn SetLowUIColor()
-    // NOT_SUPPORTED: fn LowUIColor()
+    /// Set the low color of the view to a system constant. The color will update live with user changes.
+    ///
+    /// See [C++ `BView::SetLowUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a879ab88d4e64345069f1041d3a7b652f).
+    fn set_low_ui_color(&self, which: color_which, tint: c_float) {
+        unsafe { ffi::BView_SetLowUIColor(self.as_ptr(), which, tint) }
+    }
+    /// Return the current low color constant being used.
+    ///
+    /// See [C++ `BView::LowUIColor()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ae32ca6d8f106d44b5b51df82a7eb64c5).
+    fn low_ui_color(&self, tint: *mut c_void) -> color_which {
+        unsafe { ffi::BView_LowUIColor(self.as_ptr(), tint) }
+    }
     // NOT_SUPPORTED: fn SetLineMode()
     // NOT_SUPPORTED: fn LineJoinMode()
     // NOT_SUPPORTED: fn LineCapMode()
