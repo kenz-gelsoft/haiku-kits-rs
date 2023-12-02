@@ -1,6 +1,7 @@
 wxml_files = [
     'bxml/classBApplication.xml',
     'bxml/classBArchivable.xml',
+    'bxml/classBControl.xml',
     'bxml/classBHandler.xml',
     'bxml/classBLooper.xml',
     'bxml/classBMessage.xml',
