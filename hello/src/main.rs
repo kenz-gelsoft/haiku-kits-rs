@@ -16,6 +16,10 @@ fn main() {
     // Place window to left top of screen.
     let pt = window.decorator_frame();
     window.move_by(-pt.left(), -pt.top());
+
+    let button = B::Button::new_with_rect(&rect, "Button", "Button", B::Message::none(), 0, 0);
+    window.add_child_view(Some(&button), B::View::none());
+
     window.show();
 
     app.run();
