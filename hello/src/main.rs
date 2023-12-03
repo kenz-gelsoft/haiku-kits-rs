@@ -17,7 +17,14 @@ fn main() {
     let pt = window.decorator_frame();
     window.move_by(-pt.left(), -pt.top());
 
-    let button = B::Button::new_with_rect(&rect, "Button", "Button", B::Message::none(), 0, 0);
+    let button = B::Button::new_with_rect(
+        &rect,
+        "Button",
+        "Button",
+        B::Message::none(),
+        B::B_FOLLOW_ALL_SIDES.try_into().unwrap(),
+        0,
+    );
     window.add_child_view(Some(&button), B::View::none());
 
     window.show();
