@@ -1930,11 +1930,11 @@ pub trait MessageMethods: RustBindingMethods {
     /// Deprecated.
     ///
     /// See [C++ `BMessage::FindString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a36103667f4d215f1a06add5b381c2037).
-    fn find_string_int32(&self, name: &str, n: i32) -> &CStr {
+    fn find_string_int32(&self, name: &str, n: i32) -> Option<&CStr> {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
-            CStr::from_ptr(ffi::BMessage_FindString4(self.as_ptr(), name, n))
+            CStr::option_from(ffi::BMessage_FindString4(self.as_ptr(), name, n))
         }
     }
     /// Deprecated.
@@ -2248,25 +2248,25 @@ pub trait MessageMethods: RustBindingMethods {
     /// Return the string from message with name, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#acf98ba0c69ac6dd433153b6e3e06c64f).
-    fn get_string_str(&self, name: &str, default_value: &str) -> &CStr {
+    fn get_string_str(&self, name: &str, default_value: &str) -> Option<&CStr> {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
             let default_value = CString::from_vec_unchecked(default_value.into());
             let default_value = default_value.as_ptr();
-            CStr::from_ptr(ffi::BMessage_GetString(self.as_ptr(), name, default_value))
+            CStr::option_from(ffi::BMessage_GetString(self.as_ptr(), name, default_value))
         }
     }
     /// Return the string from message with name and index, or defaultValue if not found.
     ///
     /// See [C++ `BMessage::GetString()`'s documentation](https://www.haiku-os.org/docs/api/classBMessage.html#a6e65f922253e4ab511507e015ce023f8).
-    fn get_string_int32(&self, name: &str, index: i32, default_value: &str) -> &CStr {
+    fn get_string_int32(&self, name: &str, index: i32, default_value: &str) -> Option<&CStr> {
         unsafe {
             let name = CString::from_vec_unchecked(name.into());
             let name = name.as_ptr();
             let default_value = CString::from_vec_unchecked(default_value.into());
             let default_value = default_value.as_ptr();
-            CStr::from_ptr(ffi::BMessage_GetString1(
+            CStr::option_from(ffi::BMessage_GetString1(
                 self.as_ptr(),
                 name,
                 index,

@@ -21,8 +21,8 @@ pub trait ControlMethods: ViewMethods {
     /// Gets the label of the control.
     ///
     /// See [C++ `BControl::Label()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#a0c345befac88d6af592ce2b3e7d7214e).
-    fn label(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BControl_Label(self.as_ptr())) }
+    fn label(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BControl_Label(self.as_ptr())) }
     }
     /// Enables or disables the control.
     ///

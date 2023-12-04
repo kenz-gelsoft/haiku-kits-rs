@@ -36,8 +36,8 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Return the name of this handler.
     ///
     /// See [C++ `BHandler::Name()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a40b246ac272e09b2f641d1290be21200).
-    fn name(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BHandler_Name(self.as_ptr())) }
+    fn name(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BHandler_Name(self.as_ptr())) }
     }
     /// Set the next handler in the chain that the message is passed on to if this handler cannot process it.
     ///

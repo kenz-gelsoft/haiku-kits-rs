@@ -701,8 +701,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns the window title as set by the constructor or SetTitle().
     ///
     /// See [C++ `BWindow::Title()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a73c7a05ef33d579de61b83b5daaf3c6b).
-    fn title(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BWindow_Title(self.as_ptr())) }
+    fn title(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BWindow_Title(self.as_ptr())) }
     }
     /// Returns the current window type flag.
     ///

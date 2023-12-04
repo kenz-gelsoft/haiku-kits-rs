@@ -122,8 +122,8 @@ pub trait ApplicationMethods: LooperMethods {
     /// Returns the signature of the Application.
     ///
     /// See [C++ `BApplication::Signature()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a9f22e1a76c3a742cc9139e947e2307b3).
-    fn signature(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BApplication_Signature(self.as_ptr())) }
+    fn signature(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BApplication_Signature(self.as_ptr())) }
     }
     /// Fills out the info parameter with information about the application.
     ///

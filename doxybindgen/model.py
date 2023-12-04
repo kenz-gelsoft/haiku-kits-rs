@@ -337,8 +337,8 @@ class ReturnTypeWrapper:
     def _wrap(self, call=""):
         returns = self.__wrapped[1:]
         if self.__returns.is_str():
-            return ['&CStr',
-                    'CStr::from_ptr(%s)' % (call,)]
+            return ['Option<&CStr>',
+                    'CStr::option_from(%s)' % (call,)]
         if self.is_ctor:
             return ['%sFromCpp<FROM_CPP>' % (returns,),
                     '%sFromCpp(%s)' % (returns, call)]

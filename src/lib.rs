@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use std::ffi::CStr;
 use std::ffi::OsString;
 use std::marker::PhantomData;
 use std::mem;
@@ -117,6 +118,20 @@ pub mod methods {
 //    pub trait Trackable<T>: EvtHandlerMethods {
 //        fn to_weak_ref(&self) -> WeakRef<T>;
 //    }
+
+    pub trait OptionFrom<T> {
+        unsafe fn option_from(ptr: *const i8) -> Option<T>;
+    }
+}
+
+impl OptionFrom<&CStr> for CStr {
+    unsafe fn option_from(ptr: *const i8) -> Option<&'static CStr> {
+        if ptr.is_null() {
+            None
+        } else {
+            Some(CStr::from_ptr(ptr))
+        } 
+    }
 }
 
 // Rust closure to wx calablle function+param pair.
