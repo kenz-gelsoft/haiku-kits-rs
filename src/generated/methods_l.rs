@@ -16,7 +16,7 @@ pub trait LooperMethods: HandlerMethods {
     /// See [C++ `BLooper::PostMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#ae79a7818ce950d8edcd238f7948df020).
     fn post_message_message<M: MessageMethods>(&self, message: Option<&M>) -> status_t {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -33,11 +33,11 @@ pub trait LooperMethods: HandlerMethods {
         reply_to: Option<&H2>,
     ) -> status_t {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let reply_to = match reply_to {
+            let reply_to = match &reply_to {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -54,15 +54,15 @@ pub trait LooperMethods: HandlerMethods {
         reply_to: Option<&H2>,
     ) -> status_t {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let reply_to = match reply_to {
+            let reply_to = match &reply_to {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -78,11 +78,11 @@ pub trait LooperMethods: HandlerMethods {
         handler: Option<&H>,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -111,11 +111,11 @@ pub trait LooperMethods: HandlerMethods {
         _detached: *mut c_void,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -139,7 +139,7 @@ pub trait LooperMethods: HandlerMethods {
     /// See [C++ `BLooper::AddHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a484be74814014e3c48c1a16f44e34074).
     fn add_handler<H: HandlerMethods>(&self, handler: Option<&H>) {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -151,7 +151,7 @@ pub trait LooperMethods: HandlerMethods {
     /// See [C++ `BLooper::RemoveHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a5af57140bf018388a2e64343f46ac330).
     fn remove_handler<H: HandlerMethods>(&self, handler: Option<&H>) -> bool {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -175,7 +175,7 @@ pub trait LooperMethods: HandlerMethods {
     /// See [C++ `BLooper::IndexOf()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a3061534f6d2f3186efca4cddd19f378f).
     fn index_of<H: HandlerMethods>(&self, handler: Option<&H>) -> i32 {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -193,7 +193,7 @@ pub trait LooperMethods: HandlerMethods {
     /// See [C++ `BLooper::SetPreferredHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a07c6e5c65354b48465fde2b0b44e22c6).
     fn set_preferred_handler<H: HandlerMethods>(&self, handler: Option<&H>) {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

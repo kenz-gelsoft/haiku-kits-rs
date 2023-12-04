@@ -26,7 +26,7 @@ impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
     /// See [C++ `BButton::BButton()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#a1e4e191108e817e0c4f666e8c06b5460).
     pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> ButtonFromCpp<FROM_CPP> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -38,19 +38,31 @@ impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
     /// See [C++ `BButton::BButton()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#abc54e951f00a41e93c68487808f1605c).
     pub fn new_with_rect<R: RectMethods, M: MessageMethods>(
         frame: &R,
-        name: &str,
-        label: &str,
+        name: Option<&str>,
+        label: Option<&str>,
         message: Option<&M>,
         resizing_mode: u32,
         flags: u32,
     ) -> ButtonFromCpp<FROM_CPP> {
         unsafe {
             let frame = frame.as_ptr();
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
-            let label = CString::from_vec_unchecked(label.into());
-            let label = label.as_ptr();
-            let message = match message {
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let label = match label {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let label = match &label {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -68,13 +80,19 @@ impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
     ///
     /// See [C++ `BButton::BButton()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#a8fd8464e0b2288e0e5451bc683d7d5b0).
     pub fn new_with_str_message<M: MessageMethods>(
-        label: &str,
+        label: Option<&str>,
         message: Option<&M>,
     ) -> ButtonFromCpp<FROM_CPP> {
         unsafe {
-            let label = CString::from_vec_unchecked(label.into());
-            let label = label.as_ptr();
-            let message = match message {
+            let label = match label {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let label = match &label {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -85,17 +103,29 @@ impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
     ///
     /// See [C++ `BButton::BButton()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#a454f793b3e781dbc681add9d35e29705).
     pub fn new_with_str_str<M: MessageMethods>(
-        name: &str,
-        label: &str,
+        name: Option<&str>,
+        label: Option<&str>,
         message: Option<&M>,
         flags: u32,
     ) -> ButtonFromCpp<FROM_CPP> {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
-            let label = CString::from_vec_unchecked(label.into());
-            let label = label.as_ptr();
-            let message = match message {
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let label = match label {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let label = match &label {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -150,7 +180,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for ButtonFromCpp<FROM_CPP> {
     /// See [C++ `BButton::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#a578835166502d128d1e038602f5f9c6d).
     fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

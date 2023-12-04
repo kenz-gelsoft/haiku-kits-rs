@@ -18,7 +18,7 @@ impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
     /// See [C++ `BHandler::BHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#add8fa081a7bb8633581e78777b215d0b).
     pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> HandlerFromCpp<FROM_CPP> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -28,10 +28,16 @@ impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
     /// Construct a new handler with a name.
     ///
     /// See [C++ `BHandler::BHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a2142e21fe781b24f914ec2086e5f05b7).
-    pub fn new_with_str(name: &str) -> HandlerFromCpp<FROM_CPP> {
+    pub fn new_with_str(name: Option<&str>) -> HandlerFromCpp<FROM_CPP> {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             HandlerFromCpp(ffi::BHandler_new1(name))
         }
     }
@@ -62,7 +68,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for HandlerFromCpp<FROM_CPP> {
     /// See [C++ `BHandler::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a0c23aeb48d578525f81ba6d47f968528).
     fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

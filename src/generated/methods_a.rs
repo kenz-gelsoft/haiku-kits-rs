@@ -28,7 +28,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// See [C++ `BApplication::RefsReceived()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a5fae9740458d9aec66f3b1d5c50fae87).
     fn refs_received<M: MessageMethods>(&self, message: Option<&M>) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -142,7 +142,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// See [C++ `BApplication::RegisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#a2b46141e108da1167be0d3427ca37716).
     fn register_looper<L: LooperMethods>(&self, looper: Option<&L>) -> status_t {
         unsafe {
-            let looper = match looper {
+            let looper = match &looper {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -154,7 +154,7 @@ pub trait ApplicationMethods: LooperMethods {
     /// See [C++ `BApplication::UnregisterLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBApplication.html#aac40a7828ef8cc9c65f65a30b14594f6).
     fn unregister_looper<L: LooperMethods>(&self, looper: Option<&L>) -> status_t {
         unsafe {
-            let looper = match looper {
+            let looper = match &looper {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -181,7 +181,7 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// See [C++ `BArchivable::AllArchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a4075315c407443a3b0dbb3d7551b53c9).
     fn all_archived<M: MessageMethods>(&self, archive: Option<&M>) -> status_t {
         unsafe {
-            let archive = match archive {
+            let archive = match &archive {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -193,7 +193,7 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// See [C++ `BArchivable::AllUnarchived()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a2b1d74c147ea18e4b4bfacd42f11e0d2).
     fn all_unarchived<M: MessageMethods>(&self, archive: Option<&M>) -> status_t {
         unsafe {
-            let archive = match archive {
+            let archive = match &archive {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -205,7 +205,7 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// See [C++ `BArchivable::Archive()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a051c5263dd1a75dcf28787b60825dc44).
     fn archive<M: MessageMethods>(&self, into: Option<&M>, deep: bool) -> status_t {
         unsafe {
-            let into = match into {
+            let into = match &into {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -223,7 +223,7 @@ pub trait ArchivableMethods: RustBindingMethods {
     /// See [C++ `BArchivable::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBArchivable.html#a04efcb17fa2a64a776923cc12303efcd).
     fn instantiate<M: MessageMethods>(archive: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let archive = match archive {
+            let archive = match &archive {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

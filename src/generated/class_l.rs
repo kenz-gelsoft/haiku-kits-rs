@@ -19,7 +19,7 @@ impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aad314758fd652fb48d61bcccab8b6ae3).
     pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> LooperFromCpp<FROM_CPP> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -29,10 +29,20 @@ impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
     /// Construct a new BLooper with a priority and an capacity.
     ///
     /// See [C++ `BLooper::BLooper()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#a33fa84a6ed383e5a897d11380d72ce38).
-    pub fn new_with_str(name: &str, priority: i32, port_capacity: i32) -> LooperFromCpp<FROM_CPP> {
+    pub fn new_with_str(
+        name: Option<&str>,
+        priority: i32,
+        port_capacity: i32,
+    ) -> LooperFromCpp<FROM_CPP> {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             LooperFromCpp(ffi::BLooper_new1(name, priority, port_capacity))
         }
     }
@@ -68,7 +78,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for LooperFromCpp<FROM_CPP> {
     /// See [C++ `BLooper::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBLooper.html#aee61314ab77c54a64f8122440189b73a).
     fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

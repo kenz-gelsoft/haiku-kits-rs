@@ -20,7 +20,7 @@ impl<const FROM_CPP: bool> ControlFromCpp<FROM_CPP> {
     /// See [C++ `BControl::BControl()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#a1224f952eb63f1b0d338720b88fdf220).
     pub fn new_with_message<M: MessageMethods>(data: Option<&M>) -> ControlFromCpp<FROM_CPP> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -32,19 +32,31 @@ impl<const FROM_CPP: bool> ControlFromCpp<FROM_CPP> {
     /// See [C++ `BControl::BControl()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#ae2bd77f0349ca0197b7599393a6ae3ca).
     pub fn new_with_rect<R: RectMethods, M: MessageMethods>(
         frame: &R,
-        name: &str,
-        label: &str,
+        name: Option<&str>,
+        label: Option<&str>,
         message: Option<&M>,
         resizing_mode: u32,
         flags: u32,
     ) -> ControlFromCpp<FROM_CPP> {
         unsafe {
             let frame = frame.as_ptr();
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
-            let label = CString::from_vec_unchecked(label.into());
-            let label = label.as_ptr();
-            let message = match message {
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let label = match label {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let label = match &label {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -62,17 +74,29 @@ impl<const FROM_CPP: bool> ControlFromCpp<FROM_CPP> {
     ///
     /// See [C++ `BControl::BControl()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#a6243ab82eecb7ac3a5c35592a057845d).
     pub fn new_with_str<M: MessageMethods>(
-        name: &str,
-        label: &str,
+        name: Option<&str>,
+        label: Option<&str>,
         message: Option<&M>,
         flags: u32,
     ) -> ControlFromCpp<FROM_CPP> {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
-            let label = CString::from_vec_unchecked(label.into());
-            let label = label.as_ptr();
-            let message = match message {
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let label = match label {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let label = match &label {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -122,7 +146,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for ControlFromCpp<FROM_CPP> {
     /// See [C++ `BControl::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#ad5ba32b4f839a5a9bc60fcf037e23846).
     fn instantiate<M: MessageMethods>(data: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

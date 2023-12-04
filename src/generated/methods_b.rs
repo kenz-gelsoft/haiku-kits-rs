@@ -43,7 +43,7 @@ pub trait ButtonMethods: ControlMethods {
     /// See [C++ `BButton::SetPopUpMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBButton.html#a42f542a5b3b6d9a2a7d740d468cee0eb).
     fn set_pop_up_message<M: MessageMethods>(&self, message: Option<&M>) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

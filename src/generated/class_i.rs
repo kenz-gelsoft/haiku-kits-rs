@@ -28,15 +28,15 @@ impl<const FROM_CPP: bool> InvokerFromCpp<FROM_CPP> {
         looper: Option<&L>,
     ) -> InvokerFromCpp<FROM_CPP> {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let looper = match looper {
+            let looper = match &looper {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
