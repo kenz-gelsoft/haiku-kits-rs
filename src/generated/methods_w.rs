@@ -10,7 +10,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::AddShortcut()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a5b05894e227eb22cba63ddaff289a95b).
     fn add_shortcut<M: MessageMethods>(&self, key: u32, modifiers: u32, message: Option<&M>) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -28,11 +28,11 @@ pub trait WindowMethods: LooperMethods {
         target: Option<&H>,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let target = match target {
+            let target = match &target {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -73,11 +73,11 @@ pub trait WindowMethods: LooperMethods {
         before: Option<&V2>,
     ) {
         unsafe {
-            let child = match child {
+            let child = match &child {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let before = match before {
+            let before = match &before {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -89,7 +89,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::AddToSubset()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac2abecfda66af23ee5e944530ce69c97).
     fn add_to_subset<W: WindowMethods>(&self, window: Option<&W>) -> status_t {
         unsafe {
-            let window = match window {
+            let window = match &window {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -146,7 +146,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#aaa76e90a0578a4081eb4765467d594ea).
     fn convert_from_screen_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -159,7 +159,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a7b3b4a579b4e14cd6acf1a95aee75687).
     fn convert_from_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -172,7 +172,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a218bb4c66ca3f58fbc203a36996fd119).
     fn convert_to_screen_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -185,7 +185,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a83c3d8f1fb020740f7b4c3658e5222b5).
     fn convert_to_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -253,10 +253,16 @@ pub trait WindowMethods: LooperMethods {
     /// Returns the attached view with the specified viewName.
     ///
     /// See [C++ `BWindow::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac295d2dff72e4c5254cf597d4b31f9c6).
-    fn find_view_str(&self, view_name: &str) -> Option<ViewFromCpp<true>> {
+    fn find_view_str(&self, view_name: Option<&str>) -> Option<ViewFromCpp<true>> {
         unsafe {
-            let view_name = CString::from_vec_unchecked(view_name.into());
-            let view_name = view_name.as_ptr();
+            let view_name = match view_name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let view_name = match &view_name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             View::option_from(ffi::BWindow_FindView1(self.as_ptr(), view_name))
         }
     }
@@ -298,7 +304,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::GetDecoratorSettings()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a58fba1b0ad6c2035cf1dac6304d21912).
     fn get_decorator_settings<M: MessageMethods>(&self, settings: Option<&M>) -> status_t {
         unsafe {
-            let settings = match settings {
+            let settings = match &settings {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -501,7 +507,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::RemoveChild()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ac271fe9be15e5d6e0a5d59b7b2ed3e8d).
     fn remove_child<V: ViewMethods>(&self, child: Option<&V>) -> bool {
         unsafe {
-            let child = match child {
+            let child = match &child {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -513,7 +519,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::RemoveFromSubset()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af9ef1e4afee9bfde7c7d9d8e2796c2de).
     fn remove_from_subset<W: WindowMethods>(&self, window: Option<&W>) -> status_t {
         unsafe {
-            let window = match window {
+            let window = match &window {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -544,7 +550,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::SendBehind()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a88c3aa6ee3ea29d7868bafec749f891e).
     fn send_behind<W: WindowMethods>(&self, window: Option<&W>) -> status_t {
         unsafe {
-            let window = match window {
+            let window = match &window {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -565,7 +571,7 @@ pub trait WindowMethods: LooperMethods {
     /// See [C++ `BWindow::SetDefaultButton()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#ab6c969b403bd24dc8b1e9d846a4ae414).
     fn set_default_button<B: ButtonMethods>(&self, button: Option<&B>) {
         unsafe {
-            let button = match button {
+            let button = match &button {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -625,10 +631,16 @@ pub trait WindowMethods: LooperMethods {
     /// Sets the window title to title.
     ///
     /// See [C++ `BWindow::SetTitle()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a7cd4bf7dc0079e9a52b0ac1e7e2f897b).
-    fn set_title(&self, title: &str) {
+    fn set_title(&self, title: Option<&str>) {
         unsafe {
-            let title = CString::from_vec_unchecked(title.into());
-            let title = title.as_ptr();
+            let title = match title {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let title = match &title {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BWindow_SetTitle(self.as_ptr(), title)
         }
     }
@@ -701,8 +713,8 @@ pub trait WindowMethods: LooperMethods {
     /// Returns the window title as set by the constructor or SetTitle().
     ///
     /// See [C++ `BWindow::Title()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a73c7a05ef33d579de61b83b5daaf3c6b).
-    fn title(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BWindow_Title(self.as_ptr())) }
+    fn title(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BWindow_Title(self.as_ptr())) }
     }
     /// Returns the current window type flag.
     ///

@@ -26,7 +26,7 @@ pub trait InvokerMethods: RustBindingMethods {
     /// See [C++ `BInvoker::Invoke()`'s documentation](https://www.haiku-os.org/docs/api/classBInvoker.html#ad4eb9ad4b3b8286f2a155ad7f087511c).
     fn invoke<M: MessageMethods>(&self, message: Option<&M>) -> status_t {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -38,7 +38,7 @@ pub trait InvokerMethods: RustBindingMethods {
     /// See [C++ `BInvoker::InvokeNotify()`'s documentation](https://www.haiku-os.org/docs/api/classBInvoker.html#ab009fe9c6a1f64798c614612e8c3db20).
     fn invoke_notify<M: MessageMethods>(&self, message: Option<&M>, kind: u32) -> status_t {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -63,7 +63,7 @@ pub trait InvokerMethods: RustBindingMethods {
     /// See [C++ `BInvoker::SetHandlerForReply()`'s documentation](https://www.haiku-os.org/docs/api/classBInvoker.html#a9983897bef828eea70f574f9571b8e85).
     fn set_handler_for_reply<H: HandlerMethods>(&self, handler: Option<&H>) -> status_t {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -75,7 +75,7 @@ pub trait InvokerMethods: RustBindingMethods {
     /// See [C++ `BInvoker::SetMessage()`'s documentation](https://www.haiku-os.org/docs/api/classBInvoker.html#a42fae8f984af3765c1a6af404dc36816).
     fn set_message<M: MessageMethods>(&self, message: Option<&M>) -> status_t {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -92,11 +92,11 @@ pub trait InvokerMethods: RustBindingMethods {
         looper: Option<&L>,
     ) -> status_t {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let looper = match looper {
+            let looper = match &looper {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -114,7 +114,7 @@ pub trait InvokerMethods: RustBindingMethods {
     /// See [C++ `BInvoker::Target()`'s documentation](https://www.haiku-os.org/docs/api/classBInvoker.html#aba5a469f2e0c94c08553ebe59c238cc8).
     fn target<L: LooperMethods>(&self, _looper: Option<&L>) -> Option<HandlerFromCpp<true>> {
         unsafe {
-            let _looper = match _looper {
+            let _looper = match &_looper {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

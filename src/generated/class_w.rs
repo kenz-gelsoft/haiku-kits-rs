@@ -20,7 +20,7 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
     /// See [C++ `BWindow::BWindow()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a967856a612c3e7ad4d5d1f4970f744e3).
     pub fn new_with_message<M: MessageMethods>(archive: Option<&M>) -> WindowFromCpp<FROM_CPP> {
         unsafe {
-            let archive = match archive {
+            let archive = match &archive {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -32,7 +32,7 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
     /// See [C++ `BWindow::BWindow()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#a92dfad4d2089ea9a4e8ca8154776e82d).
     pub fn new_with_rect_window_look<R: RectMethods>(
         frame: &R,
-        title: &str,
+        title: Option<&str>,
         look: window_look,
         feel: window_feel,
         flags: u32,
@@ -40,8 +40,14 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
     ) -> WindowFromCpp<FROM_CPP> {
         unsafe {
             let frame = frame.as_ptr();
-            let title = CString::from_vec_unchecked(title.into());
-            let title = title.as_ptr();
+            let title = match title {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let title = match &title {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             WindowFromCpp(ffi::BWindow_new1(
                 frame, title, look, feel, flags, workspace,
             ))
@@ -52,15 +58,21 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
     /// See [C++ `BWindow::BWindow()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#afe03898c4cefc6b853f304c57afee533).
     pub fn new_with_rect_window_type<R: RectMethods>(
         frame: &R,
-        title: &str,
+        title: Option<&str>,
         type_: window_type,
         flags: u32,
         workspace: u32,
     ) -> WindowFromCpp<FROM_CPP> {
         unsafe {
             let frame = frame.as_ptr();
-            let title = CString::from_vec_unchecked(title.into());
-            let title = title.as_ptr();
+            let title = match title {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let title = match &title {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             WindowFromCpp(ffi::BWindow_new2(frame, title, type_, flags, workspace))
         }
     }
@@ -94,7 +106,7 @@ impl<const FROM_CPP: bool> ArchivableMethods for WindowFromCpp<FROM_CPP> {
     /// See [C++ `BWindow::Instantiate()`'s documentation](https://www.haiku-os.org/docs/api/classBWindow.html#af03c3109307589d67a1888a26f516f3f).
     fn instantiate<M: MessageMethods>(archive: Option<&M>) -> Option<ArchivableFromCpp<true>> {
         unsafe {
-            let archive = match archive {
+            let archive = match &archive {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

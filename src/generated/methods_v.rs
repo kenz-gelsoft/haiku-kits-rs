@@ -67,7 +67,7 @@ pub trait ViewMethods: HandlerMethods {
     ) {
         unsafe {
             let where_ = where_.as_ptr();
-            let drag_message = match drag_message {
+            let drag_message = match &drag_message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -83,20 +83,32 @@ pub trait ViewMethods: HandlerMethods {
     /// Hook method called when a keyboard key is pressed.
     ///
     /// See [C++ `BView::KeyDown()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#abea50ea665ce5fcb76b32f1302a6852d).
-    fn key_down(&self, bytes: &str, num_bytes: i32) {
+    fn key_down(&self, bytes: Option<&str>, num_bytes: i32) {
         unsafe {
-            let bytes = CString::from_vec_unchecked(bytes.into());
-            let bytes = bytes.as_ptr();
+            let bytes = match bytes {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let bytes = match &bytes {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_KeyDown(self.as_ptr(), bytes, num_bytes)
         }
     }
     /// Hook method called when a keyboard key is released.
     ///
     /// See [C++ `BView::KeyUp()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#acbc528bb70be49993bd99aa136dbb089).
-    fn key_up(&self, bytes: &str, num_bytes: i32) {
+    fn key_up(&self, bytes: Option<&str>, num_bytes: i32) {
         unsafe {
-            let bytes = CString::from_vec_unchecked(bytes.into());
-            let bytes = bytes.as_ptr();
+            let bytes = match bytes {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let bytes = match &bytes {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_KeyUp(self.as_ptr(), bytes, num_bytes)
         }
     }
@@ -145,11 +157,11 @@ pub trait ViewMethods: HandlerMethods {
         before: Option<&V2>,
     ) {
         unsafe {
-            let child = match child {
+            let child = match &child {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let before = match before {
+            let before = match &before {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -167,7 +179,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::RemoveChild()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a5f93a23d06267da83c128bce222ceb17).
     fn remove_child<V: ViewMethods>(&self, child: Option<&V>) -> bool {
         unsafe {
-            let child = match child {
+            let child = match &child {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -207,10 +219,16 @@ pub trait ViewMethods: HandlerMethods {
     /// Returns the view in the view hierarchy with the specified name.
     ///
     /// See [C++ `BView::FindView()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ab83ef89f1876913174c825ff7cd02c4a).
-    fn find_view(&self, name: &str) -> Option<ViewFromCpp<true>> {
+    fn find_view(&self, name: Option<&str>) -> Option<ViewFromCpp<true>> {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             View::option_from(ffi::BView_FindView(self.as_ptr(), name))
         }
     }
@@ -245,7 +263,7 @@ pub trait ViewMethods: HandlerMethods {
         check_message_queue: bool,
     ) {
         unsafe {
-            let location = match location {
+            let location = match &location {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -262,12 +280,12 @@ pub trait ViewMethods: HandlerMethods {
         reply_to: Option<&H>,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
             let drag_rect = drag_rect.as_ptr();
-            let reply_to = match reply_to {
+            let reply_to = match &reply_to {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -285,12 +303,12 @@ pub trait ViewMethods: HandlerMethods {
         reply_to: Option<&H>,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
             let offset = offset.as_ptr();
-            let reply_to = match reply_to {
+            let reply_to = match &reply_to {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -309,12 +327,12 @@ pub trait ViewMethods: HandlerMethods {
         reply_to: Option<&H>,
     ) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
             let offset = offset.as_ptr();
-            let reply_to = match reply_to {
+            let reply_to = match &reply_to {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -372,7 +390,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#aefefb1242613b869feb6b8e0cc119518).
     fn convert_to_screen_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -385,7 +403,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a4b794ccd899dc6a0cafd886169122df5).
     fn convert_from_screen_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -398,7 +416,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertToScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ad99f5af006f28c485f02484752a2ac5d).
     fn convert_to_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -411,7 +429,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertFromScreen()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a3fbc496f437925cb02ccf9e817406e4e).
     fn convert_from_screen_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -424,7 +442,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertToParent()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ab20700567eabd5f8135be179b4232e2c).
     fn convert_to_parent_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -437,7 +455,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertFromParent()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a43c16140dd4491a6a6f7bad11bbea1f9).
     fn convert_from_parent_point<P: PointMethods>(&self, point: Option<&P>) {
         unsafe {
-            let point = match point {
+            let point = match &point {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -450,7 +468,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertToParent()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ac7bd2e0e7aac40d1be9a47999b5701a9).
     fn convert_to_parent_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -463,7 +481,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::ConvertFromParent()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ab2aeeb14409a18f950173e7cb22e147c).
     fn convert_from_parent_rect<R: RectMethods>(&self, rect: Option<&R>) {
         unsafe {
-            let rect = match rect {
+            let rect = match &rect {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -608,7 +626,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::AdoptViewColors()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ab68ad7103708884f9e6fd84e8a579746).
     fn adopt_view_colors<V: ViewMethods>(&self, view: Option<&V>) {
         unsafe {
-            let view = match view {
+            let view = match &view {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -798,20 +816,32 @@ pub trait ViewMethods: HandlerMethods {
     /// Return the width of string set in the font of the view.
     ///
     /// See [C++ `BView::StringWidth()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#adef480de8a8bcd2fff3129660501616e).
-    fn string_width(&self, string: &str) -> c_float {
+    fn string_width(&self, string: Option<&str>) -> c_float {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_StringWidth(self.as_ptr(), string)
         }
     }
     /// Return the width of string set in the font of the view up to length characters.
     ///
     /// See [C++ `BView::StringWidth()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#aef3638cf597407e6a9f31bc75cd42097).
-    fn string_width_int32(&self, string: &str, length: i32) -> c_float {
+    fn string_width_int32(&self, string: Option<&str>, length: i32) -> c_float {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_StringWidth1(self.as_ptr(), string, length)
         }
     }
@@ -965,7 +995,7 @@ pub trait ViewMethods: HandlerMethods {
         gradient: *const c_void,
     ) {
         unsafe {
-            let point_array = match point_array {
+            let point_array = match &point_array {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -983,7 +1013,7 @@ pub trait ViewMethods: HandlerMethods {
         gradient: *const c_void,
     ) {
         unsafe {
-            let point_array = match point_array {
+            let point_array = match &point_array {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -1154,7 +1184,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::FillBezier()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a7cf8a5eaa5451b2c7df0d6fa392012bd).
     fn fill_bezier<P: PointMethods>(&self, control_points: Option<&P>, gradient: *const c_void) {
         unsafe {
-            let control_points = match control_points {
+            let control_points = match &control_points {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -1337,10 +1367,16 @@ pub trait ViewMethods: HandlerMethods {
     /// Draw string onto the view at the current pen position.
     ///
     /// See [C++ `BView::DrawString()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a5c261dbbb4e8157799e85d6ad1530920).
-    fn draw_string_escapement_delta(&self, string: &str, delta: *mut c_void) {
+    fn draw_string_escapement_delta(&self, string: Option<&str>, delta: *mut c_void) {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_DrawString(self.as_ptr(), string, delta)
         }
     }
@@ -1348,10 +1384,21 @@ pub trait ViewMethods: HandlerMethods {
     /// Draw string up to length characters onto the view at the current pen position.
     ///
     /// See [C++ `BView::DrawString()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#ad3830d09ed0300a1144d47ac78cd2dde).
-    fn draw_string_int32_escapement_delta(&self, string: &str, length: i32, delta: *mut c_void) {
+    fn draw_string_int32_escapement_delta(
+        &self,
+        string: Option<&str>,
+        length: i32,
+        delta: *mut c_void,
+    ) {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_DrawString2(self.as_ptr(), string, length, delta)
         }
     }
@@ -1361,14 +1408,20 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::DrawString()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a5dacf5d193a0c492f296bc1e402e6370).
     fn draw_string_point<P: PointMethods>(
         &self,
-        string: &str,
+        string: Option<&str>,
         locations: Option<&P>,
         location_count: i32,
     ) {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
-            let locations = match locations {
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let locations = match &locations {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -1380,15 +1433,21 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::DrawString()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a135868eb5cd1b35ee1c2d03517b9a33f).
     fn draw_string_int32_point<P: PointMethods>(
         &self,
-        string: &str,
+        string: Option<&str>,
         length: i32,
         locations: Option<&P>,
         location_count: i32,
     ) {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
-            let locations = match locations {
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
+            let locations = match &locations {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -1473,10 +1532,21 @@ pub trait ViewMethods: HandlerMethods {
     /// Draws the picture from the file specified by filename offset by offset bytes at the location in the view specified by where.
     ///
     /// See [C++ `BView::DrawPicture()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a9f5781a2b37113c55950c93b621984a7).
-    fn draw_picture_str<P: PointMethods>(&self, filename: &str, offset: c_long, where_: &P) {
+    fn draw_picture_str<P: PointMethods>(
+        &self,
+        filename: Option<&str>,
+        offset: c_long,
+        where_: &P,
+    ) {
         unsafe {
-            let filename = CString::from_vec_unchecked(filename.into());
-            let filename = filename.as_ptr();
+            let filename = match filename {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let filename = match &filename {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let where_ = where_.as_ptr();
             ffi::BView_DrawPicture2(self.as_ptr(), filename, offset, where_)
         }
@@ -1503,10 +1573,21 @@ pub trait ViewMethods: HandlerMethods {
     /// Draws the picture from the file specified by filename offset by offset bytes at the location in the view specified by where.
     ///
     /// See [C++ `BView::DrawPictureAsync()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a7f2fde4e7719bded5af33805b8242b06).
-    fn draw_picture_async_str<P: PointMethods>(&self, filename: &str, offset: c_long, where_: &P) {
+    fn draw_picture_async_str<P: PointMethods>(
+        &self,
+        filename: Option<&str>,
+        offset: c_long,
+        where_: &P,
+    ) {
         unsafe {
-            let filename = CString::from_vec_unchecked(filename.into());
-            let filename = filename.as_ptr();
+            let filename = match filename {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let filename = match &filename {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             let where_ = where_.as_ptr();
             ffi::BView_DrawPictureAsync2(self.as_ptr(), filename, offset, where_)
         }
@@ -1727,10 +1808,16 @@ pub trait ViewMethods: HandlerMethods {
     /// Set the tool tip of the view to text.
     ///
     /// See [C++ `BView::SetToolTip()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a75fb825a3ef69c1c6fbf3535ee2260ab).
-    fn set_tool_tip_str(&self, text: &str) {
+    fn set_tool_tip_str(&self, text: Option<&str>) {
         unsafe {
-            let text = CString::from_vec_unchecked(text.into());
-            let text = text.as_ptr();
+            let text = match text {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let text = match &text {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BView_SetToolTip(self.as_ptr(), text)
         }
     }
@@ -1806,7 +1893,7 @@ pub trait ViewMethods: HandlerMethods {
     /// See [C++ `BView::IsHidden()`'s documentation](https://www.haiku-os.org/docs/api/classBView.html#a95cfa8ee585230ea8fb224e88eddc503).
     fn is_hidden_view<V: ViewMethods>(&self, looking_from: Option<&V>) -> bool {
         unsafe {
-            let looking_from = match looking_from {
+            let looking_from = match &looking_from {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

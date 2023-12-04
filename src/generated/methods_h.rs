@@ -10,7 +10,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::MessageReceived()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#aeecda5017e0081db617f23bbff71fb53).
     fn message_received<M: MessageMethods>(&self, message: Option<&M>) {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -26,25 +26,31 @@ pub trait HandlerMethods: ArchivableMethods {
     /// Set or change the name of this handler.
     ///
     /// See [C++ `BHandler::SetName()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#abf861126df4b6e71b9261a99da4ad0eb).
-    fn set_name(&self, name: &str) {
+    fn set_name(&self, name: Option<&str>) {
         unsafe {
-            let name = CString::from_vec_unchecked(name.into());
-            let name = name.as_ptr();
+            let name = match name {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let name = match &name {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BHandler_SetName(self.as_ptr(), name)
         }
     }
     /// Return the name of this handler.
     ///
     /// See [C++ `BHandler::Name()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a40b246ac272e09b2f641d1290be21200).
-    fn name(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BHandler_Name(self.as_ptr())) }
+    fn name(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BHandler_Name(self.as_ptr())) }
     }
     /// Set the next handler in the chain that the message is passed on to if this handler cannot process it.
     ///
     /// See [C++ `BHandler::SetNextHandler()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a02f78779c8141987d6030e73c22e734a).
     fn set_next_handler<H: HandlerMethods>(&self, handler: Option<&H>) {
         unsafe {
-            let handler = match handler {
+            let handler = match &handler {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -108,19 +114,25 @@ pub trait HandlerMethods: ArchivableMethods {
         index: i32,
         specifier: Option<&M2>,
         what: i32,
-        property: &str,
+        property: Option<&str>,
     ) -> Option<HandlerFromCpp<true>> {
         unsafe {
-            let message = match message {
+            let message = match &message {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let specifier = match specifier {
+            let specifier = match &specifier {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
-            let property = CString::from_vec_unchecked(property.into());
-            let property = property.as_ptr();
+            let property = match property {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let property = match &property {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             Handler::option_from(ffi::BHandler_ResolveSpecifier(
                 self.as_ptr(),
                 message,
@@ -136,7 +148,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::GetSupportedSuites()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#acf34435dada239f411e8e034e0ea36b5).
     fn get_supported_suites<M: MessageMethods>(&self, data: Option<&M>) -> status_t {
         unsafe {
-            let data = match data {
+            let data = match &data {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -152,7 +164,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::StartWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a20713ff6ee9df49a014f391374eaf689).
     fn start_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> status_t {
         unsafe {
-            let observer = match observer {
+            let observer = match &observer {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -164,7 +176,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::StartWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a31927c51d89e0e3b3bf609a786ee6c3b).
     fn start_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> status_t {
         unsafe {
-            let observer = match observer {
+            let observer = match &observer {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -176,7 +188,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::StopWatching()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#ad3544be491270f856a0af8d36ce02d78).
     fn stop_watching<H: HandlerMethods>(&self, observer: Option<&H>, what: u32) -> status_t {
         unsafe {
-            let observer = match observer {
+            let observer = match &observer {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -188,7 +200,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::StopWatchingAll()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a8b9a424ce63f5932666094b6eadf10cf).
     fn stop_watching_all<H: HandlerMethods>(&self, observer: Option<&H>) -> status_t {
         unsafe {
-            let observer = match observer {
+            let observer = match &observer {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };
@@ -200,7 +212,7 @@ pub trait HandlerMethods: ArchivableMethods {
     /// See [C++ `BHandler::SendNotices()`'s documentation](https://www.haiku-os.org/docs/api/classBHandler.html#a71bf72dc17a64bcd42656722271a9e0c).
     fn send_notices<M: MessageMethods>(&self, what: u32, notice: Option<&M>) {
         unsafe {
-            let notice = match notice {
+            let notice = match &notice {
                 Some(r) => r.as_ptr(),
                 None => ptr::null_mut(),
             };

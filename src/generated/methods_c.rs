@@ -21,8 +21,8 @@ pub trait ControlMethods: ViewMethods {
     /// Gets the label of the control.
     ///
     /// See [C++ `BControl::Label()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#a0c345befac88d6af592ce2b3e7d7214e).
-    fn label(&self) -> &CStr {
-        unsafe { CStr::from_ptr(ffi::BControl_Label(self.as_ptr())) }
+    fn label(&self) -> Option<&CStr> {
+        unsafe { CStr::option_from(ffi::BControl_Label(self.as_ptr())) }
     }
     /// Enables or disables the control.
     ///
@@ -45,10 +45,16 @@ pub trait ControlMethods: ViewMethods {
     /// Sets the label of the control.
     ///
     /// See [C++ `BControl::SetLabel()`'s documentation](https://www.haiku-os.org/docs/api/classBControl.html#a2894bf781c41b3ab8a99417f098e71dc).
-    fn set_label(&self, string: &str) {
+    fn set_label(&self, string: Option<&str>) {
         unsafe {
-            let string = CString::from_vec_unchecked(string.into());
-            let string = string.as_ptr();
+            let string = match string {
+                Some(s) => Some(CString::from_vec_unchecked(s.into())),
+                None => None,
+            };
+            let string = match &string {
+                Some(r) => r.as_ptr(),
+                None => ptr::null_mut(),
+            };
             ffi::BControl_SetLabel(self.as_ptr(), string)
         }
     }

@@ -337,8 +337,8 @@ class ReturnTypeWrapper:
     def _wrap(self, call=""):
         returns = self.__wrapped[1:]
         if self.__returns.is_str():
-            return ['&CStr',
-                    'CStr::from_ptr(%s)' % (call,)]
+            return ['Option<&CStr>',
+                    'CStr::option_from(%s)' % (call,)]
         if self.is_ctor:
             return ['%sFromCpp<FROM_CPP>' % (returns,),
                     '%sFromCpp(%s)' % (returns, call)]
@@ -548,20 +548,24 @@ class CxxType:
         name = camel_to_snake(param.name)
         if self._is_const_ptr_to_string():
             # This variable keeps temporary CString object in this scope.
-            yield 'let %s = CString::from_vec_unchecked(%s.into());' % (
+            yield 'let %s = match %s {' % (
                 name,
                 name,
             )
+            yield '    Some(s) => Some(CString::from_vec_unchecked(s.into())),'
+            yield '    None => None,'
+            yield '};'
         if (self.is_ref_to_binding() or
-            self._is_const_ptr_to_string() or
             self.is_binding_value()):
             # So, taking pointer must be another expression for its lifetime.
             yield 'let %s = %s;' % (
                 name,
                 param.rust_ffi_ref(),
             )
-        if self.is_ptr_to_binding():
-            yield 'let %s = match %s {' % (
+        if (self.is_ptr_to_binding() or
+            self._is_const_ptr_to_string()):
+            # Pass ref not to move Binding or CString value.
+            yield 'let %s = match &%s {' % (
                 name,
                 name,
             )
@@ -575,7 +579,7 @@ class CxxType:
         t = self.typename
         if not for_ffi:
             if self._is_const_ptr_to_string():
-                return '&str'
+                return 'Option<&str>'
             if (self.is_const_ref_to_binding() or
                 self.is_binding_value()):
                 return '&%s' % (t[1:])
