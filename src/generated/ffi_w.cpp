@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BWindow
+BWindow *BWindow_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BWindow *>(ptr);
+}
 void BWindow_AddShortcut(BWindow * self, uint32 key, uint32 modifiers, BMessage * message) {
     return self->AddShortcut(key, modifiers, message);
 }

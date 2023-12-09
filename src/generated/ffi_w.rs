@@ -3,6 +3,7 @@ use super::*;
 extern "C" {
 
     // BWindow
+    pub fn BWindow_dynamic_cast(ptr: *mut c_void) -> *mut c_void;
     pub fn BWindow_AddShortcut(self_: *mut c_void, key: u32, modifiers: u32, message: *mut c_void);
     pub fn BWindow_AddShortcut1(
         self_: *mut c_void,

@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BLooper
+BLooper *BLooper_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BLooper *>(ptr);
+}
 BLooper *BLooper_new(BMessage * data) {
     return new BLooper(data);
 }

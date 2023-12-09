@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BButton
+BButton *BButton_dynamic_cast(BArchivable *ptr);
 BArchivable * BButton_Instantiate(BMessage * data);
 BButton *BButton_new(BMessage * data);
 BButton *BButton_new1(BRect* frame, const char * name, const char * label, BMessage * message, uint32 resizing_mode, uint32 flags);

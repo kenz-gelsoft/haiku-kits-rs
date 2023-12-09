@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BButton
+BButton *BButton_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BButton *>(ptr);
+}
 BArchivable * BButton_Instantiate(BMessage * data) {
     return BButton::Instantiate(data);
 }

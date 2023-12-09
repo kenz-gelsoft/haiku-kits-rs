@@ -3,6 +3,7 @@ use super::*;
 extern "C" {
 
     // BButton
+    pub fn BButton_dynamic_cast(ptr: *mut c_void) -> *mut c_void;
     pub fn BButton_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BButton_new(data: *mut c_void) -> *mut c_void;
     pub fn BButton_new1(

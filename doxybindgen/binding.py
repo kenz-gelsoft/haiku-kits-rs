@@ -33,7 +33,11 @@ class RustClassBinding:
             self.__model.name,
         )
         if for_ffi:
-            if not self.is_a('BArchivable'):
+            if self.is_a('BArchivable'):
+                yield 'pub fn %s_dynamic_cast(ptr: *mut c_void) -> *mut c_void;' % (
+                    self.__model.name,
+                )
+            else:
                 yield 'pub fn %s_delete(self_: *mut c_void);' % (
                     self.__model.name,
                 )
@@ -79,6 +83,8 @@ class RustClassBinding:
             for line in self._impl_clone():
                 yield line                
             for line in self._impl_from_ancestors():
+                yield line
+            for line in self._impl_dynamic_cast_if_needed():
                 yield line
             for line in self._impl_drop_if_needed():
                 yield line
@@ -153,6 +159,15 @@ class RustClassBinding:
             yield '        unsafe { Self::from_ptr(o.as_ptr()) }'
             yield '    }'
             yield '}'
+
+    def _impl_dynamic_cast_if_needed(self):
+        if not self.is_a('BArchivable'):
+            return
+        yield 'impl<const FROM_CPP: bool> DynamicCast for %sFromCpp<FROM_CPP> {' % (self.__model.unprefixed(),)
+        yield'     fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {'
+        yield '        unsafe { Self::option_from(ffi::%s_dynamic_cast(ptr)) }' % (self.__model.name)
+        yield '    }'
+        yield '}'
 
     def _impl_drop_if_needed(self):
         if (self.is_a('BWindow') or
@@ -595,6 +610,8 @@ class CxxClassBinding:
         yield '// CLASS: %s' % (self.__model.name,)
         for line in self._dtor_lines(is_cc):
             yield line
+        for line in self._dynamic_cast_lines(is_cc):
+            yield line
         self.in_condition = None
         for method in self.__methods:
             for line in method.lines(is_cc):
@@ -643,6 +660,20 @@ class CxxClassBinding:
         if is_cc:
             yield '%s {' % (signature,)
             yield '    delete self;'
+            yield '}'
+        else:
+            yield '%s;' % (signature,)
+
+    def _dynamic_cast_lines(self, is_cc):
+        if not self.__model.manager.is_a(self.__model, 'BArchivable'):
+            return
+        signature = '%s *%s_dynamic_cast(BArchivable *ptr)' % (
+            self.__model.name,
+            self.__model.name,
+        )
+        if is_cc:
+            yield '%s {' % (signature,)
+            yield '    return dynamic_cast<%s *>(ptr);' % (self.__model.name,)
             yield '}'
         else:
             yield '%s;' % (signature,)

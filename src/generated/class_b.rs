@@ -161,6 +161,11 @@ impl<const FROM_CPP: bool> From<ButtonFromCpp<FROM_CPP>> for ArchivableFromCpp<F
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
+impl<const FROM_CPP: bool> DynamicCast for ButtonFromCpp<FROM_CPP> {
+    fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {
+        unsafe { Self::option_from(ffi::BButton_dynamic_cast(ptr)) }
+    }
+}
 impl<const FROM_CPP: bool> Drop for ButtonFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {

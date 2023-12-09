@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BLooper
+BLooper *BLooper_dynamic_cast(BArchivable *ptr);
 BLooper *BLooper_new(BMessage * data);
 BArchivable * BLooper_Instantiate(BMessage * data);
 status_t BLooper_PostMessage(BLooper * self, uint32 command);

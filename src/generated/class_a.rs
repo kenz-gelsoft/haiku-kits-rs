@@ -86,6 +86,11 @@ impl<const FROM_CPP: bool> From<ApplicationFromCpp<FROM_CPP>> for ArchivableFrom
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
+impl<const FROM_CPP: bool> DynamicCast for ApplicationFromCpp<FROM_CPP> {
+    fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {
+        unsafe { Self::option_from(ffi::BApplication_dynamic_cast(ptr)) }
+    }
+}
 impl<const FROM_CPP: bool> Drop for ApplicationFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
@@ -145,6 +150,11 @@ impl<const FROM_CPP: bool> ArchivableFromCpp<FROM_CPP> {
 impl Clone for ArchivableFromCpp<true> {
     fn clone(&self) -> Self {
         Self(self.0)
+    }
+}
+impl<const FROM_CPP: bool> DynamicCast for ArchivableFromCpp<FROM_CPP> {
+    fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {
+        unsafe { Self::option_from(ffi::BArchivable_dynamic_cast(ptr)) }
     }
 }
 impl<const FROM_CPP: bool> Drop for ArchivableFromCpp<FROM_CPP> {
