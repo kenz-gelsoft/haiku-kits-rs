@@ -162,8 +162,8 @@ impl<const FROM_CPP: bool> From<ButtonFromCpp<FROM_CPP>> for ArchivableFromCpp<F
     }
 }
 impl<const FROM_CPP: bool> DynamicCast for ButtonFromCpp<FROM_CPP> {
-    fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {
-        unsafe { Self::option_from(ffi::BButton_dynamic_cast(ptr)) }
+    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
+        unsafe { Self::CppManaged::option_from(ffi::BButton_dynamic_cast(from.as_ptr())) }
     }
 }
 impl<const FROM_CPP: bool> Drop for ButtonFromCpp<FROM_CPP> {

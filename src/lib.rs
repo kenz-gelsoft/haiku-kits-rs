@@ -105,7 +105,7 @@ pub mod methods {
     }
 
     pub trait DynamicCast: ArchivableMethods {
-    	fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged>;
+        fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged>;
     }
 
 //    pub trait Trackable<T>: EvtHandlerMethods {

@@ -56,8 +56,8 @@ impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for ArchivableFromCpp<
     }
 }
 impl<const FROM_CPP: bool> DynamicCast for HandlerFromCpp<FROM_CPP> {
-    fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {
-        unsafe { Self::option_from(ffi::BHandler_dynamic_cast(ptr)) }
+    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
+        unsafe { Self::CppManaged::option_from(ffi::BHandler_dynamic_cast(from.as_ptr())) }
     }
 }
 impl<const FROM_CPP: bool> Drop for HandlerFromCpp<FROM_CPP> {

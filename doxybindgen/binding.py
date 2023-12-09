@@ -164,8 +164,10 @@ class RustClassBinding:
         if not self.is_a('BArchivable'):
             return
         yield 'impl<const FROM_CPP: bool> DynamicCast for %sFromCpp<FROM_CPP> {' % (self.__model.unprefixed(),)
-        yield'     fn dynamic_cast(ptr: *mut c_void) -> Option<Self::CppManaged> {'
-        yield '        unsafe { Self::option_from(ffi::%s_dynamic_cast(ptr)) }' % (self.__model.name)
+        yield '    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {'
+        yield '        unsafe { Self::CppManaged::option_from(ffi::%s_dynamic_cast(from.as_ptr())) }' % (
+            self.__model.name,
+        )
         yield '    }'
         yield '}'
 
