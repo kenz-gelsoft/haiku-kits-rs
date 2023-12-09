@@ -87,6 +87,11 @@ impl<const FROM_CPP: bool> From<ViewFromCpp<FROM_CPP>> for ArchivableFromCpp<FRO
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
+impl<const FROM_CPP: bool> DynamicCast for ViewFromCpp<FROM_CPP> {
+    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
+        unsafe { Self::CppManaged::option_from(ffi::BView_dynamic_cast(from.as_ptr())) }
+    }
+}
 impl<const FROM_CPP: bool> Drop for ViewFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {

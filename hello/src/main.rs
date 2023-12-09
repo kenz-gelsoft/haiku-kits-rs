@@ -27,6 +27,13 @@ fn main() {
     );
     window.add_child_view(Some(&button), B::View::none());
 
+    if let Some(first_child) = window.child_at(0) {
+        if let Some(as_button) = B::Button::dynamic_cast(&first_child) {
+            // Set label through dynamic_cast
+            as_button.set_label(Some("World"));
+        }
+    }
+
     window.show();
 
     app.run();

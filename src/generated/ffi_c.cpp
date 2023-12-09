@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BControl
+BControl *BControl_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BControl *>(ptr);
+}
 BControl *BControl_new(BMessage * data) {
     return new BControl(data);
 }

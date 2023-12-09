@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BHandler
+BHandler *BHandler_dynamic_cast(BArchivable *ptr);
 BHandler *BHandler_new(BMessage * data);
 void BHandler_MessageReceived(BHandler * self, BMessage * message);
 BLooper * BHandler_Looper(const BHandler * self);

@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BWindow
+BWindow *BWindow_dynamic_cast(BArchivable *ptr);
 void BWindow_AddShortcut(BWindow * self, uint32 key, uint32 modifiers, BMessage * message);
 void BWindow_AddShortcut1(BWindow * self, uint32 key, uint32 modifiers, BMessage * message, BHandler * target);
 bool BWindow_HasShortcut(BWindow * self, uint32 key, uint32 modifiers);

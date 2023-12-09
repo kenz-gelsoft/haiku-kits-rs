@@ -104,17 +104,10 @@ pub mod methods {
         }
     }
 
-//    pub trait DynamicCast: ObjectMethods {
-//        fn class_info() -> ClassInfoFromCpp<true>;
-//        fn dynamic_cast<T: DynamicCast>(&self) -> Option<T::CppManaged> {
-//            if self.is_kind_of(Some(&T::class_info())) {
-//                unsafe { Some(T::from_cpp_managed_ptr(self.as_ptr())) }
-//            } else {
-//                None
-//            }
-//        }
-//    }
-//
+    pub trait DynamicCast: ArchivableMethods {
+        fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged>;
+    }
+
 //    pub trait Trackable<T>: EvtHandlerMethods {
 //        fn to_weak_ref(&self) -> WeakRef<T>;
 //    }

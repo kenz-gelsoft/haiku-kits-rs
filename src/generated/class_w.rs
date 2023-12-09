@@ -100,6 +100,11 @@ impl<const FROM_CPP: bool> From<WindowFromCpp<FROM_CPP>> for ArchivableFromCpp<F
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
+impl<const FROM_CPP: bool> DynamicCast for WindowFromCpp<FROM_CPP> {
+    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
+        unsafe { Self::CppManaged::option_from(ffi::BWindow_dynamic_cast(from.as_ptr())) }
+    }
+}
 impl<const FROM_CPP: bool> ArchivableMethods for WindowFromCpp<FROM_CPP> {
     /// Creates a new BWindow object from the data message.
     ///

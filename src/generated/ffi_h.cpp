@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BHandler
+BHandler *BHandler_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BHandler *>(ptr);
+}
 BHandler *BHandler_new(BMessage * data) {
     return new BHandler(data);
 }

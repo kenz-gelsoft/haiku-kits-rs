@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BApplication
+BApplication *BApplication_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BApplication *>(ptr);
+}
 BApplication *BApplication_new(BMessage * data) {
     return new BApplication(data);
 }
@@ -89,6 +92,9 @@ status_t BApplication_InitCheck(const BApplication * self) {
 }
 
 // CLASS: BArchivable
+BArchivable *BArchivable_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BArchivable *>(ptr);
+}
 BArchivable *BArchivable_new() {
     return new BArchivable();
 }

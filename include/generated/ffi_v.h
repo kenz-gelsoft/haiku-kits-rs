@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BView
+BView *BView_dynamic_cast(BArchivable *ptr);
 BArchivable * BView_Instantiate(BMessage * archive);
 void BView_AttachedToWindow(BView * self);
 void BView_AllAttached(BView * self);

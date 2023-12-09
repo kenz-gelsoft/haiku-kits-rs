@@ -5,6 +5,7 @@
 extern "C" {
 
 // CLASS: BControl
+BControl *BControl_dynamic_cast(BArchivable *ptr);
 BControl *BControl_new(BMessage * data);
 BArchivable * BControl_Instantiate(BMessage * data);
 BControl *BControl_new1(BRect* frame, const char * name, const char * label, BMessage * message, uint32 resizing_mode, uint32 flags);

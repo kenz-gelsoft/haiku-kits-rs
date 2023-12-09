@@ -3,6 +3,9 @@
 extern "C" {
 
 // CLASS: BView
+BView *BView_dynamic_cast(BArchivable *ptr) {
+    return dynamic_cast<BView *>(ptr);
+}
 BArchivable * BView_Instantiate(BMessage * archive) {
     return BView::Instantiate(archive);
 }

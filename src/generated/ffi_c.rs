@@ -3,6 +3,7 @@ use super::*;
 extern "C" {
 
     // BControl
+    pub fn BControl_dynamic_cast(ptr: *mut c_void) -> *mut c_void;
     pub fn BControl_new(data: *mut c_void) -> *mut c_void;
     pub fn BControl_Instantiate(data: *mut c_void) -> *mut c_void;
     pub fn BControl_new1(

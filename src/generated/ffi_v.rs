@@ -3,6 +3,7 @@ use super::*;
 extern "C" {
 
     // BView
+    pub fn BView_dynamic_cast(ptr: *mut c_void) -> *mut c_void;
     pub fn BView_Instantiate(archive: *mut c_void) -> *mut c_void;
     pub fn BView_AttachedToWindow(self_: *mut c_void);
     pub fn BView_AllAttached(self_: *mut c_void);

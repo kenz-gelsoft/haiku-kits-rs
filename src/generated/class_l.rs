@@ -65,6 +65,11 @@ impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ArchivableFromCpp<F
         unsafe { Self::from_ptr(o.as_ptr()) }
     }
 }
+impl<const FROM_CPP: bool> DynamicCast for LooperFromCpp<FROM_CPP> {
+    fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
+        unsafe { Self::CppManaged::option_from(ffi::BLooper_dynamic_cast(from.as_ptr())) }
+    }
+}
 impl<const FROM_CPP: bool> Drop for LooperFromCpp<FROM_CPP> {
     fn drop(&mut self) {
         if !FROM_CPP {
