@@ -77,12 +77,6 @@ mod ffi {
         pub fn wxArrayInt_Item(self_: *mut c_void, index: usize) -> c_int;
 
         pub fn wxRustEntry(argc: *mut c_int, argv: *mut *const super::ArgChar) -> c_int;
-
-        // WeakRef
-        pub fn OpaqueWeakRef_new(obj: *mut c_void) -> *mut c_void;
-        pub fn OpaqueWeakRef_copy(obj: *mut c_void) -> *mut c_void;
-        pub fn OpaqueWeakRef_delete(self_: *mut c_void);
-        pub fn OpaqueWeakRef_Get(self_: *mut c_void) -> *mut c_void;
     }
 }
 
@@ -107,10 +101,6 @@ pub mod methods {
     pub trait DynamicCast: ArchivableMethods {
         fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged>;
     }
-
-//    pub trait Trackable<T>: EvtHandlerMethods {
-//        fn to_weak_ref(&self) -> WeakRef<T>;
-//    }
 
     pub trait OptionFrom<T> {
         unsafe fn option_from(ptr: *const i8) -> Option<T>;
@@ -154,13 +144,6 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //            let (f, param) = to_wx_callable(closure);
 //            ffi::wxEvtHandler_CallAfter(self.as_ptr(), f, param);
 //        }
-//    }
-//}
-//
-// Effectively all wxEvtHandlers are wxTrackable.
-//impl<T: EvtHandlerMethods> Trackable<T> for T {
-//    fn to_weak_ref(&self) -> WeakRef<T> {
-//        unsafe { WeakRef::from(self.as_ptr()) }
 //    }
 //}
 
@@ -224,47 +207,6 @@ pub fn entry() {
         .collect();
     unsafe {
         ffi::wxRustEntry(&mut argc, argv.as_mut_ptr());
-    }
-}
-
-// wxWeakRef
-pub struct WeakRef<T>(*mut c_void, PhantomData<T>);
-impl<T: RustBindingMethods> WeakRef<T> {
-    pub unsafe fn from(ptr: *mut c_void) -> Self {
-        let ptr = if ptr.is_null() {
-            ptr
-        } else {
-            ffi::OpaqueWeakRef_new(ptr)
-        };
-        WeakRef(ptr, PhantomData)
-    }
-    pub fn get(&self) -> Option<T::CppManaged> {
-        unsafe {
-            let ptr = self.0;
-            let ptr = if ptr.is_null() {
-                ptr
-            } else {
-                ffi::OpaqueWeakRef_Get(ptr)
-            };
-            if ptr.is_null() {
-                None
-            } else {
-                Some(T::from_cpp_managed_ptr(ptr))
-            }
-        }
-    }
-}
-impl<T: RustBindingMethods> Clone for WeakRef<T> {
-    fn clone(&self) -> Self {
-        unsafe {
-            let ptr = ffi::OpaqueWeakRef_copy(self.0);
-            WeakRef(ptr, PhantomData)
-        }
-    }
-}
-impl<T> Drop for WeakRef<T> {
-    fn drop(&mut self) {
-        unsafe { ffi::OpaqueWeakRef_delete(self.0) }
     }
 }
 
