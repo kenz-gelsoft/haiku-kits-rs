@@ -52,12 +52,6 @@ class App : public wxApp {
 void BArchivable_delete(BArchivable *self);
 
 #if 0
-// WeakRef
-void *OpaqueWeakRef_new(void *obj);
-void *OpaqueWeakRef_copy(void *obj);
-void OpaqueWeakRef_delete(void *self);
-void *OpaqueWeakRef_Get(void *self);
-
 #ifdef __WXMSW__
 typedef wxChar ArgChar;
 #else

@@ -278,15 +278,6 @@ class Method:
         returns_owned_list = self.cls.config.get('returns_owned') or []
         return self.name() in returns_owned_list
     
-    def returns_trackable(self):
-        cm = self.cls.manager
-        return_class = cm.by_name(self.returns.typename)
-        # Manually bound bindings wont be found from class manager.
-        if not return_class:
-            return False
-        is_trackable = cm.is_a(return_class, 'wxEvtHandler')
-        return is_trackable
-    
     def maybe_returns_self(self):
         return (self.returns.is_self_ref(self.cls.name) and
                 not self.is_static)
@@ -321,7 +312,6 @@ class ReturnTypeWrapper:
         self.__wrapped = self.__returns.typename
         self.is_ctor = method.is_ctor
         self.is_owned = method.returns_owned()
-        self.is_trackable = method.returns_trackable()
     
     def in_cxx(self):
         if self.__returns.is_str():
@@ -347,12 +337,8 @@ class ReturnTypeWrapper:
                     '%sFromCpp::from_ptr(%s)' % (returns, call)]
         if self.__returns.is_ptr_to_binding():
             if not self.is_owned:
-                if self.is_trackable:
-                    return ['WeakRef<%s>' % (returns,),
-                            'WeakRef::<%s>::from(%s)' % (returns, call)]
-                else:
-                    return ['Option<%sFromCpp<true>>' % (returns,),
-                            '%s::option_from(%s)' % (returns, call)]
+                return ['Option<%sFromCpp<true>>' % (returns,),
+                        '%s::option_from(%s)' % (returns, call)]
         return [returns,
                 '%s::from_ptr(%s)' % (returns, call)]
 
