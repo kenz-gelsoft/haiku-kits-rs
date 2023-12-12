@@ -72,7 +72,7 @@ impl<const FROM_CPP: bool> ViewFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for ViewFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for ViewFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }

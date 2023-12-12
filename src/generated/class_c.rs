@@ -107,7 +107,7 @@ impl<const FROM_CPP: bool> ControlFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for ControlFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for ControlFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }
