@@ -1,4 +1,4 @@
-wxml_files = [
+bxml_files = [
     'bxml/classBApplication.xml',
     'bxml/classBArchivable.xml',
     'bxml/classBButton.xml',

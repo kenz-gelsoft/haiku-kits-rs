@@ -8,14 +8,14 @@ import subprocess
 import toml
 
 
-# place wxWidgets doxygen xml files in wxml/ dir and run this.
+# place Haiku doxygen xml files in bxml/ dir and run this.
 def main():
     with open('Doxybindgen.toml', 'r') as f:
         config = toml.load(f)
     
     classes = ClassManager()
     parsed = []
-    xmlfiles = config['wxml_files']
+    xmlfiles = config['bxml_files']
     progress('Parsing')
     for file in xmlfiles:
         progress('.')

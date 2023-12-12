@@ -2,7 +2,6 @@
 
 use std::ffi::CStr;
 use std::ffi::OsString;
-use std::marker::PhantomData;
 use std::mem;
 use std::os::raw::{c_int, c_void};
 use std::ptr;

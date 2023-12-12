@@ -17,9 +17,9 @@ binding! {
 }
 impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
     //  ENUM: BBehavior
-    pub const B_BUTTON_BEHAVIOR: c_int = 0;
-    pub const B_TOGGLE_BEHAVIOR: c_int = 0 + 1;
-    pub const B_POP_UP_BEHAVIOR: c_int = 0 + 2;
+    pub const BUTTON_BEHAVIOR: c_int = 0;
+    pub const TOGGLE_BEHAVIOR: c_int = 0 + 1;
+    pub const POP_UP_BEHAVIOR: c_int = 0 + 2;
 
     /// Constructs a BButton object from an data message.
     ///
@@ -136,7 +136,7 @@ impl<const FROM_CPP: bool> ButtonFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for ButtonFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for ButtonFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }

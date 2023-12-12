@@ -9,14 +9,14 @@ pub const fn _rule_(t: c_int, l: c_int, b: c_int, r: c_int) -> c_int {
     (t << 12) | (l << 8) | (b << 4) | r
 }
 
-pub const fn B_TO_POSIX_ERROR(v: c_int) -> c_int {
+pub const fn TO_POSIX_ERROR(v: c_int) -> c_int {
     v
 }
-pub const fn B_FROM_POSIX_ERROR(v: c_int) -> c_int {
+pub const fn FROM_POSIX_ERROR(v: c_int) -> c_int {
     v
 }
 
-pub const fn B_MOUSE_BUTTON(v: c_int) -> c_int {
+pub const fn MOUSE_BUTTON(v: c_int) -> c_int {
     1 << (v - 1)
 }
 
@@ -25,7 +25,7 @@ pub const _VIEW_LEFT_: c_int = 2;
 pub const _VIEW_BOTTOM_: c_int = 3;
 pub const _VIEW_RIGHT_: c_int = 4;
 pub const _VIEW_CENTER_: c_int = 5;
-pub const B_BEOS_VERSION: c_int = 0x0500;
+pub const BEOS_VERSION: c_int = 0x0500;
 pub const INT_MIN: c_int = -2147483647;
 pub const MAXPATHLEN: c_int = 1024;
 pub const NAME_MAX: c_int = 256;

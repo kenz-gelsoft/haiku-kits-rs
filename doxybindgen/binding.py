@@ -129,8 +129,7 @@ class RustClassBinding:
         yield '}'
 
     def _has_drop(self):
-        if (self.is_a('wxEvtHandler') or
-            self.is_a('wxSizer')):
+        if self.is_a('BView'):
             return False
         return True
 
@@ -172,8 +171,7 @@ class RustClassBinding:
         yield '}'
 
     def _impl_drop_if_needed(self):
-        if (self.is_a('BWindow') or
-            self.is_a('wxSizer')):
+        if self.is_a('BWindow'):
             return
         deleter_class = self.__model.name
         if self.is_a('BArchivable'):
@@ -505,8 +503,6 @@ class RustMethodBinding:
             splitter = '_'
             arg_types = overloads.args_to_disambiguate(self.__model)
             if self.__model.is_ctor:
-                if self.__cls.is_a('wxWindow'):
-                    return 'new_2step' if len(arg_types) == 0 else 'new'
                 splitter = '_with_'
             if len(arg_types) > 0:
                 method_name += splitter + '_'.join(arg_types)
@@ -649,11 +645,7 @@ class CxxClassBinding:
         return (m for m in self.__methods if m.is_ctor)
     
     def _dtor_lines(self, is_cc):
-        if (self.__model.manager.is_a(self.__model, 'BArchivable') or
-            self.__model.manager.is_a(self.__model, 'wxRefCounter') or
-            # FIXME: wxObjectRefData is a typedef of wxRefCounter
-            self.__model.manager.is_a(self.__model, 'wxObjectRefData') or
-            self.__model.manager.is_a(self.__model, 'wxSharedClientDataContainer')):
+        if self.__model.manager.is_a(self.__model, 'BArchivable'):
             return
         signature = 'void %s_delete(%s *self)' % (
             self.__model.name,
