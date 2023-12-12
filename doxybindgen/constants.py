@@ -2,8 +2,7 @@ import re
 import xml.etree.ElementTree as ET
 
 
-# MEMO: don't replace `wx` prefix of `wx_GL_COMPAT_PROFILE`
-RE_IDENT = re.compile(r'wx([^_]\w)')
+RE_IDENT = re.compile(r'\bB_([^_\d]\w)')
 
 RE_ENUM_INITALIZER = re.compile(r'=\s+(.*)')
 RE_BYTES_LITERAL = re.compile(r"'([^']+)'")
