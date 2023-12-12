@@ -17,7 +17,7 @@ use std::os::raw::{c_int, c_long, c_uint};
 use crate::manual::*;
 '''
 
-# place wxWidgets doxygen xml files in wxml/ dir and run this.
+# place Haiku doxygen xml files in bxml/ dir and run this.
 def main():
     outpath = 'src/constants.rs'
     with open(outpath, 'w', newline='\n') as f:
