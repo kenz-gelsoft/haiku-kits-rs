@@ -41,23 +41,6 @@ public:
 
 extern "C" {
 
-#if 0
-// wxApp
-void AppSetOnInit(void *aFn, void *aParam);
-class App : public wxApp {
-    virtual bool OnInit();
-};
-#endif
-
 void BArchivable_delete(BArchivable *self);
-
-#if 0
-#ifdef __WXMSW__
-typedef wxChar ArgChar;
-#else
-typedef char ArgChar;
-#endif // __WXMSW__
-int wxRustEntry(int *argc, ArgChar **argv);
-#endif
 
 } // extern "C"
