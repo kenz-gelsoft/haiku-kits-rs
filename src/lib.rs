@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use std::ffi::OsString;
 use std::mem;
 use std::os::raw::{c_int, c_void};
@@ -49,10 +49,12 @@ mod typedefs {
 }
 
 mod ffi {
-    use std::os::raw::{c_int, c_void};
+    use std::os::raw::{c_char, c_int, c_void};
 
     extern "C" {
         pub fn BArchivable_delete(self_: *mut c_void);
+
+        pub fn RustHandler_new(aFn: *mut c_void, aParam: *mut c_void, name: *const c_char) -> *mut c_void;
 
 //        pub fn wxEvtHandler_Bind(
 //            self_: *mut c_void,
@@ -137,6 +139,22 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //        }
 //    }
 //}
+
+binding! {
+    class RustHandler
+        = RustHandlerFromCpp<false>(RustHandler) impl
+        HandlerMethods,
+        ArchivableMethods
+}
+impl<const FROM_CPP: bool> RustHandlerFromCpp<FROM_CPP> {
+    pub fn new<F: Fn(*mut c_void) + 'static>(&self, closure: F, name: &str) -> Self {
+        unsafe {
+        	let name = CString::new(name).unwrap();
+            let (f, param) = to_wx_callable(closure);
+            RustHandlerFromCpp(ffi::RustHandler_new(f, param, name.as_ptr()))
+        }
+    }
+}
 
 binding! {
     class ArrayInt

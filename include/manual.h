@@ -2,9 +2,9 @@
 // TODO include haiku-api headers
 
 #include <Archivable.h>
+#include <Handler.h>
 
-#if 0
-// wxEvtHandler
+// BHandler
 template <typename T>
 class CxxClosure {
     typedef void (*TrampolineFunc)(void *, T);
@@ -37,10 +37,23 @@ public:
         mTyped(/*unused*/0);
     }
 };
-#endif
+
+class RustHandler: public BHandler
+{
+    CxxClosure<void*> mOnMessageReceived;
+public:
+    RustHandler(void *f, void *param, const char *name = NULL) : BHandler(name),
+        mOnMessageReceived(f, param)
+    {}
+    void MessageReceived(BMessage *message) {
+        mOnMessageReceived(message);
+    }
+};
 
 extern "C" {
 
 void BArchivable_delete(BArchivable *self);
+
+RustHandler *RustHandler_new(void *f, void *param, const char *name = NULL);
 
 } // extern "C"
