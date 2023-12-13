@@ -43,13 +43,4 @@ extern "C" {
 
 void BArchivable_delete(BArchivable *self);
 
-#if 0
-#ifdef __WXMSW__
-typedef wxChar ArgChar;
-#else
-typedef char ArgChar;
-#endif // __WXMSW__
-int wxRustEntry(int *argc, ArgChar **argv);
-#endif
-
 } // extern "C"

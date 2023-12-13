@@ -22,11 +22,6 @@ pub use generated::class::*;
 
 use methods::*;
 
-#[cfg(windows)]
-type ArgChar = u16;
-#[cfg(not(windows))]
-type ArgChar = u8;
-
 pub use typedefs::*;
 #[allow(non_camel_case_types)]
 mod typedefs {
@@ -73,8 +68,6 @@ mod ffi {
         pub fn wxArrayInt_delete(self_: *mut c_void);
         pub fn wxArrayInt_Add(self_: *mut c_void, i: c_int);
         pub fn wxArrayInt_Item(self_: *mut c_void, index: usize) -> c_int;
-
-        pub fn wxRustEntry(argc: *mut c_int, argv: *mut *const super::ArgChar) -> c_int;
     }
 }
 
@@ -160,36 +153,6 @@ impl<const FROM_CPP: bool> Drop for ArrayIntFromCpp<FROM_CPP> {
         if !FROM_CPP {
             unsafe { ffi::wxArrayInt_delete(self.0) }
         }
-    }
-}
-
-// wxEntry
-pub fn entry() {
-    #[cfg(windows)]
-    fn to_wx_arg(arg: OsString) -> Vec<ArgChar> {
-        use std::os::windows::prelude::OsStrExt;
-
-        let mut wide: Vec<ArgChar> = arg.encode_wide().collect();
-        wide.push(0);
-        wide
-    }
-    #[cfg(not(windows))]
-    fn to_wx_arg(arg: OsString) -> Vec<ArgChar> {
-        use std::os::unix::prelude::OsStringExt;
-
-        let mut vec: Vec<ArgChar> = arg.into_vec();
-        vec.push(0);
-        vec
-    }
-
-    let args: Vec<Vec<ArgChar>> = std::env::args_os().map(to_wx_arg).collect();
-    let mut argc: c_int = args.len().try_into().unwrap();
-    let mut argv: Vec<*const ArgChar> = args
-        .iter()
-        .map(|arg| arg.as_ptr() as *const ArgChar)
-        .collect();
-    unsafe {
-        ffi::wxRustEntry(&mut argc, argv.as_mut_ptr());
     }
 }
 
