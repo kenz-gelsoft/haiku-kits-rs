@@ -41,14 +41,6 @@ public:
 
 extern "C" {
 
-#if 0
-// wxApp
-void AppSetOnInit(void *aFn, void *aParam);
-class App : public wxApp {
-    virtual bool OnInit();
-};
-#endif
-
 void BArchivable_delete(BArchivable *self);
 
 #if 0

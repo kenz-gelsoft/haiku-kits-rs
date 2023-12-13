@@ -59,7 +59,6 @@ mod ffi {
     extern "C" {
         pub fn BArchivable_delete(self_: *mut c_void);
 
-        pub fn AppSetOnInit(aFn: *mut c_void, aParam: *mut c_void);
 //        pub fn wxEvtHandler_Bind(
 //            self_: *mut c_void,
 //            eventType: c_int,
@@ -145,21 +144,6 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //        }
 //    }
 //}
-
-// wxApp
-pub enum App {}
-impl App {
-    pub fn on_init<F: Fn(*mut c_void) + 'static>(closure: F) {
-        unsafe {
-            let (f, param) = to_wx_callable(closure);
-            ffi::AppSetOnInit(f, param);
-        }
-    }
-    pub fn run<F: Fn(*mut c_void) + 'static>(closure: F) {
-        Self::on_init(closure);
-        entry();
-    }
-}
 
 binding! {
     class ArrayInt
