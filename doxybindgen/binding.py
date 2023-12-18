@@ -129,7 +129,7 @@ class RustClassBinding:
         yield '}'
 
     def _has_drop(self):
-        if self.is_a('BView'):
+        if self.is_a('BHandler'):
             return False
         return True
 
@@ -171,7 +171,8 @@ class RustClassBinding:
         yield '}'
 
     def _impl_drop_if_needed(self):
-        if self.is_a('BWindow'):
+        return
+        if self.is_a('BHandler'):
             return
         deleter_class = self.__model.name
         if self.is_a('BArchivable'):

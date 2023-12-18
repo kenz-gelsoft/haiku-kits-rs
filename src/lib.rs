@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 
-use std::ffi::CStr;
 use std::ffi::OsString;
+use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw::{c_int, c_void};
 use std::ptr;
@@ -34,7 +34,7 @@ mod typedefs {
     pub type status_t = i32;
     pub type team_id = i32;
     pub type thread_id = i32;
-    
+
     // enum types
     // BView
     pub type cap_mode = c_int;
@@ -49,10 +49,16 @@ mod typedefs {
 }
 
 mod ffi {
-    use std::os::raw::{c_int, c_void};
+    use std::os::raw::{c_char, c_int, c_void};
 
     extern "C" {
         pub fn BArchivable_delete(self_: *mut c_void);
+
+        pub fn RustHandler_new(
+            aFn: *mut c_void,
+            aParam: *mut c_void,
+            name: *const c_char,
+        ) -> *mut c_void;
 
 //        pub fn wxEvtHandler_Bind(
 //            self_: *mut c_void,
@@ -104,7 +110,7 @@ impl OptionFrom<&CStr> for CStr {
             None
         } else {
             Some(CStr::from_ptr(ptr))
-        } 
+        }
     }
 }
 
@@ -137,6 +143,22 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //        }
 //    }
 //}
+
+binding! {
+    class RustHandler
+        = RustHandlerFromCpp<false>(RustHandler) impl
+        HandlerMethods,
+        ArchivableMethods
+}
+impl<const FROM_CPP: bool> RustHandlerFromCpp<FROM_CPP> {
+    pub fn new<F: Fn(*mut c_void) + 'static>(name: &str, closure: F) -> Self {
+        unsafe {
+            let name = CString::new(name).unwrap();
+            let (f, param) = to_wx_callable(closure);
+            RustHandlerFromCpp(ffi::RustHandler_new(f, param, name.as_ptr()))
+        }
+    }
+}
 
 binding! {
     class ArrayInt

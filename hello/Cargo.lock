@@ -12,6 +12,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "four-cc"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "431a4c31778fde52b4400de34975f219eeca55cc829a9de157cd743a5b230ecb"
+
+[[package]]
 name = "haiku-kits"
 version = "0.0.1-alpha"
 dependencies = [
@@ -22,6 +28,7 @@ dependencies = [
 name = "hello"
 version = "0.1.0"
 dependencies = [
+ "four-cc",
  "haiku-kits",
 ]
 

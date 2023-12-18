@@ -45,7 +45,7 @@ impl<const FROM_CPP: bool> HandlerFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for HandlerFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for HandlerFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }
@@ -58,13 +58,6 @@ impl<const FROM_CPP: bool> From<HandlerFromCpp<FROM_CPP>> for ArchivableFromCpp<
 impl<const FROM_CPP: bool> DynamicCast for HandlerFromCpp<FROM_CPP> {
     fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
         unsafe { Self::CppManaged::option_from(ffi::BHandler_dynamic_cast(from.as_ptr())) }
-    }
-}
-impl<const FROM_CPP: bool> Drop for HandlerFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BArchivable_delete(self.0) }
-        }
     }
 }
 impl<const FROM_CPP: bool> ArchivableMethods for HandlerFromCpp<FROM_CPP> {

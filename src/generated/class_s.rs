@@ -42,10 +42,3 @@ impl Clone for SizeFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> Drop for SizeFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BSize_delete(self.0) }
-        }
-    }
-}
