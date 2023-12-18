@@ -92,13 +92,6 @@ impl<const FROM_CPP: bool> DynamicCast for ViewFromCpp<FROM_CPP> {
         unsafe { Self::CppManaged::option_from(ffi::BView_dynamic_cast(from.as_ptr())) }
     }
 }
-impl<const FROM_CPP: bool> Drop for ViewFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BArchivable_delete(self.0) }
-        }
-    }
-}
 impl<const FROM_CPP: bool> ArchivableMethods for ViewFromCpp<FROM_CPP> {
     /// Creates a new BView object from the data message.
     ///

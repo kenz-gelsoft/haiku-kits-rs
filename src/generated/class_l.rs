@@ -50,7 +50,7 @@ impl<const FROM_CPP: bool> LooperFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for LooperFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for LooperFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }
@@ -68,13 +68,6 @@ impl<const FROM_CPP: bool> From<LooperFromCpp<FROM_CPP>> for ArchivableFromCpp<F
 impl<const FROM_CPP: bool> DynamicCast for LooperFromCpp<FROM_CPP> {
     fn dynamic_cast<T: DynamicCast>(from: &T) -> Option<Self::CppManaged> {
         unsafe { Self::CppManaged::option_from(ffi::BLooper_dynamic_cast(from.as_ptr())) }
-    }
-}
-impl<const FROM_CPP: bool> Drop for LooperFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BArchivable_delete(self.0) }
-        }
     }
 }
 impl<const FROM_CPP: bool> ArchivableMethods for LooperFromCpp<FROM_CPP> {

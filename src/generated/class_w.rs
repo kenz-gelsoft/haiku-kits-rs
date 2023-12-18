@@ -80,7 +80,7 @@ impl<const FROM_CPP: bool> WindowFromCpp<FROM_CPP> {
         None
     }
 }
-impl Clone for WindowFromCpp<true> {
+impl<const FROM_CPP: bool> Clone for WindowFromCpp<FROM_CPP> {
     fn clone(&self) -> Self {
         Self(self.0)
     }

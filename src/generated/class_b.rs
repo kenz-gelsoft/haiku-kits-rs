@@ -166,13 +166,6 @@ impl<const FROM_CPP: bool> DynamicCast for ButtonFromCpp<FROM_CPP> {
         unsafe { Self::CppManaged::option_from(ffi::BButton_dynamic_cast(from.as_ptr())) }
     }
 }
-impl<const FROM_CPP: bool> Drop for ButtonFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BArchivable_delete(self.0) }
-        }
-    }
-}
 // Mix-in(s) to BButton
 impl<const FROM_CPP: bool> InvokerMethods for ButtonFromCpp<FROM_CPP> {
     fn as_invoker(&self) -> *mut c_void {

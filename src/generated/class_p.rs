@@ -42,10 +42,3 @@ impl Clone for PointFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> Drop for PointFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BPoint_delete(self.0) }
-        }
-    }
-}

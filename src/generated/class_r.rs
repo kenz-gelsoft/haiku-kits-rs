@@ -79,10 +79,3 @@ impl Clone for RectFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> Drop for RectFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BRect_delete(self.0) }
-        }
-    }
-}

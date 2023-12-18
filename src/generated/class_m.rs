@@ -45,10 +45,3 @@ impl Clone for MessageFromCpp<true> {
         Self(self.0)
     }
 }
-impl<const FROM_CPP: bool> Drop for MessageFromCpp<FROM_CPP> {
-    fn drop(&mut self) {
-        if !FROM_CPP {
-            unsafe { ffi::BMessage_delete(self.0) }
-        }
-    }
-}
