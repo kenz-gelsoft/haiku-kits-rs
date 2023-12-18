@@ -151,7 +151,7 @@ binding! {
         ArchivableMethods
 }
 impl<const FROM_CPP: bool> RustHandlerFromCpp<FROM_CPP> {
-    pub fn new<F: Fn(*mut c_void) + 'static>(&self, closure: F, name: &str) -> Self {
+    pub fn new<F: Fn(*mut c_void) + 'static>(name: &str, closure: F) -> Self {
         unsafe {
             let name = CString::new(name).unwrap();
             let (f, param) = to_wx_callable(closure);
