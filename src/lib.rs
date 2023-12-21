@@ -54,10 +54,14 @@ mod ffi {
     extern "C" {
         pub fn BArchivable_delete(self_: *mut c_void);
 
-        pub fn RustHandler_new(
+        pub fn RustWindow_new(
             aFn: *mut c_void,
             aParam: *mut c_void,
-            name: *const c_char,
+            frame: *mut c_void,
+            title: *const c_char,
+            type_: i32,
+            flags: u32,
+            workspace: u32,
         ) -> *mut c_void;
 
 //        pub fn wxEvtHandler_Bind(
@@ -145,17 +149,34 @@ unsafe fn to_wx_callable<F: Fn(*mut c_void) + 'static>(closure: F) -> (*mut c_vo
 //}
 
 binding! {
-    class RustHandler
-        = RustHandlerFromCpp<false>(RustHandler) impl
+    class RustWindow
+        = RustWindowFromCpp<false>(RustWindow) impl
+        WindowMethods,
+        LooperMethods,
         HandlerMethods,
         ArchivableMethods
 }
-impl<const FROM_CPP: bool> RustHandlerFromCpp<FROM_CPP> {
-    pub fn new<F: Fn(*mut c_void) + 'static>(&self, closure: F, name: &str) -> Self {
+impl<const FROM_CPP: bool> RustWindowFromCpp<FROM_CPP> {
+    pub fn new<F: Fn(*mut c_void) + 'static, R: RectMethods>(
+        frame: &R,
+        title: &str,
+        type_: i32,
+        flags: u32,
+        workspace: u32,
+        closure: F,
+    ) -> Self {
         unsafe {
-            let name = CString::new(name).unwrap();
+            let title = CString::new(title).unwrap();
             let (f, param) = to_wx_callable(closure);
-            RustHandlerFromCpp(ffi::RustHandler_new(f, param, name.as_ptr()))
+            RustWindowFromCpp(ffi::RustWindow_new(
+                f,
+                param,
+                frame.as_ptr(),
+                title.as_ptr(),
+                type_,
+                flags,
+                workspace,
+            ))
         }
     }
 }

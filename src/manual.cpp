@@ -4,6 +4,6 @@ void BArchivable_delete(BArchivable *self) {
     delete self;
 }
 
-RustHandler *RustHandler_new(void *f, void *param, const char *name/*= NULL*/) {
-    return new RustHandler(f, param, name);
+RustWindow *RustWindow_new(void *f, void *param, BRect frame, const char *title, window_type type, uint32 flags, uint32 workspace) {
+    return new RustWindow(f, param, frame, title, type, flags, workspace);
 }

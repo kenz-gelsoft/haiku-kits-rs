@@ -2,9 +2,9 @@
 // TODO include haiku-api headers
 
 #include <Archivable.h>
-#include <Handler.h>
+#include <Window.h>
 
-// BHandler
+// BWindow
 template <typename T>
 class CxxClosure {
     typedef void (*TrampolineFunc)(void *, T);
@@ -38,11 +38,12 @@ public:
     }
 };
 
-class RustHandler: public BHandler
+class RustWindow: public BWindow
 {
     CxxClosure<void*> mOnMessageReceived;
 public:
-    RustHandler(void *f, void *param, const char *name = NULL) : BHandler(name),
+    RustWindow(void *f, void *param, BRect frame, const char *title, window_type type, uint32 flags, uint32 workspace = B_CURRENT_WORKSPACE) :
+        BWindow(frame, title, type, flags, workspace),
         mOnMessageReceived(f, param)
     {}
     void MessageReceived(BMessage *message) {
@@ -54,6 +55,6 @@ extern "C" {
 
 void BArchivable_delete(BArchivable *self);
 
-RustHandler *RustHandler_new(void *f, void *param, const char *name = NULL);
+RustWindow *RustWindow_new(void *f, void *param, BRect frame, const char *title, window_type type, uint32 flags, uint32 workspace);
 
 } // extern "C"

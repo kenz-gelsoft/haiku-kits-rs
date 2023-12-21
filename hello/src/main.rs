@@ -6,12 +6,15 @@ fn main() {
     let app = B::Application::new_with_str(Some(signature));
 
     let rect = B::Rect::new_with_float_float(0.0, 0.0, 320.0, 240.0);
-    let window = B::Window::new_with_rect_window_type(
+    let window = B::RustWindow::new(
         &rect,
-        Some("Hello"),
+        "Hello",
         B::TITLED_WINDOW,
         0,
         B::CURRENT_WORKSPACE as u32,
+        |_| {
+            println!("Hello");
+        },
     );
     // Place window to left top of screen.
     let pt = window.decorator_frame();
