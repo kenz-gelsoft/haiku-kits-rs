@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 B = { path = "..", package="haiku-kits" }
+four-cc = "0.3.0"

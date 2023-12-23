@@ -90,6 +90,10 @@ pub mod methods {
 //        fn call_after<F: Fn(*mut c_void) + 'static>(&self, closure: F);
 //    }
 
+    pub trait WindowHooks {
+        fn message_received<M: MessageMethods>(&self, message: &M) {}
+    }
+
     pub trait ArrayIntMethods: RustBindingMethods {
         fn add(&self, i: c_int) {
             unsafe { ffi::wxArrayInt_Add(self.as_ptr(), i) }
@@ -157,17 +161,20 @@ binding! {
         ArchivableMethods
 }
 impl<const FROM_CPP: bool> RustWindowFromCpp<FROM_CPP> {
-    pub fn new<F: Fn(*mut c_void) + 'static, R: RectMethods>(
+    pub fn new<R: RectMethods, H: WindowHooks + 'static>(
         frame: &R,
         title: &str,
         type_: i32,
         flags: u32,
         workspace: u32,
-        closure: F,
+        hooks: H,
     ) -> Self {
         unsafe {
             let title = CString::new(title).unwrap();
-            let (f, param) = to_wx_callable(closure);
+            let (f, param) = to_wx_callable(move |message| {
+            	let message = Message::from_cpp_managed_ptr(message);
+            	hooks.message_received(&message);
+            });
             RustWindowFromCpp(ffi::RustWindow_new(
                 f,
                 param,
